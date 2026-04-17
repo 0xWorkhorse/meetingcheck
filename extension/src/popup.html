@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <strong data-i18n="popupHeader">isthislinksafe</strong>
+      <a href="https://isthislinksafe.com" target="_blank" rel="noopener">↗</a>
+    </header>
+    <main>
+      <form id="check-form">
+        <input id="url-input" type="url" data-i18n-attr="placeholder:popupPlaceholder" required autofocus />
+        <button type="submit" id="check-btn" data-i18n="popupCheck">Check</button>
+      </form>
+      <div id="result" class="hidden"></div>
+      <div id="actions" class="hidden">
+        <button id="report-btn" data-i18n="popupReportScam">Report as scam</button>
+      </div>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

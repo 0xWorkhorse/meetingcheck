@@ -1,0 +1,33 @@
+{
+  "name": "@isthislinksafe/api",
+  "version": "0.2.0",
+  "private": true,
+  "description": "isthislinksafe API. Hono on Node, Postgres, Redis. Deploys to Railway.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "cron:purge": "tsx src/cron/purge-check-log.ts",
+    "db:migrate": "tsx src/migrate.ts",
+    "audit": "tsx scripts/audit.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.0",
+    "@isthislinksafe/detector": "*",
+    "dotenv": "^16.4.0",
+    "hono": "^4.6.0",
+    "ioredis": "^5.4.0",
+    "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.11.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

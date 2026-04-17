@@ -1,0 +1,28 @@
+{
+  "name": "@isthislinksafe/detector",
+  "version": "0.1.0",
+  "description": "Strict meeting-link verification engine. MIT licensed for auditability.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:run": "tsx tests/run.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

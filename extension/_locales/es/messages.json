@@ -1,0 +1,28 @@
+{
+  "extName": {
+    "message": "isthislinksafe — verificador de enlaces de reunión",
+    "description": "Extension name shown in the store and browser"
+  },
+  "extDescription": {
+    "message": "Haz click derecho en cualquier enlace para comprobar si es un Zoom, Meet o Calendly real — o una estafa que los imita.",
+    "description": "Store listing description"
+  },
+  "menuCheck": {
+    "message": "Verificar este enlace con isthislinksafe",
+    "description": "Right-click menu item — check"
+  },
+  "menuReport": {
+    "message": "Denunciar este enlace como estafa",
+    "description": "Right-click menu item — report"
+  },
+  "popupHeader": { "message": "isthislinksafe" },
+  "popupPlaceholder": { "message": "Pega un enlace…" },
+  "popupCheck": { "message": "Verificar" },
+  "popupChecking": { "message": "Verificando…" },
+  "popupReportScam": { "message": "Denunciar estafa" },
+  "popupConfirmReport": { "message": "Confirmar y denunciar" },
+  "popupReporting": { "message": "Denunciando…" },
+  "popupReported": { "message": "Denunciado. Gracias." },
+  "popupReportFailed": { "message": "Falló — inténtalo de nuevo" },
+  "popupCouldntCheck": { "message": "No se pudo verificar ese enlace" }
+}
