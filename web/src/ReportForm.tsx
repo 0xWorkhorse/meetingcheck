@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { reportUrl } from './api.js';
 import { useLocale } from './LocaleContext.js';
+import { Turnstile } from './Turnstile.js';
 
 export function ReportForm({ initialUrl = '' }: { initialUrl?: string }) {
   const { t, locale } = useLocale();
@@ -11,14 +12,30 @@ export function ReportForm({ initialUrl = '' }: { initialUrl?: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState('');
+
+  const turnstileRequired = Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
+  const handleToken = useCallback((token: string) => setTurnstileToken(token), []);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (honeypot) return;
+    if (turnstileRequired && !turnstileToken) {
+      setError('Please complete the challenge.');
+      return;
+    }
     setSubmitting(true);
     setError(null);
     try {
-      const res = await reportUrl({ url, context, received_from: receivedFrom }, locale);
+      const res = await reportUrl(
+        {
+          url,
+          context,
+          received_from: receivedFrom,
+          ...(turnstileToken ? { turnstile_token: turnstileToken } : {}),
+        },
+        locale,
+      );
       setDone(res.report_id);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'failed');
@@ -76,6 +93,7 @@ export function ReportForm({ initialUrl = '' }: { initialUrl?: string }) {
         Don't fill this
         <input tabIndex={-1} autoComplete="off" value={honeypot} onChange={e => setHoneypot(e.target.value)} />
       </label>
+      <Turnstile onToken={handleToken} />
       {error && <div className="text-danger text-sm">{error}</div>}
       <button
         type="submit"
