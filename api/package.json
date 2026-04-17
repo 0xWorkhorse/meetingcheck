@@ -10,7 +10,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "cron:purge": "tsx src/cron/purge-check-log.ts",
-    "db:migrate": "tsx src/migrate.ts"
+    "db:migrate": "tsx src/migrate.ts",
+    "audit": "tsx scripts/audit.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.0",
