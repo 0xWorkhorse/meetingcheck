@@ -1,0 +1,23 @@
+{
+  "name": "@isthislinksafe/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "isthislinksafe API. Hono on Cloudflare Workers. D1 + KV.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build": "tsc --noEmit",
+    "db:migrate:local": "wrangler d1 execute isthislinksafe --local --file=./schema.sql",
+    "db:migrate:prod": "wrangler d1 execute isthislinksafe --remote --file=./schema.sql"
+  },
+  "dependencies": {
+    "@isthislinksafe/detector": "*",
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250101.0",
+    "typescript": "^5.6.0",
+    "wrangler": "^3.90.0"
+  }
+}

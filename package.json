@@ -1,0 +1,24 @@
+{
+  "name": "isthislinksafe",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Strict meeting-link verifier. Website + browser extension + community reporting.",
+  "workspaces": [
+    "detector",
+    "api",
+    "web",
+    "extension"
+  ],
+  "scripts": {
+    "test": "npm --workspace detector test",
+    "build": "npm --workspaces --if-present run build",
+    "dev:web": "npm --workspace web run dev",
+    "dev:api": "npm --workspace api run dev",
+    "dev:extension": "npm --workspace extension run dev"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xworkhorse/meetingverification"
+  }
+}

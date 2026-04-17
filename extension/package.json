@@ -1,0 +1,21 @@
+{
+  "name": "@isthislinksafe/extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "isthislinksafe browser extension. Manifest V3, Chrome + Firefox.",
+  "type": "module",
+  "scripts": {
+    "dev": "node build.mjs --watch",
+    "build": "node build.mjs",
+    "build:chrome": "node build.mjs --target=chrome",
+    "build:firefox": "node build.mjs --target=firefox"
+  },
+  "dependencies": {
+    "@isthislinksafe/detector": "*"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.280",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  }
+}

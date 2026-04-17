@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+.env
+.env.local
+.wrangler/
+.dev.vars
+coverage/
+.vscode/
+.idea/
+extension/dist-chrome/
+extension/dist-firefox/
+web/dist/
+api/dist/
+detector/dist/
