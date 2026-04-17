@@ -12,12 +12,12 @@ const MENU_REPORT = 'itls-report';
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: MENU_CHECK,
-    title: 'Check this link with isthislinksafe',
+    title: chrome.i18n.getMessage('menuCheck'),
     contexts: ['link'],
   });
   chrome.contextMenus.create({
     id: MENU_REPORT,
-    title: 'Report this link as a scam',
+    title: chrome.i18n.getMessage('menuReport'),
     contexts: ['link'],
   });
 });

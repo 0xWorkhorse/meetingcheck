@@ -6,17 +6,17 @@
   </head>
   <body>
     <header>
-      <strong>isthislinksafe</strong>
+      <strong data-i18n="popupHeader">isthislinksafe</strong>
       <a href="https://isthislinksafe.com" target="_blank" rel="noopener">↗</a>
     </header>
     <main>
       <form id="check-form">
-        <input id="url-input" type="url" placeholder="Paste a link…" required autofocus />
-        <button type="submit" id="check-btn">Check</button>
+        <input id="url-input" type="url" data-i18n-attr="placeholder:popupPlaceholder" required autofocus />
+        <button type="submit" id="check-btn" data-i18n="popupCheck">Check</button>
       </form>
       <div id="result" class="hidden"></div>
       <div id="actions" class="hidden">
-        <button id="report-btn">Report as scam</button>
+        <button id="report-btn" data-i18n="popupReportScam">Report as scam</button>
       </div>
     </main>
     <script type="module" src="popup.js"></script>

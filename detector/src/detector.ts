@@ -2,6 +2,9 @@
  * isthislinksafe — core detector
  * Strict mode: SAFE only if on official list, DANGEROUS on any impersonation signal.
  * MIT licensed — designed to be auditable.
+ *
+ * The detector returns only stable IDs and template parameters. Display strings
+ * live in ./i18n — consumers pick a locale via `format(result, messages)`.
  */
 import {
   OFFICIAL_DOMAINS,
@@ -14,29 +17,31 @@ import { getRegistrableDomain, normalizeHostname } from './domain-utils.js';
 export type Verdict = 'SAFE' | 'DANGEROUS' | 'UNRECOGNIZED' | 'INVALID';
 export type SignalLevel = 'ok' | 'warning' | 'critical' | 'info';
 
+export type ParamMap = Record<string, string>;
+
 export interface Signal {
   id: string;
   level: SignalLevel;
-  label: string;
-  detail: string;
+  /** Parameters for interpolation into locale templates. */
+  params?: ParamMap;
   brand?: string;
 }
 
 export interface CheckResult {
   verdict: Verdict;
   confidence: number;
-  title: string;
-  reason: string;
+  /** Locale key for the headline, e.g. `title.dangerous.subdomain_trick`. */
+  titleKey: string;
+  /** Locale key for the body paragraph. */
+  reasonKey: string;
+  /** Params for `reasonKey` (and `titleKey` if it takes any). */
+  reasonParams?: ParamMap;
   hostname: string;
   registrableDomain: string;
   signals: Signal[];
 }
 
 export interface CheckOptions {
-  /**
-   * Registrable domains confirmed via the community threat feed.
-   * Pass an empty array when unavailable (e.g. offline/extension first-run).
-   */
   reportedDomains?: ReadonlySet<string>;
 }
 
@@ -56,8 +61,6 @@ function detectSubdomainTrick(hostname: string): { brand: string; fakeDomain: st
   const lower = hostname.toLowerCase();
   for (const [brand, domains] of Object.entries(OFFICIAL_DOMAINS)) {
     for (const domain of domains) {
-      // Brand domain appears in hostname but it's not the registrable domain.
-      // e.g. "zoom.us.meeting-join.co" contains "zoom.us." but doesn't end with ".zoom.us".
       if (lower.includes(domain + '.') && !lower.endsWith('.' + domain) && lower !== domain) {
         return { brand, fakeDomain: getRegistrableDomain(lower) };
       }
@@ -107,8 +110,8 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
     return {
       verdict: 'INVALID',
       confidence: 1,
-      title: 'Not a valid URL',
-      reason: 'Could not parse this as a URL. Paste the full link starting with https://',
+      titleKey: 'title.invalid.unparseable',
+      reasonKey: 'reason.invalid.unparseable',
       hostname: '',
       registrableDomain: '',
       signals: [],
@@ -119,8 +122,9 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
     return {
       verdict: 'INVALID',
       confidence: 1,
-      title: 'Unsupported protocol',
-      reason: `Protocol ${url.protocol} is not supported. Paste a http(s) link.`,
+      titleKey: 'title.invalid.protocol',
+      reasonKey: 'reason.invalid.protocol',
+      reasonParams: { protocol: url.protocol },
       hostname: '',
       registrableDomain: '',
       signals: [],
@@ -130,7 +134,7 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
   const hostname = url.hostname.toLowerCase();
   const registrableDomain = getRegistrableDomain(hostname);
   const signals: Signal[] = [
-    { id: 'hostname', level: 'info', label: 'Domain', detail: hostname },
+    { id: 'hostname', level: 'info', params: { host: hostname } },
   ];
 
   // --- Dangerous signal: community-reported ---
@@ -139,14 +143,14 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
     signals.push({
       id: 'community_reports',
       level: 'critical',
-      label: 'Community reported',
-      detail: `${registrableDomain} is on the confirmed threat feed`,
+      params: { domain: registrableDomain },
     });
     return {
       verdict: 'DANGEROUS',
       confidence: 0.99,
-      title: 'Confirmed scam',
-      reason: `${registrableDomain} has been reported by the community as a scam. Do not open this link.`,
+      titleKey: 'title.dangerous.community',
+      reasonKey: 'reason.dangerous.community',
+      reasonParams: { domain: registrableDomain },
       hostname,
       registrableDomain,
       signals,
@@ -159,15 +163,15 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
     signals.push({
       id: 'subdomain_trick',
       level: 'critical',
-      label: 'Subdomain trick',
-      detail: `pretends to be ${subdomainTrick.brand}; real domain is ${subdomainTrick.fakeDomain}`,
       brand: subdomainTrick.brand,
+      params: { brand: subdomainTrick.brand, fakeDomain: subdomainTrick.fakeDomain },
     });
     return {
       verdict: 'DANGEROUS',
       confidence: 0.99,
-      title: 'Almost certainly a scam',
-      reason: `The real domain here is ${subdomainTrick.fakeDomain}, not ${subdomainTrick.brand}. This is a classic subdomain spoofing pattern. Do not open this link.`,
+      titleKey: 'title.dangerous.subdomain_trick',
+      reasonKey: 'reason.dangerous.subdomain_trick',
+      reasonParams: { brand: subdomainTrick.brand, fakeDomain: subdomainTrick.fakeDomain },
       hostname,
       registrableDomain,
       signals,
@@ -180,18 +184,18 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
     signals.push({
       id: 'official',
       level: 'ok',
-      label: 'Verified',
-      detail: `official ${officialBrand} domain`,
       brand: officialBrand,
+      params: { brand: officialBrand },
     });
     if (url.protocol !== 'https:') {
-      signals.push({ id: 'no_https', level: 'warning', label: 'Protocol', detail: 'not using HTTPS' });
+      signals.push({ id: 'no_https', level: 'warning' });
     }
     return {
       verdict: 'SAFE',
       confidence: 0.99,
-      title: 'Looks legitimate',
-      reason: `This is a real ${officialBrand} domain. Always verify the sender through a trusted channel before joining the call.`,
+      titleKey: 'title.safe',
+      reasonKey: 'reason.safe',
+      reasonParams: { brand: officialBrand },
       hostname,
       registrableDomain,
       signals,
@@ -204,7 +208,6 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
   const suspiciousTld = detectSuspiciousTld(hostname);
   const punycode = detectPunycode(hostname);
 
-  // Punycode + brand context is always DANGEROUS.
   const punycodeWithBrand = punycode && (impersonation.length > 0 || typosquat);
 
   if (impersonation.length > 0 || typosquat || punycodeWithBrand) {
@@ -212,51 +215,49 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
       signals.push({
         id: 'brand_impersonation',
         level: 'critical',
-        label: 'Impersonation',
-        detail: `contains "${imp.token}" but is not on the official ${imp.brand} domain list`,
         brand: imp.brand,
+        params: { token: imp.token, brand: imp.brand },
       });
     }
     if (typosquat) {
       signals.push({
         id: 'typosquat',
         level: 'critical',
-        label: 'Typosquat',
-        detail: `misspelled ${typosquat}`,
         brand: typosquat,
+        params: { brand: typosquat },
       });
     }
     if (suspiciousTld) {
-      signals.push({ id: 'suspicious_tld', level: 'warning', label: 'Suspicious TLD', detail: suspiciousTld });
+      signals.push({ id: 'suspicious_tld', level: 'warning', params: { tld: suspiciousTld } });
     }
     if (punycode) {
-      signals.push({ id: 'punycode', level: 'warning', label: 'Punycode', detail: 'unicode characters in domain' });
+      signals.push({ id: 'punycode', level: 'warning' });
     }
     return {
       verdict: 'DANGEROUS',
       confidence: suspiciousTld || punycode ? 0.98 : 0.95,
-      title: 'Almost certainly a scam',
-      reason: 'This domain is trying to look like a real meeting service but is not on the official list. This matches the exact pattern used in the Feb 2026 fake-Zoom campaigns. Do not open this link.',
+      titleKey: 'title.dangerous.impersonation',
+      reasonKey: 'reason.dangerous.impersonation',
       hostname,
       registrableDomain,
       signals,
     };
   }
 
-  // --- Unrecognized: not official, no impersonation signal ---
+  // --- Unrecognized ---
   if (suspiciousTld) {
-    signals.push({ id: 'suspicious_tld', level: 'warning', label: 'Suspicious TLD', detail: suspiciousTld });
+    signals.push({ id: 'suspicious_tld', level: 'warning', params: { tld: suspiciousTld } });
   }
   if (punycode) {
-    signals.push({ id: 'punycode', level: 'warning', label: 'Punycode', detail: 'unicode characters in domain' });
+    signals.push({ id: 'punycode', level: 'warning' });
   }
-  signals.push({ id: 'not_official', level: 'warning', label: 'Not recognized', detail: 'not on the official meeting service list' });
+  signals.push({ id: 'not_official', level: 'warning' });
 
   return {
     verdict: 'UNRECOGNIZED',
     confidence: 0.8,
-    title: 'Not a known meeting service',
-    reason: 'This is not on our list of official meeting services (Zoom, Google Meet, Teams, Webex, Calendly, and others). If someone sent this as a meeting link, do not open it without verifying through a trusted channel first.',
+    titleKey: 'title.unrecognized',
+    reasonKey: 'reason.unrecognized',
     hostname,
     registrableDomain,
     signals,

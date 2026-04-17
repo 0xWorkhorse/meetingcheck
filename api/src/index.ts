@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { check } from '@isthislinksafe/detector';
+import { check, format, pickLocale, AVAILABLE_LOCALES } from '@isthislinksafe/detector';
 import type { Bindings, Variables } from './bindings.js';
 import { clientIp, hashIp, isUuidLike, newId } from './util.js';
 import { rateLimit } from './rate-limit.js';
@@ -22,8 +22,16 @@ app.use('*', cors({
     return null;
   },
   allowMethods: ['GET', 'POST', 'OPTIONS'],
-  allowHeaders: ['content-type', 'x-install-id'],
+  allowHeaders: ['content-type', 'x-install-id', 'x-locale', 'accept-language'],
 }));
+
+// Resolve the locale once per request. `x-locale` (explicit user choice)
+// takes precedence over `Accept-Language` (browser default).
+function resolveLocale(c: { req: { header(name: string): string | undefined } }): string {
+  const explicit = c.req.header('x-locale');
+  if (explicit && AVAILABLE_LOCALES.includes(explicit)) return explicit;
+  return pickLocale(c.req.header('accept-language'));
+}
 
 app.use('*', async (c, next) => {
   const ip = clientIp(c.req.raw);
@@ -61,7 +69,7 @@ app.post('/v1/check', async (c) => {
   const expansion = await expand(input);
   const finalUrl = expansion.final;
 
-  // Cache verdict by hostname, not full URL — paths don't affect the verdict.
+  // Cache the locale-neutral detector output by hostname. Formatting happens per-request.
   let finalHostname = '';
   try { finalHostname = new URL(finalUrl).hostname.toLowerCase(); } catch {}
   const cacheKey = `verdict:${finalHostname}`;
@@ -78,6 +86,9 @@ app.post('/v1/check', async (c) => {
     }
   }
 
+  const locale = resolveLocale(c);
+  const formatted = format(checkResult, locale);
+
   // Log the check asynchronously. Don't block the response.
   c.executionCtx.waitUntil(
     c.env.DB
@@ -90,7 +101,7 @@ app.post('/v1/check', async (c) => {
   );
 
   return c.json({
-    ...checkResult,
+    ...formatted,
     resolved_hostname: finalHostname,
     redirect_chain: expansion.chain,
     expansion_timed_out: expansion.timedOut,
@@ -196,6 +207,15 @@ app.get('/v1/official-domains', async (c) => {
   return c.json({
     version: '0.1.0',
     domains: OFFICIAL_DOMAINS,
+  }, 200, { 'cache-control': 'public, max-age=3600' });
+});
+
+// ---------- /v1/locales ----------
+app.get('/v1/locales', async (c) => {
+  const { LOCALES } = await import('@isthislinksafe/detector');
+  return c.json({
+    available: Object.values(LOCALES).map((l) => ({ code: l.code, name: l.name })),
+    resolved: resolveLocale(c),
   }, 200, { 'cache-control': 'public, max-age=3600' });
 });
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getStats, type Stats as StatsT } from './api.js';
+import { useLocale } from './LocaleContext.js';
 
 const FALLBACK: StatsT = {
   links_checked_24h: 0,
@@ -9,6 +10,7 @@ const FALLBACK: StatsT = {
 };
 
 export function Stats() {
+  const { t, locale } = useLocale();
   const [stats, setStats] = useState<StatsT>(FALLBACK);
 
   useEffect(() => {
@@ -16,17 +18,17 @@ export function Stats() {
   }, []);
 
   const items: Array<[string, number]> = [
-    ['Links checked (24h)', stats.links_checked_24h],
-    ['Scams flagged (24h)', stats.scams_flagged_24h],
-    ['Community reports', stats.community_reports_total],
-    ['Confirmed scam domains', stats.confirmed_scam_domains],
+    [t.stats.linksChecked, stats.links_checked_24h],
+    [t.stats.scamsFlagged, stats.scams_flagged_24h],
+    [t.stats.reports, stats.community_reports_total],
+    [t.stats.confirmed, stats.confirmed_scam_domains],
   ];
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {items.map(([label, value]) => (
         <div key={label} className="rounded-lg border border-neutral-800 bg-neutral-900/50 p-4">
-          <div className="text-2xl font-semibold">{value.toLocaleString()}</div>
+          <div className="text-2xl font-semibold">{value.toLocaleString(locale)}</div>
           <div className="text-xs text-neutral-400 mt-1">{label}</div>
         </div>
       ))}

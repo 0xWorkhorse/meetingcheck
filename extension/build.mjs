@@ -54,6 +54,14 @@ async function buildOne(target) {
     const src = join(__dirname, `icons/icon-${size}.png`);
     if (existsSync(src)) await copyFile(src, join(outdir, `icons/icon-${size}.png`));
   }
+
+  // _locales/ for chrome.i18n / browser.i18n (Firefox supports the same format).
+  const localesSrc = join(__dirname, '_locales');
+  if (existsSync(localesSrc)) {
+    const { cp } = await import('node:fs/promises');
+    await cp(localesSrc, join(outdir, '_locales'), { recursive: true });
+  }
+
   console.log(`built ${target} → ${outdir}`);
 }
 

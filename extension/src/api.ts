@@ -1,13 +1,13 @@
-import { check, type CheckResult } from '@isthislinksafe/detector';
+import { check, format, type FormattedCheckResult } from '@isthislinksafe/detector';
 
 export const API_BASE = 'https://api.isthislinksafe.com';
 
-export interface CheckResponse extends CheckResult {
+export type CheckResponse = FormattedCheckResult & {
   resolved_hostname: string;
   redirect_chain: string[];
   expansion_timed_out: boolean;
   scanned_at: string;
-}
+};
 
 async function getInstallId(): Promise<string> {
   const stored = await chrome.storage.local.get('install_id');
@@ -17,10 +17,11 @@ async function getInstallId(): Promise<string> {
   return id;
 }
 
-/**
- * Cache verdicts locally for 15 minutes to reduce server round-trips.
- * Keyed by hostname.
- */
+/** Map Chrome's BCP-47 UI language (e.g. `es-419`) to a detector locale code. */
+function uiLocale(): string {
+  return (chrome.i18n.getUILanguage?.() ?? 'en').split('-')[0].toLowerCase();
+}
+
 const LOCAL_TTL_MS = 15 * 60 * 1000;
 
 async function getCached(hostname: string): Promise<CheckResponse | null> {
@@ -49,7 +50,11 @@ export async function checkUrlRemote(url: string): Promise<CheckResponse> {
   const installId = await getInstallId();
   const res = await fetch(`${API_BASE}/v1/check`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json', 'x-install-id': installId },
+    headers: {
+      'content-type': 'application/json',
+      'x-install-id': installId,
+      'x-locale': uiLocale(),
+    },
     body: JSON.stringify({ url }),
   });
   if (!res.ok) throw new Error(`api ${res.status}`);
@@ -59,19 +64,30 @@ export async function checkUrlRemote(url: string): Promise<CheckResponse> {
 }
 
 /**
- * Offline fallback: run the detector locally if the API is unreachable.
+ * Offline fallback: run the detector locally and format with the UI locale.
  * Redirect expansion is unavailable offline.
  */
 export function checkUrlLocal(url: string): CheckResponse {
   const r = check(url);
-  return { ...r, resolved_hostname: r.hostname, redirect_chain: [url], expansion_timed_out: false, scanned_at: new Date().toISOString() };
+  const f = format(r, uiLocale());
+  return {
+    ...f,
+    resolved_hostname: f.hostname,
+    redirect_chain: [url],
+    expansion_timed_out: false,
+    scanned_at: new Date().toISOString(),
+  };
 }
 
 export async function reportScam(url: string, context?: string): Promise<{ report_id: string; status: string }> {
   const installId = await getInstallId();
   const res = await fetch(`${API_BASE}/v1/report`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json', 'x-install-id': installId },
+    headers: {
+      'content-type': 'application/json',
+      'x-install-id': installId,
+      'x-locale': uiLocale(),
+    },
     body: JSON.stringify({ url, context, received_from: 'extension' }),
   });
   if (!res.ok) throw new Error(`report ${res.status}`);

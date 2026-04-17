@@ -1,8 +1,8 @@
-import type { CheckResult } from '@isthislinksafe/detector';
+import type { FormattedCheckResult } from '@isthislinksafe/detector';
 
 export const API_BASE = (import.meta.env.VITE_API_BASE as string) || 'https://api.isthislinksafe.com';
 
-export interface CheckResponse extends CheckResult {
+export interface CheckResponse extends FormattedCheckResult {
   resolved_hostname: string;
   redirect_chain: string[];
   expansion_timed_out: boolean;
@@ -18,10 +18,19 @@ function installId(): string {
   return id;
 }
 
-export async function checkUrl(url: string): Promise<CheckResponse> {
+function headers(locale?: string): HeadersInit {
+  const h: Record<string, string> = {
+    'content-type': 'application/json',
+    'x-install-id': installId(),
+  };
+  if (locale) h['x-locale'] = locale;
+  return h;
+}
+
+export async function checkUrl(url: string, locale?: string): Promise<CheckResponse> {
   const res = await fetch(`${API_BASE}/v1/check`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json', 'x-install-id': installId() },
+    headers: headers(locale),
     body: JSON.stringify({ url }),
   });
   if (!res.ok) throw new Error(`check failed: ${res.status}`);
@@ -33,10 +42,10 @@ export async function reportUrl(params: {
   context?: string;
   received_from?: string;
   turnstile_token?: string;
-}): Promise<{ report_id: string; status: string }> {
+}, locale?: string): Promise<{ report_id: string; status: string }> {
   const res = await fetch(`${API_BASE}/v1/report`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json', 'x-install-id': installId() },
+    headers: headers(locale),
     body: JSON.stringify(params),
   });
   if (!res.ok) throw new Error(`report failed: ${res.status}`);
