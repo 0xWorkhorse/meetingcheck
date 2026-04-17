@@ -36,7 +36,6 @@ export function App() {
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <a href="/" className="font-mono text-lg font-semibold">meetingcheck</a>
           <nav className="text-sm text-neutral-400 space-x-4 flex items-center">
-            <a href="/threat-feed" className="hover:text-neutral-200">{t.nav.threatFeed}</a>
             <a href="#extension" className="hover:text-neutral-200">{t.nav.extension}</a>
             <LocaleSwitcher />
           </nav>
@@ -112,10 +111,7 @@ export function App() {
         <section id="extension" className="max-w-3xl mx-auto mt-16 space-y-3">
           <h2 className="text-lg font-semibold">{t.sections.extensionTitle}</h2>
           <p className="text-neutral-400 text-sm">{t.sections.extensionBody}</p>
-          <div className="flex gap-2">
-            <a href="#" className="rounded-md border border-neutral-800 bg-neutral-900 px-4 py-2 text-sm hover:bg-neutral-800">Chrome</a>
-            <a href="#" className="rounded-md border border-neutral-800 bg-neutral-900 px-4 py-2 text-sm hover:bg-neutral-800">Firefox</a>
-          </div>
+          <div className="text-neutral-500 text-sm italic">Coming soon.</div>
         </section>
 
         <section className="max-w-3xl mx-auto mt-16 space-y-3">
@@ -129,8 +125,6 @@ export function App() {
           <span>{t.footer.copyright}</span>
           <div className="space-x-4">
             <a href="https://github.com/0xworkhorse/meetingverification" className="hover:text-neutral-300">{t.footer.github}</a>
-            <a href="/privacy" className="hover:text-neutral-300">{t.footer.privacy}</a>
-            <a href="/threat-feed" className="hover:text-neutral-300">{t.footer.threatFeed}</a>
           </div>
         </div>
       </footer>
