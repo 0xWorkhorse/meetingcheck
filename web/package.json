@@ -7,12 +7,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "serve -s dist -l ${PORT:-3000}"
   },
   "dependencies": {
     "@meetingcheck/detector": "*",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-dom": "^18.3.0",
+    "serve": "^14.2.6"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",
