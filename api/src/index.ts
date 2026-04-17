@@ -9,7 +9,7 @@ import {
   LOCALES,
   OFFICIAL_DOMAINS,
   type CheckResult,
-} from '@isthislinksafe/detector';
+} from '@meetingcheck/detector';
 import { env } from './env.js';
 import { db, query, queryOne } from './db.js';
 import { redis, getCachedVerdict, setCachedVerdict, getCachedStats, setCachedStats, invalidateVerdict } from './redis.js';
@@ -56,7 +56,7 @@ function fireAndForget<T>(p: Promise<T>) {
 
 // ---------- Root + Health ----------
 
-app.get('/', (c) => c.json({ service: 'isthislinksafe', version: '0.2.0' }));
+app.get('/', (c) => c.json({ service: 'meetingcheck', version: '0.2.0' }));
 
 app.get('/health', async (c) => {
   try {

@@ -1,8 +1,8 @@
 {
-  "name": "@isthislinksafe/extension",
+  "name": "@meetingcheck/extension",
   "version": "0.1.0",
   "private": true,
-  "description": "isthislinksafe browser extension. Manifest V3, Chrome + Firefox.",
+  "description": "meetingcheck browser extension. Manifest V3, Chrome + Firefox.",
   "type": "module",
   "scripts": {
     "dev": "node build.mjs --watch",
@@ -11,7 +11,7 @@
     "build:firefox": "node build.mjs --target=firefox"
   },
   "dependencies": {
-    "@isthislinksafe/detector": "*"
+    "@meetingcheck/detector": "*"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.280",

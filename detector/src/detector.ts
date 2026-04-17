@@ -1,5 +1,5 @@
 /**
- * isthislinksafe — core detector
+ * meetingcheck — core detector
  * Strict mode: SAFE only if on official list, DANGEROUS on any impersonation signal.
  * MIT licensed — designed to be auditable.
  *

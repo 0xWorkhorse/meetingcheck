@@ -1,5 +1,5 @@
 {
-  "name": "@isthislinksafe/detector",
+  "name": "@meetingcheck/detector",
   "version": "0.1.0",
   "description": "Strict meeting-link verification engine. MIT licensed for auditability.",
   "license": "MIT",

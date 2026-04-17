@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "isthislinksafe — meeting link verifier",
+    "message": "meetingcheck — meeting link verifier",
     "description": "Extension name shown in the store and browser"
   },
   "extDescription": {
@@ -8,14 +8,14 @@
     "description": "Store listing description"
   },
   "menuCheck": {
-    "message": "Check this link with isthislinksafe",
+    "message": "Check this link with meetingcheck",
     "description": "Right-click menu item — check"
   },
   "menuReport": {
     "message": "Report this link as a scam",
     "description": "Right-click menu item — report"
   },
-  "popupHeader": { "message": "isthislinksafe" },
+  "popupHeader": { "message": "meetingcheck" },
   "popupPlaceholder": { "message": "Paste a link…" },
   "popupCheck": { "message": "Check" },
   "popupChecking": { "message": "Checking…" },

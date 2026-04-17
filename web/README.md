@@ -1,6 +1,6 @@
-# @isthislinksafe/web
+# @meetingcheck/web
 
-isthislinksafe.com frontend. React + Vite + Tailwind. Deploys to Cloudflare Pages.
+meetingcheck.io frontend. React + Vite + Tailwind. Deploys to Cloudflare Pages.
 
 ## Develop
 

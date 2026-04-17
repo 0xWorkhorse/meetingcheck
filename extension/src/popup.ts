@@ -1,4 +1,4 @@
-import type { FormattedCheckResult } from '@isthislinksafe/detector';
+import type { FormattedCheckResult } from '@meetingcheck/detector';
 
 type CheckResponse = FormattedCheckResult & {
   resolved_hostname: string;

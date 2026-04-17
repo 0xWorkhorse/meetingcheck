@@ -1,5 +1,5 @@
 {
-  "name": "isthislinksafe",
+  "name": "meetingcheck",
   "version": "0.1.0",
   "private": true,
   "description": "Strict meeting-link verifier. Website + browser extension + community reporting.",

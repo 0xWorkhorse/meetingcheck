@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "isthislinksafe — verificador de enlaces de reunión",
+    "message": "meetingcheck — verificador de enlaces de reunión",
     "description": "Extension name shown in the store and browser"
   },
   "extDescription": {
@@ -8,14 +8,14 @@
     "description": "Store listing description"
   },
   "menuCheck": {
-    "message": "Verificar este enlace con isthislinksafe",
+    "message": "Verificar este enlace con meetingcheck",
     "description": "Right-click menu item — check"
   },
   "menuReport": {
     "message": "Denunciar este enlace como estafa",
     "description": "Right-click menu item — report"
   },
-  "popupHeader": { "message": "isthislinksafe" },
+  "popupHeader": { "message": "meetingcheck" },
   "popupPlaceholder": { "message": "Pega un enlace…" },
   "popupCheck": { "message": "Verificar" },
   "popupChecking": { "message": "Verificando…" },
