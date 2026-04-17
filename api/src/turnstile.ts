@@ -20,7 +20,7 @@ export async function verifyTurnstile(
       method: 'POST',
       body,
     });
-    const json: { success?: boolean } = await res.json();
+    const json = (await res.json()) as { success?: boolean };
     return Boolean(json.success);
   } catch {
     return false;

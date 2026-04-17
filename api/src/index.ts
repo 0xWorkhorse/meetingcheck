@@ -1,59 +1,75 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { check, format, pickLocale, AVAILABLE_LOCALES } from '@isthislinksafe/detector';
-import type { Bindings, Variables } from './bindings.js';
-import { clientIp, hashIp, isUuidLike, newId } from './util.js';
-import { rateLimit } from './rate-limit.js';
+import { serve } from '@hono/node-server';
+import {
+  check,
+  format,
+  pickLocale,
+  AVAILABLE_LOCALES,
+  LOCALES,
+  OFFICIAL_DOMAINS,
+  type CheckResult,
+} from '@isthislinksafe/detector';
+import { env } from './env.js';
+import { db, query, queryOne } from './db.js';
+import { redis, getCachedVerdict, setCachedVerdict, getCachedStats, setCachedStats, invalidateVerdict } from './redis.js';
+import { context, rateLimitMiddleware, type AppVariables } from './middleware.js';
+import { clientIp, isUuidLike, newId } from './util.js';
 import { expand } from './expand.js';
 import { getConfirmedDomains, isProtectedDomain, tryAutoPromote } from './threat-feed.js';
 import { verifyTurnstile } from './turnstile.js';
 
-const app = new Hono<{ Bindings: Bindings; Variables: Variables }>();
+const app = new Hono<{ Variables: AppVariables }>();
 
-app.use('*', cors({
-  origin: (origin) => {
-    if (!origin) return '*';
-    // Allow the website, extension popups (chrome-extension:// / moz-extension://),
-    // and localhost for development.
-    if (origin === 'https://isthislinksafe.com') return origin;
-    if (origin.startsWith('chrome-extension://')) return origin;
-    if (origin.startsWith('moz-extension://')) return origin;
-    if (/^https?:\/\/localhost(:\d+)?$/.test(origin)) return origin;
-    return null;
-  },
-  allowMethods: ['GET', 'POST', 'OPTIONS'],
-  allowHeaders: ['content-type', 'x-install-id', 'x-locale', 'accept-language'],
-}));
+app.use(
+  '*',
+  cors({
+    origin: (origin) => {
+      if (!origin) return '*';
+      if (origin === env.ALLOWED_ORIGIN) return origin;
+      if (origin.startsWith('chrome-extension://')) return origin;
+      if (origin.startsWith('moz-extension://')) return origin;
+      if (/^https?:\/\/localhost(:\d+)?$/.test(origin)) return origin;
+      return null;
+    },
+    allowMethods: ['GET', 'POST', 'OPTIONS'],
+    allowHeaders: ['content-type', 'x-install-id', 'x-locale', 'accept-language', 'authorization'],
+    exposeHeaders: ['X-RateLimit-Limit', 'X-RateLimit-Remaining', 'X-RateLimit-Reset'],
+  }),
+);
 
-// Resolve the locale once per request. `x-locale` (explicit user choice)
-// takes precedence over `Accept-Language` (browser default).
+app.use('*', context);
+
 function resolveLocale(c: { req: { header(name: string): string | undefined } }): string {
   const explicit = c.req.header('x-locale');
   if (explicit && AVAILABLE_LOCALES.includes(explicit)) return explicit;
   return pickLocale(c.req.header('accept-language'));
 }
 
-app.use('*', async (c, next) => {
-  const ip = clientIp(c.req.raw);
-  const salt = c.env.ENVIRONMENT === 'production' ? 'prod-v1' : 'dev-v1';
-  c.set('ipHash', await hashIp(ip, salt));
-  const installHeader = c.req.header('x-install-id');
-  c.set('installId', installHeader && isUuidLike(installHeader) ? installHeader : null);
-  return next();
+/**
+ * Fire-and-forget on Node: just don't await. The Hono response flushes regardless.
+ * Errors are swallowed intentionally — these writes are best-effort logging.
+ */
+function fireAndForget<T>(p: Promise<T>) {
+  p.catch((err) => console.error('[background]', err));
+}
+
+// ---------- Root + Health ----------
+
+app.get('/', (c) => c.json({ service: 'isthislinksafe', version: '0.2.0' }));
+
+app.get('/health', async (c) => {
+  try {
+    await Promise.all([db.query('SELECT 1'), redis.ping()]);
+    return c.json({ ok: true, db: 'up', redis: 'up' });
+  } catch (err) {
+    return c.json({ ok: false, error: (err as Error).message }, 503);
+  }
 });
 
-app.get('/', (c) => c.json({ service: 'isthislinksafe', version: '0.1.0' }));
-
 // ---------- /v1/check ----------
-app.post('/v1/check', async (c) => {
-  const installId = c.get('installId');
-  const ipHash = c.get('ipHash');
-  const limit = installId ? 120 : 30;
-  const rl = await rateLimit(c.env.CACHE, `check:${installId ?? ipHash}`, limit, 60);
-  if (!rl.allowed) {
-    return c.json({ error: 'rate_limited', resetAt: rl.resetAt }, 429);
-  }
 
+app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
   let body: { url?: string };
   try {
     body = await c.req.json();
@@ -61,43 +77,31 @@ app.post('/v1/check', async (c) => {
     return c.json({ error: 'invalid_json' }, 400);
   }
   const input = (body.url ?? '').trim();
-  if (!input || input.length > 2048) {
-    return c.json({ error: 'missing_or_too_long' }, 400);
-  }
+  if (!input || input.length > 2048) return c.json({ error: 'missing_or_too_long' }, 400);
 
-  // Expand shortened URLs. If expansion fails, fall through to checking the original.
   const expansion = await expand(input);
   const finalUrl = expansion.final;
 
-  // Cache the locale-neutral detector output by hostname. Formatting happens per-request.
   let finalHostname = '';
   try { finalHostname = new URL(finalUrl).hostname.toLowerCase(); } catch {}
-  const cacheKey = `verdict:${finalHostname}`;
-  const cached = finalHostname ? await c.env.CACHE.get(cacheKey, 'json') : null;
 
-  let checkResult;
-  if (cached) {
-    checkResult = cached as ReturnType<typeof check>;
-  } else {
-    const reportedDomains = await getConfirmedDomains(c.env.DB);
+  let checkResult = finalHostname ? await getCachedVerdict<CheckResult>(finalHostname) : null;
+  if (!checkResult) {
+    const reportedDomains = await getConfirmedDomains();
     checkResult = check(finalUrl, { reportedDomains });
     if (finalHostname && checkResult.verdict !== 'INVALID') {
-      await c.env.CACHE.put(cacheKey, JSON.stringify(checkResult), { expirationTtl: 900 });
+      await setCachedVerdict(finalHostname, checkResult);
     }
   }
 
   const locale = resolveLocale(c);
   const formatted = format(checkResult, locale);
 
-  // Log the check asynchronously. Don't block the response.
-  c.executionCtx.waitUntil(
-    c.env.DB
-      .prepare(
-        `INSERT INTO check_log (hostname, verdict, ip_hash, install_id, checked_at) VALUES (?, ?, ?, ?, ?)`
-      )
-      .bind(finalHostname, checkResult.verdict, ipHash, installId, Date.now())
-      .run()
-      .catch(() => { /* swallow — logging is best-effort */ })
+  fireAndForget(
+    query(
+      `INSERT INTO check_log (hostname, verdict, ip_hash, install_id) VALUES ($1, $2, $3, $4)`,
+      [finalHostname, checkResult.verdict, c.get('ipHash'), c.get('installId')],
+    ),
   );
 
   return c.json({
@@ -110,14 +114,8 @@ app.post('/v1/check', async (c) => {
 });
 
 // ---------- /v1/report ----------
-app.post('/v1/report', async (c) => {
-  const installId = c.get('installId');
-  const ipHash = c.get('ipHash');
-  const rl = await rateLimit(c.env.CACHE, `report:${installId ?? ipHash}`, 10, 3600);
-  if (!rl.allowed) {
-    return c.json({ error: 'rate_limited', resetAt: rl.resetAt }, 429);
-  }
 
+app.post('/v1/report', rateLimitMiddleware('report', 10, 10, 3600), async (c) => {
   let body: { url?: string; context?: string; received_from?: string; turnstile_token?: string; honeypot?: string };
   try {
     body = await c.req.json();
@@ -125,105 +123,103 @@ app.post('/v1/report', async (c) => {
     return c.json({ error: 'invalid_json' }, 400);
   }
 
-  // Honeypot — bots fill this, humans don't see it.
   if (body.honeypot) return c.json({ report_id: 'ignored', status: 'queued' });
 
   const url = (body.url ?? '').trim();
   if (!url || url.length > 2048) return c.json({ error: 'missing_or_too_long' }, 400);
 
-  const ok = await verifyTurnstile(body.turnstile_token, clientIp(c.req.raw), c.env.TURNSTILE_SECRET);
+  const ok = await verifyTurnstile(body.turnstile_token, clientIp(c.req), env.TURNSTILE_SECRET_KEY);
   if (!ok) return c.json({ error: 'turnstile_failed' }, 403);
 
   const parsed = check(url);
   if (parsed.verdict === 'INVALID') return c.json({ error: 'invalid_url' }, 400);
+  if (isProtectedDomain(parsed.registrableDomain)) return c.json({ error: 'protected_domain' }, 400);
 
-  // Official domains can never be reported as scams.
-  if (isProtectedDomain(parsed.registrableDomain)) {
-    return c.json({ error: 'protected_domain' }, 400);
-  }
-
-  const brand = parsed.signals.find(s => s.brand)?.brand?.toLowerCase() ?? null;
+  const brand = parsed.signals.find((s) => s.brand)?.brand?.toLowerCase() ?? null;
   const id = newId('rpt');
-  const now = Date.now();
 
-  await c.env.DB
-    .prepare(
-      `INSERT INTO reports (id, url, hostname, registrable_domain, context, received_from, install_id, ip_hash, status, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)`
-    )
-    .bind(
-      id, url, parsed.hostname, parsed.registrableDomain,
+  await query(
+    `INSERT INTO reports (id, url, hostname, registrable_domain, context, received_from, install_id, ip_hash, status)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'pending')`,
+    [
+      id,
+      url,
+      parsed.hostname,
+      parsed.registrableDomain,
       body.context ?? null,
       body.received_from ?? null,
-      installId,
-      ipHash,
-      now,
-    )
-    .run();
+      c.get('installId'),
+      c.get('ipHash'),
+    ],
+  );
 
-  c.executionCtx.waitUntil(tryAutoPromote(c.env.DB, parsed.registrableDomain, brand));
+  fireAndForget(tryAutoPromote(parsed.registrableDomain, brand));
 
   return c.json({ report_id: id, status: 'queued' });
 });
 
 // ---------- /v1/stats ----------
+
 app.get('/v1/stats', async (c) => {
-  const cached = await c.env.CACHE.get('stats:v1', 'json');
+  const cached = await getCachedStats();
   if (cached) return c.json(cached);
 
-  const dayAgo = Date.now() - 24 * 60 * 60 * 1000;
   const [checks24, flagged24, reportsTotal, confirmed] = await Promise.all([
-    c.env.DB.prepare(`SELECT COUNT(*) AS n FROM check_log WHERE checked_at >= ?`).bind(dayAgo).first<{ n: number }>(),
-    c.env.DB.prepare(`SELECT COUNT(*) AS n FROM check_log WHERE checked_at >= ? AND verdict = 'DANGEROUS'`).bind(dayAgo).first<{ n: number }>(),
-    c.env.DB.prepare(`SELECT COUNT(*) AS n FROM reports`).first<{ n: number }>(),
-    c.env.DB.prepare(`SELECT COUNT(*) AS n FROM threat_feed WHERE status = 'confirmed'`).first<{ n: number }>(),
+    queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM check_log WHERE checked_at >= NOW() - INTERVAL '24 hours'`),
+    queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM check_log WHERE checked_at >= NOW() - INTERVAL '24 hours' AND verdict = 'DANGEROUS'`),
+    queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM reports`),
+    queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM threat_feed WHERE status = 'confirmed'`),
   ]);
 
   const stats = {
-    links_checked_24h: checks24?.n ?? 0,
-    scams_flagged_24h: flagged24?.n ?? 0,
-    community_reports_total: reportsTotal?.n ?? 0,
-    confirmed_scam_domains: confirmed?.n ?? 0,
+    links_checked_24h:       Number(checks24?.n ?? 0),
+    scams_flagged_24h:       Number(flagged24?.n ?? 0),
+    community_reports_total: Number(reportsTotal?.n ?? 0),
+    confirmed_scam_domains:  Number(confirmed?.n ?? 0),
   };
-  await c.env.CACHE.put('stats:v1', JSON.stringify(stats), { expirationTtl: 60 });
+  await setCachedStats(stats);
   return c.json(stats);
 });
 
 // ---------- /v1/threat-feed ----------
+
 app.get('/v1/threat-feed', async (c) => {
-  const { results } = await c.env.DB
-    .prepare(
-      `SELECT registrable_domain, first_seen, last_seen, brand_impersonated
-       FROM threat_feed WHERE status = 'confirmed'
-       ORDER BY last_seen DESC LIMIT 500`
-    )
-    .all();
-  return c.json({ domains: results });
+  const rows = await query(
+    `SELECT registrable_domain, first_seen, last_seen, brand_impersonated
+     FROM threat_feed WHERE status = 'confirmed'
+     ORDER BY last_seen DESC LIMIT 500`,
+  );
+  return c.json({ domains: rows });
 });
 
 // ---------- /v1/official-domains ----------
-app.get('/v1/official-domains', async (c) => {
-  const { OFFICIAL_DOMAINS } = await import('@isthislinksafe/detector');
-  return c.json({
-    version: '0.1.0',
-    domains: OFFICIAL_DOMAINS,
-  }, 200, { 'cache-control': 'public, max-age=3600' });
-});
+
+app.get('/v1/official-domains', (c) =>
+  c.json(
+    { version: '0.2.0', domains: OFFICIAL_DOMAINS },
+    200,
+    { 'cache-control': 'public, max-age=3600' },
+  ),
+);
 
 // ---------- /v1/locales ----------
-app.get('/v1/locales', async (c) => {
-  const { LOCALES } = await import('@isthislinksafe/detector');
-  return c.json({
-    available: Object.values(LOCALES).map((l) => ({ code: l.code, name: l.name })),
-    resolved: resolveLocale(c),
-  }, 200, { 'cache-control': 'public, max-age=3600' });
-});
+
+app.get('/v1/locales', (c) =>
+  c.json(
+    {
+      available: Object.values(LOCALES).map((l) => ({ code: l.code, name: l.name })),
+      resolved: resolveLocale(c),
+    },
+    200,
+    { 'cache-control': 'public, max-age=3600' },
+  ),
+);
 
 // ---------- Admin review ----------
+
 app.post('/admin/review', async (c) => {
   const auth = c.req.header('authorization');
-  const token = c.env.ADMIN_TOKEN;
-  if (!token || auth !== `Bearer ${token}`) {
+  if (!env.ADMIN_TOKEN || auth !== `Bearer ${env.ADMIN_TOKEN}`) {
     return c.json({ error: 'unauthorized' }, 401);
   }
   const body = await c.req.json<{
@@ -234,21 +230,33 @@ app.post('/admin/review', async (c) => {
   if (isProtectedDomain(body.registrable_domain) && body.status === 'confirmed') {
     return c.json({ error: 'protected_domain' }, 400);
   }
-  const now = Date.now();
-  await c.env.DB
-    .prepare(
-      `INSERT INTO threat_feed (registrable_domain, first_seen, last_seen, report_count, brand_impersonated, status, notes)
-       VALUES (?, ?, ?, 0, NULL, ?, ?)
-       ON CONFLICT(registrable_domain) DO UPDATE SET
-         last_seen = excluded.last_seen,
-         status = excluded.status,
-         notes = excluded.notes`
-    )
-    .bind(body.registrable_domain, now, now, body.status, body.note ?? null)
-    .run();
-  // Bust the cache for that hostname.
-  await c.env.CACHE.delete(`verdict:${body.registrable_domain}`);
+  await query(
+    `INSERT INTO threat_feed (registrable_domain, first_seen, last_seen, report_count, brand_impersonated, status, notes)
+     VALUES ($1, NOW(), NOW(), 0, NULL, $2, $3)
+     ON CONFLICT (registrable_domain) DO UPDATE SET
+       last_seen = NOW(),
+       status = EXCLUDED.status,
+       notes = EXCLUDED.notes`,
+    [body.registrable_domain, body.status, body.note ?? null],
+  );
+  await invalidateVerdict(body.registrable_domain);
   return c.json({ ok: true });
 });
+
+// ---------- Start ----------
+
+serve({ fetch: app.fetch, port: env.PORT }, (info) => {
+  console.log(`[api] listening on :${info.port} (${env.NODE_ENV})`);
+});
+
+// Graceful shutdown so Railway rolling restarts don't drop connections mid-flight.
+for (const sig of ['SIGTERM', 'SIGINT'] as const) {
+  process.on(sig, async () => {
+    console.log(`[api] received ${sig}, shutting down`);
+    try { await db.end(); } catch {}
+    try { redis.disconnect(); } catch {}
+    process.exit(0);
+  });
+}
 
 export default app;
