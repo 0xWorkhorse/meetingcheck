@@ -26,7 +26,7 @@ app.use(
   cors({
     origin: (origin) => {
       if (!origin) return '*';
-      if (origin === env.ALLOWED_ORIGIN) return origin;
+      if (env.ALLOWED_ORIGINS.includes(origin)) return origin;
       if (origin.startsWith('chrome-extension://')) return origin;
       if (origin.startsWith('moz-extension://')) return origin;
       if (/^https?:\/\/localhost(:\d+)?$/.test(origin)) return origin;

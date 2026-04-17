@@ -24,7 +24,10 @@ export const env = {
   TURNSTILE_SECRET_KEY: optional('TURNSTILE_SECRET_KEY'),
   ADMIN_TOKEN: optional('ADMIN_TOKEN'),
 
-  ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN ?? 'https://meetingcheck.io',
+  ALLOWED_ORIGINS: (process.env.ALLOWED_ORIGIN ?? 'https://meetingcheck.io')
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean),
 };
 
 export const isProd = env.NODE_ENV === 'production';

@@ -63,7 +63,7 @@ Rate-limit responses expose `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-Rat
    IP_SALT               <openssl rand -hex 32>
    ADMIN_TOKEN           <openssl rand -hex 32>
    TURNSTILE_SECRET_KEY  <from Cloudflare Turnstile dashboard>
-   ALLOWED_ORIGIN        https://meetingcheck.io
+   ALLOWED_ORIGIN        https://meetingcheck.io,https://www.meetingcheck.io
    NODE_ENV              production
    ```
 
