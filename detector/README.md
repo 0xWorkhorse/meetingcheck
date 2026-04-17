@@ -1,17 +1,17 @@
-# @isthislinksafe/detector
+# @meetingcheck/detector
 
 Strict meeting-link verification engine. MIT licensed so anyone can audit the rules.
 
 ## Install
 
 ```bash
-npm install @isthislinksafe/detector
+npm install @meetingcheck/detector
 ```
 
 ## Usage
 
 ```ts
-import { check } from '@isthislinksafe/detector';
+import { check } from '@meetingcheck/detector';
 
 check('https://uswebzoomus.com/j/123');
 // {

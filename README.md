@@ -1,4 +1,4 @@
-# isthislinksafe
+# meetingcheck
 
 > A strict link verifier for the one question you ask when a meeting invite shows up: is this actually Zoom / Meet / Calendly, or am I about to get drained?
 
@@ -10,7 +10,7 @@ Built for web3 professionals after the Feb 2026 fake-Zoom wave. Three-second str
 |---|---|---|
 | [`detector/`](./detector) | MIT | Core detection engine. Strict rules, auditable, framework-free. |
 | [`extension/`](./extension) | MIT | Manifest V3 browser extension (Chrome + Firefox). |
-| [`web/`](./web) | MIT | Website at isthislinksafe.com. React + Vite + Tailwind. |
+| [`web/`](./web) | MIT | Website at meetingcheck.io. React + Vite + Tailwind. |
 | [`api/`](./api) | private | Hono on Cloudflare Workers. D1 + KV. |
 
 ## Verdict states

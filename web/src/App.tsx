@@ -34,7 +34,7 @@ export function App() {
     <div className="min-h-screen">
       <header className="border-b border-neutral-900 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <a href="/" className="font-mono text-lg font-semibold">isthislinksafe</a>
+          <a href="/" className="font-mono text-lg font-semibold">meetingcheck</a>
           <nav className="text-sm text-neutral-400 space-x-4 flex items-center">
             <a href="/threat-feed" className="hover:text-neutral-200">{t.nav.threatFeed}</a>
             <a href="#extension" className="hover:text-neutral-200">{t.nav.extension}</a>

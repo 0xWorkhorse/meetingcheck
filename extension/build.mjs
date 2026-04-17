@@ -41,7 +41,7 @@ async function buildOne(target) {
   } else {
     manifest.background = { scripts: ['background.js'], type: 'module' };
     manifest.browser_specific_settings = {
-      gecko: { id: 'extension@isthislinksafe.com', strict_min_version: '109.0' },
+      gecko: { id: 'extension@meetingcheck.com', strict_min_version: '109.0' },
     };
   }
   await writeFile(join(outdir, 'manifest.json'), JSON.stringify(manifest, null, 2));

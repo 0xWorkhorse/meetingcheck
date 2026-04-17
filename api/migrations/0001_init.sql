@@ -1,4 +1,4 @@
--- isthislinksafe Postgres schema
+-- meetingcheck Postgres schema
 -- Idempotent: safe to re-run.
 
 CREATE TABLE IF NOT EXISTS reports (

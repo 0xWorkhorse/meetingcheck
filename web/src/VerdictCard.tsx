@@ -1,5 +1,5 @@
 import type { CheckResponse } from './api.js';
-import type { FormattedSignal, Verdict } from '@isthislinksafe/detector';
+import type { FormattedSignal, Verdict } from '@meetingcheck/detector';
 import { useLocale } from './LocaleContext.js';
 
 const VERDICT_STYLE: Record<Verdict, { bg: string; fg: string; border: string }> = {

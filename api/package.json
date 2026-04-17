@@ -1,8 +1,8 @@
 {
-  "name": "@isthislinksafe/api",
+  "name": "@meetingcheck/api",
   "version": "0.2.0",
   "private": true,
-  "description": "isthislinksafe API. Hono on Node, Postgres, Redis. Deploys to Railway.",
+  "description": "meetingcheck API. Hono on Node, Postgres, Redis. Deploys to Railway.",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.13.0",
-    "@isthislinksafe/detector": "*",
+    "@meetingcheck/detector": "*",
     "dotenv": "^16.4.0",
     "hono": "^4.6.0",
     "ioredis": "^5.4.0",

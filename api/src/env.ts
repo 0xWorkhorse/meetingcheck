@@ -24,7 +24,7 @@ export const env = {
   TURNSTILE_SECRET_KEY: optional('TURNSTILE_SECRET_KEY'),
   ADMIN_TOKEN: optional('ADMIN_TOKEN'),
 
-  ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN ?? 'https://isthislinksafe.com',
+  ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN ?? 'https://meetingcheck.io',
 };
 
 export const isProd = env.NODE_ENV === 'production';

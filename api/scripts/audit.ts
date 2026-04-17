@@ -1,10 +1,10 @@
 /**
- * isthislinksafe pre-launch audit.
+ * meetingcheck pre-launch audit.
  *
  * Hits the deployed HTTP API (set AUDIT_API_URL), plus direct Postgres and
  * Redis connections (DATABASE_URL / REDIS_URL) to verify server-side state.
  *
- *   AUDIT_API_URL=https://api.isthislinksafe.com \
+ *   AUDIT_API_URL=https://api.meetingcheck.io \
  *   AUDIT_ADMIN_TOKEN=... \
  *   DATABASE_URL=... \
  *   REDIS_URL=... \
@@ -26,7 +26,7 @@ const ADMIN_TOKEN = process.env.AUDIT_ADMIN_TOKEN;
 const DATABASE_URL = process.env.DATABASE_URL;
 const REDIS_URL = process.env.REDIS_URL;
 
-if (!API_URL)      die('AUDIT_API_URL is required (e.g. https://api.isthislinksafe.com)');
+if (!API_URL)      die('AUDIT_API_URL is required (e.g. https://api.meetingcheck.io)');
 if (!DATABASE_URL) die('DATABASE_URL is required');
 if (!REDIS_URL)    die('REDIS_URL is required');
 
@@ -527,7 +527,7 @@ const CHECKS: Check[] = [
 ];
 
 async function main() {
-  console.log('isthislinksafe pre-launch audit');
+  console.log('meetingcheck pre-launch audit');
   console.log('================================');
   console.log(`Target: ${API_URL}`);
   console.log(`Time:   ${new Date().toISOString()}`);

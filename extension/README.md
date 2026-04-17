@@ -1,4 +1,4 @@
-# @isthislinksafe/extension
+# @meetingcheck/extension
 
 Manifest V3 browser extension. Chrome + Firefox from the same source.
 
@@ -19,7 +19,7 @@ Deliberately minimal — store reviewers look at this first.
 
 - `contextMenus` — right-click a link to check it.
 - `storage` — store install_id (anonymous UUID) and cached verdicts.
-- `host_permissions: https://api.isthislinksafe.com/*` — the API. No `<all_urls>`.
+- `host_permissions: https://api.meetingcheck.io/*` — the API. No `<all_urls>`.
 
 ## Features
 

@@ -1,4 +1,4 @@
-import { OFFICIAL_DOMAINS } from '@isthislinksafe/detector';
+import { OFFICIAL_DOMAINS } from '@meetingcheck/detector';
 import { query, queryOne } from './db.js';
 
 const OFFICIAL_SET: Set<string> = new Set(

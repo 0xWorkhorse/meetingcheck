@@ -1,6 +1,6 @@
-import { check, format, type FormattedCheckResult } from '@isthislinksafe/detector';
+import { check, format, type FormattedCheckResult } from '@meetingcheck/detector';
 
-export const API_BASE = 'https://api.isthislinksafe.com';
+export const API_BASE = 'https://api.meetingcheck.io';
 
 export type CheckResponse = FormattedCheckResult & {
   resolved_hostname: string;

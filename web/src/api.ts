@@ -1,6 +1,6 @@
-import type { FormattedCheckResult } from '@isthislinksafe/detector';
+import type { FormattedCheckResult } from '@meetingcheck/detector';
 
-export const API_BASE = (import.meta.env.VITE_API_BASE as string) || 'https://api.isthislinksafe.com';
+export const API_BASE = (import.meta.env.VITE_API_BASE as string) || 'https://api.meetingcheck.io';
 
 export interface CheckResponse extends FormattedCheckResult {
   resolved_hostname: string;

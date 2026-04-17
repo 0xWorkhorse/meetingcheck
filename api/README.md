@@ -1,4 +1,4 @@
-# @isthislinksafe/api
+# @meetingcheck/api
 
 Hono on Node. Postgres for persistence, Redis for verdict cache + rate limits. Deploys to Railway.
 
@@ -26,9 +26,9 @@ docker run -d --name redis -p 6379:6379 redis:7
 
 # From repo root:
 npm install
-npm --workspace @isthislinksafe/detector run build
-npm --workspace @isthislinksafe/api run db:migrate
-npm --workspace @isthislinksafe/api run dev
+npm --workspace @meetingcheck/detector run build
+npm --workspace @meetingcheck/api run db:migrate
+npm --workspace @meetingcheck/api run dev
 ```
 
 The API listens on `http://localhost:3000`.
@@ -63,7 +63,7 @@ Rate-limit responses expose `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-Rat
    IP_SALT               <openssl rand -hex 32>
    ADMIN_TOKEN           <openssl rand -hex 32>
    TURNSTILE_SECRET_KEY  <from Cloudflare Turnstile dashboard>
-   ALLOWED_ORIGIN        https://isthislinksafe.com
+   ALLOWED_ORIGIN        https://meetingcheck.io
    NODE_ENV              production
    ```
 
@@ -81,12 +81,12 @@ Rate-limit responses expose `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-Rat
    - Schedule: `0 4 * * *` (daily 04:00 UTC).
    - Reference the same `DATABASE_URL`.
 
-5. **Custom domain.** Service → Settings → Networking → Custom Domain → `api.isthislinksafe.com`.
+5. **Custom domain.** Service → Settings → Networking → Custom Domain → `api.meetingcheck.io`.
 
 ## Post-deploy smoke test
 
 ```bash
-BASE=https://api.isthislinksafe.com
+BASE=https://api.meetingcheck.io
 
 # Safe
 curl -s -X POST $BASE/v1/check -H 'content-type: application/json' \

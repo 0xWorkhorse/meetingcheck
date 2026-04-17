@@ -1,6 +1,6 @@
 /**
  * Background service worker.
- * - Registers context menu items ("Check with isthislinksafe", "Report this link").
+ * - Registers context menu items ("Check with meetingcheck", "Report this link").
  * - Opens the popup with the selected link pre-filled.
  * - Handles messages from the popup to run checks via the API with a local fallback.
  */
