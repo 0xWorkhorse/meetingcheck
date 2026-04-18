@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const ko: UiMessages = {
   nav: {
     checkALink: '링크 확인',
-    theProblem: '문제',
     howItWorks: '작동 방식',
     verdicts: '판정',
     extension: '확장 프로그램',
@@ -85,29 +84,6 @@ export const ko: UiMessages = {
     dangerous: '위험',
     unrecognized: '미확인',
     invalid: '무효',
-  },
-
-  problem: {
-    sectionTag: '문제',
-    heading: '당신의 캘린더는 이제 {weapon}입니다.',
-    headingWeapon: '무기',
-    lede:
-      '2026년 2월, 수천 명의 크립토 홀더가 Zoom이 아닌 "Zoom 초대"를 클릭했습니다. 로딩 스피너가 도는 시간 동안 클립보드 하이재커가 설치되었습니다. 지갑은 비워졌습니다. 통화는 존재하지 않았습니다.',
-    bodyP1:
-      '진짜와 가짜 링크는 사람의 눈에 똑같아 보입니다. {zoomUs} vs {zoomInvite}. {meetGoogle} vs {meetCiom}. {oneLetter}, 그리고 지갑은 사라집니다.',
-    bodyP1OneLetter: '글자 하나',
-    bodyP2:
-      '더 나쁜 것은 — 합법적으로 보이는 서브도메인(rooms.zoom-partner.xyz)이 이제 사기와 같은 인프라에서 살고 있다는 것입니다. 브라우저 주소창은 도움이 되지 않습니다. Slack 미리보기도 도움이 되지 않습니다. 백신도 도움이 되지 않습니다 — 아직 아무것도 다운로드되지 않았기 때문입니다.',
-    bodyP3:
-      '도움이 되는 것은 {ruleChecker}입니다: 공식 도메인 허용 목록, 인증서 투명성, 그리고 2분마다 새로고침되는 커뮤니티 차단 목록. 그게 다입니다.',
-    bodyP3RuleChecker: '규칙 기반 검사기',
-    ledger: {
-      ariaLabel: '최근 손실',
-      date: '날짜',
-      incident: '사건',
-      estLoss: '추정 손실',
-      totalLabel: '총 신고 — 2026년 2월 ➜ 4월',
-    },
   },
 
   howItWorks: {

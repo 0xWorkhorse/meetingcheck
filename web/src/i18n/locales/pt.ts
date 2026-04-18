@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const pt: UiMessages = {
   nav: {
     checkALink: 'Verificar link',
-    theProblem: 'O problema',
     howItWorks: 'Como funciona',
     verdicts: 'Veredictos',
     extension: 'Extensão',
@@ -85,29 +84,6 @@ export const pt: UiMessages = {
     dangerous: 'PERIGOSO',
     unrecognized: 'DESCONHECIDO',
     invalid: 'INVÁLIDO',
-  },
-
-  problem: {
-    sectionTag: 'O PROBLEMA',
-    heading: 'Sua agenda virou uma {weapon} agora.',
-    headingWeapon: 'arma',
-    lede:
-      'Em fevereiro de 2026, milhares de holders de cripto clicaram num "convite do Zoom" que não era. Instalou um sequestrador de área de transferência no tempo que o spinner levou pra girar. As wallets esvaziaram. As calls nunca existiram.',
-    bodyP1:
-      'Links reais e falsos parecem idênticos ao olho humano. {zoomUs} vs {zoomInvite}. {meetGoogle} vs {meetCiom}. {oneLetter} e a wallet foi.',
-    bodyP1OneLetter: 'uma letra',
-    bodyP2:
-      'Pior — subdomínios que parecem legítimos (rooms.zoom-partner.xyz) agora vivem na mesma infraestrutura que os golpes. A barra de endereço do navegador não ajuda. A prévia do Slack não ajuda. Antivírus não ajuda, porque nada foi baixado ainda.',
-    bodyP3:
-      'O que ajuda é um {ruleChecker}: listas permitidas de domínios oficiais, transparência de certificados e uma lista de bloqueio da comunidade atualizada a cada dois minutos. É só isso.',
-    bodyP3RuleChecker: 'verificador por regras',
-    ledger: {
-      ariaLabel: 'Perdas recentes',
-      date: 'DATA',
-      incident: 'INCIDENTE',
-      estLoss: 'PERDA EST.',
-      totalLabel: 'TOTAL RELATADO — FEV ➜ ABR 2026',
-    },
   },
 
   howItWorks: {

@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const ja: UiMessages = {
   nav: {
     checkALink: 'リンクを確認',
-    theProblem: '問題',
     howItWorks: '仕組み',
     verdicts: '判定',
     extension: '拡張機能',
@@ -85,29 +84,6 @@ export const ja: UiMessages = {
     dangerous: '危険',
     unrecognized: '未確認',
     invalid: '無効',
-  },
-
-  problem: {
-    sectionTag: '問題',
-    heading: 'あなたのカレンダーは今や{weapon}です。',
-    headingWeapon: '武器',
-    lede:
-      '2026年2月、数千人の暗号通貨ホルダーが「Zoom招待」でないものをクリックした。ローディングスピナーが回るあいだに、それはクリップボードハイジャッカーをインストールした。ウォレットは空になった。通話は存在しなかった。',
-    bodyP1:
-      '本物と偽物のリンクは人間の目には同じに見えます。{zoomUs} vs {zoomInvite}。{meetGoogle} vs {meetCiom}。{oneLetter}、それでウォレットは消える。',
-    bodyP1OneLetter: '一文字',
-    bodyP2:
-      'さらに悪いことに — 正当に見えるサブドメイン（rooms.zoom-partner.xyz）が、今や詐欺と同じインフラ上にあります。ブラウザのアドレスバーは助けてくれません。Slackのプレビューも助けてくれません。ウイルス対策も助けてくれません、なぜならまだ何もダウンロードされていないからです。',
-    bodyP3:
-      '助けになるのは{ruleChecker}です：公式ドメインの許可リスト、証明書の透明性、そして2分ごとに更新されるコミュニティのブロックリスト。それだけです。',
-    bodyP3RuleChecker: 'ルールベースのチェッカー',
-    ledger: {
-      ariaLabel: '最近の損失',
-      date: '日付',
-      incident: 'インシデント',
-      estLoss: '推定損失',
-      totalLabel: '報告合計 — 2026年 2月 ➜ 4月',
-    },
   },
 
   howItWorks: {

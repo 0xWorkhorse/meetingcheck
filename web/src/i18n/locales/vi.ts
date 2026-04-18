@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const vi: UiMessages = {
   nav: {
     checkALink: 'Kiểm tra liên kết',
-    theProblem: 'Vấn đề',
     howItWorks: 'Cách hoạt động',
     verdicts: 'Phán quyết',
     extension: 'Tiện ích',
@@ -85,29 +84,6 @@ export const vi: UiMessages = {
     dangerous: 'NGUY HIỂM',
     unrecognized: 'KHÔNG RÕ',
     invalid: 'KHÔNG HỢP LỆ',
-  },
-
-  problem: {
-    sectionTag: 'VẤN ĐỀ',
-    heading: 'Lịch của bạn bây giờ là một {weapon}.',
-    headingWeapon: 'vũ khí',
-    lede:
-      'Vào tháng 2/2026, hàng nghìn người nắm giữ crypto đã bấm vào một "lời mời Zoom" không phải Zoom. Nó đã cài một trình chiếm đoạt clipboard trong thời gian loading spinner xoay. Ví trống rỗng. Những cuộc gọi đó chưa từng tồn tại.',
-    bodyP1:
-      'Liên kết thật và giả trông giống hệt nhau với mắt người. {zoomUs} vs {zoomInvite}. {meetGoogle} vs {meetCiom}. {oneLetter} và ví đã biến mất.',
-    bodyP1OneLetter: 'một ký tự',
-    bodyP2:
-      'Tệ hơn — các tên miền phụ trông hợp lệ (rooms.zoom-partner.xyz) giờ sống trên cùng hạ tầng với kẻ lừa đảo. Thanh địa chỉ trình duyệt không giúp được. Xem trước của Slack không giúp được. Antivirus không giúp được, vì chưa có gì được tải xuống.',
-    bodyP3:
-      'Điều giúp được là một {ruleChecker}: danh sách cho phép tên miền chính thức, minh bạch chứng chỉ và danh sách chặn cộng đồng cập nhật mỗi hai phút. Chỉ có vậy thôi.',
-    bodyP3RuleChecker: 'trình kiểm tra theo quy tắc',
-    ledger: {
-      ariaLabel: 'Tổn thất gần đây',
-      date: 'NGÀY',
-      incident: 'SỰ CỐ',
-      estLoss: 'THIỆT HẠI ƯỚC TÍNH',
-      totalLabel: 'TỔNG BÁO CÁO — FEB ➜ APR 2026',
-    },
   },
 
   howItWorks: {

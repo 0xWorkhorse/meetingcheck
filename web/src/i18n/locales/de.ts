@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const de: UiMessages = {
   nav: {
     checkALink: 'Link prüfen',
-    theProblem: 'Das Problem',
     howItWorks: 'So funktioniert\'s',
     verdicts: 'Urteile',
     extension: 'Extension',
@@ -85,29 +84,6 @@ export const de: UiMessages = {
     dangerous: 'GEFÄHRLICH',
     unrecognized: 'UNBEKANNT',
     invalid: 'UNGÜLTIG',
-  },
-
-  problem: {
-    sectionTag: 'DAS PROBLEM',
-    heading: 'Dein Kalender ist jetzt eine {weapon}.',
-    headingWeapon: 'Waffe',
-    lede:
-      'Im Februar 2026 klickten Tausende Crypto-Holder auf eine "Zoom-Einladung", die keine war. Sie installierte einen Clipboard-Hijacker in der Zeit, die der Ladekreis zum Drehen brauchte. Wallets geleert. Die Calls existierten nie.',
-    bodyP1:
-      'Echte und gefälschte Meeting-Links sehen für menschliche Augen identisch aus. {zoomUs} vs {zoomInvite}. {meetGoogle} vs {meetCiom}. {oneLetter} und eine Wallet ist weg.',
-    bodyP1OneLetter: 'ein Buchstabe',
-    bodyP2:
-      'Schlimmer noch — legitim wirkende Subdomains (rooms.zoom-partner.xyz) laufen jetzt auf derselben Infrastruktur wie die Scams. Die Browser-Adressleiste hilft nicht. Die Slack-Vorschau hilft nicht. Antivirus hilft nicht, weil noch nichts heruntergeladen wurde.',
-    bodyP3:
-      'Was hilft, ist ein {ruleChecker}: Allowlists offizieller Domains, Zertifikatstransparenz und eine Community-Blocklist, die alle zwei Minuten aktualisiert wird. Mehr ist das nicht.',
-    bodyP3RuleChecker: 'Regel-Checker',
-    ledger: {
-      ariaLabel: 'Jüngste Verluste',
-      date: 'DATUM',
-      incident: 'VORFALL',
-      estLoss: 'GESCH. VERLUST',
-      totalLabel: 'GESAMT GEMELDET — FEB ➜ APR 2026',
-    },
   },
 
   howItWorks: {

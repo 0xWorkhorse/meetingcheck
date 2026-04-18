@@ -5,7 +5,6 @@ export function TopNav() {
   const { t } = useLocale();
   const navLinks: Array<[string, string]> = [
     ['#checker',  t.nav.checkALink],
-    ['#problem',  t.nav.theProblem],
     ['#how',      t.nav.howItWorks],
     ['#verdicts', t.nav.verdicts],
   ];

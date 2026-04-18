@@ -12,7 +12,6 @@
 export interface UiMessages {
   nav: {
     checkALink: string;
-    theProblem: string;
     howItWorks: string;
     verdicts: string;
     extension: string;
@@ -92,27 +91,6 @@ export interface UiMessages {
     dangerous: string;
     unrecognized: string;
     invalid: string;
-  };
-  problem: {
-    sectionTag: string; // "THE PROBLEM"
-    /** Template: "Your calendar is a {weapon} now." */
-    heading: string;
-    headingWeapon: string; // "weapon"
-    lede: string;
-    /** Template with {zoomUs}, {zoomInvite}, {meetGoogle}, {meetCiom}, {oneLetter} tags */
-    bodyP1: string;
-    bodyP1OneLetter: string;
-    bodyP2: string;
-    bodyP3: string;
-    bodyP3RuleChecker: string;
-    ledger: {
-      ariaLabel: string;
-      date: string;
-      incident: string;
-      estLoss: string;
-      /** Template: "TOTAL REPORTED — FEB ➜ APR 2026" — will need rephrasing if we source real data */
-      totalLabel: string;
-    };
   };
   howItWorks: {
     sectionTag: string;

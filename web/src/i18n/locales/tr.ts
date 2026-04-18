@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const tr: UiMessages = {
   nav: {
     checkALink: 'Link kontrol et',
-    theProblem: 'Sorun',
     howItWorks: 'Nasıl çalışır',
     verdicts: 'Kararlar',
     extension: 'Uzantı',
@@ -85,29 +84,6 @@ export const tr: UiMessages = {
     dangerous: 'TEHLİKELİ',
     unrecognized: 'TANINMIYOR',
     invalid: 'GEÇERSİZ',
-  },
-
-  problem: {
-    sectionTag: 'SORUN',
-    heading: 'Takvimin artık bir {weapon}.',
-    headingWeapon: 'silah',
-    lede:
-      'Şubat 2026\'da binlerce kripto kullanıcısı, aslında Zoom olmayan bir "Zoom davetine" tıkladı. Yükleme göstergesi dönene kadar bir pano hijacker\'ı kurdu. Cüzdanlar boşaldı. O aramalar hiç olmadı.',
-    bodyP1:
-      'Gerçek ve sahte toplantı linkleri insan gözüne aynı görünür. {zoomUs} vs {zoomInvite}. {meetGoogle} vs {meetCiom}. {oneLetter} ve bir cüzdan yok olur.',
-    bodyP1OneLetter: 'bir harf',
-    bodyP2:
-      'Daha da kötüsü — meşru görünen alt alanlar (rooms.zoom-partner.xyz) artık dolandırıcılıklarla aynı altyapıda yaşıyor. Tarayıcının adres çubuğu yardımcı olmuyor. Slack önizlemesi yardımcı olmuyor. Antivirüs yardımcı olmuyor, çünkü henüz hiçbir şey indirilmedi.',
-    bodyP3:
-      'Yardımcı olan şey bir {ruleChecker}: resmi domain izin listeleri, sertifika şeffaflığı ve her iki dakikada bir yenilenen topluluk engel listesi. Olay bu kadar.',
-    bodyP3RuleChecker: 'kural kontrolcüsü',
-    ledger: {
-      ariaLabel: 'Son kayıplar',
-      date: 'TARİH',
-      incident: 'OLAY',
-      estLoss: 'TAHM. KAYIP',
-      totalLabel: 'TOPLAM RAPOR EDİLEN — ŞUB ➜ NİS 2026',
-    },
   },
 
   howItWorks: {

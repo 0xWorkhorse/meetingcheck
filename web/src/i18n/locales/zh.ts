@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const zh: UiMessages = {
   nav: {
     checkALink: '检查链接',
-    theProblem: '问题',
     howItWorks: '工作原理',
     verdicts: '判定',
     extension: '扩展',
@@ -85,29 +84,6 @@ export const zh: UiMessages = {
     dangerous: '危险',
     unrecognized: '未识别',
     invalid: '无效',
-  },
-
-  problem: {
-    sectionTag: '问题',
-    heading: '你的日历现在是一件{weapon}。',
-    headingWeapon: '武器',
-    lede:
-      '2026 年 2 月，成千上万的加密持有者点击了一个并非 Zoom 的 "Zoom 邀请"。在加载转圈的那几秒里，它安装了一个剪贴板劫持器。钱包被清空。那些通话从未存在。',
-    bodyP1:
-      '真假会议链接在人眼下看起来一模一样。{zoomUs} 与 {zoomInvite}。{meetGoogle} 与 {meetCiom}。{oneLetter}，钱包就没了。',
-    bodyP1OneLetter: '一个字母',
-    bodyP2:
-      '更糟的是 —— 看起来合法的子域名（rooms.zoom-partner.xyz）现在与诈骗共享同一基础设施。浏览器地址栏帮不上忙。Slack 预览帮不上忙。杀毒软件也帮不上忙，因为此时还没下载任何东西。',
-    bodyP3:
-      '真正有用的是一个{ruleChecker}：官方域名允许列表、证书透明度，以及每两分钟刷新一次的社区屏蔽列表。就这么简单。',
-    bodyP3RuleChecker: '基于规则的核查器',
-    ledger: {
-      ariaLabel: '近期损失',
-      date: '日期',
-      incident: '事件',
-      estLoss: '估计损失',
-      totalLabel: '累计报告 — 2026 年 2 ➜ 4 月',
-    },
   },
 
   howItWorks: {

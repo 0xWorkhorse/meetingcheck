@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const id: UiMessages = {
   nav: {
     checkALink: 'Cek link',
-    theProblem: 'Masalah',
     howItWorks: 'Cara kerja',
     verdicts: 'Keputusan',
     extension: 'Ekstensi',
@@ -85,29 +84,6 @@ export const id: UiMessages = {
     dangerous: 'BERBAHAYA',
     unrecognized: 'TIDAK DIKENAL',
     invalid: 'TIDAK VALID',
-  },
-
-  problem: {
-    sectionTag: 'MASALAH',
-    heading: 'Kalender kamu sekarang adalah {weapon}.',
-    headingWeapon: 'senjata',
-    lede:
-      'Pada Februari 2026, ribuan pemegang crypto mengklik "undangan Zoom" yang sebenarnya bukan Zoom. Ia memasang pembajak clipboard dalam waktu loading spinner berputar. Wallet dikuras. Panggilan itu tidak pernah ada.',
-    bodyP1:
-      'Link meeting asli dan palsu terlihat identik bagi mata manusia. {zoomUs} vs {zoomInvite}. {meetGoogle} vs {meetCiom}. {oneLetter} dan wallet hilang.',
-    bodyP1OneLetter: 'satu huruf',
-    bodyP2:
-      'Lebih buruk lagi — subdomain yang terlihat sah (rooms.zoom-partner.xyz) sekarang hidup di infrastruktur yang sama dengan penipuan. Bilah alamat browser tidak membantu. Preview Slack tidak membantu. Antivirus tidak membantu, karena belum ada yang diunduh.',
-    bodyP3:
-      'Yang membantu adalah {ruleChecker}: allowlist domain resmi, transparansi sertifikat, dan blocklist komunitas yang diperbarui setiap dua menit. Hanya itu saja.',
-    bodyP3RuleChecker: 'pemeriksa berbasis aturan',
-    ledger: {
-      ariaLabel: 'Kerugian terbaru',
-      date: 'TANGGAL',
-      incident: 'INSIDEN',
-      estLoss: 'PERKIRAAN RUGI',
-      totalLabel: 'TOTAL DILAPORKAN — FEB ➜ APR 2026',
-    },
   },
 
   howItWorks: {

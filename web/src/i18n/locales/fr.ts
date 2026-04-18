@@ -3,7 +3,6 @@ import type { UiMessages } from '../types.js';
 export const fr: UiMessages = {
   nav: {
     checkALink: 'Vérifier un lien',
-    theProblem: 'Le problème',
     howItWorks: 'Comment ça marche',
     verdicts: 'Verdicts',
     extension: 'Extension',
@@ -85,29 +84,6 @@ export const fr: UiMessages = {
     dangerous: 'DANGEREUX',
     unrecognized: 'NON RECONNU',
     invalid: 'INVALIDE',
-  },
-
-  problem: {
-    sectionTag: 'LE PROBLÈME',
-    heading: 'Ton agenda est une {weapon} maintenant.',
-    headingWeapon: 'arme',
-    lede:
-      'En février 2026, des milliers de détenteurs de crypto ont cliqué sur une "invitation Zoom" qui n\'en était pas une. Elle a installé un détourneur de presse-papiers le temps que le spinner tourne. Les wallets se sont vidées. Les appels n\'ont jamais existé.',
-    bodyP1:
-      'Les vrais liens et les faux paraissent identiques à l\'œil humain. {zoomUs} vs {zoomInvite}. {meetGoogle} vs {meetCiom}. {oneLetter} et une wallet est vide.',
-    bodyP1OneLetter: 'une lettre',
-    bodyP2:
-      'Pire — des sous-domaines d\'apparence légitime (rooms.zoom-partner.xyz) cohabitent maintenant avec les arnaques sur la même infrastructure. La barre d\'adresse du navigateur n\'aide pas. L\'aperçu Slack n\'aide pas. L\'antivirus n\'aide pas, parce que rien n\'a encore été téléchargé.',
-    bodyP3:
-      'Ce qui aide, c\'est un {ruleChecker} : listes blanches de domaines officiels, transparence des certificats, et une blocklist communautaire mise à jour toutes les deux minutes. C\'est tout ce que c\'est.',
-    bodyP3RuleChecker: 'vérificateur par règles',
-    ledger: {
-      ariaLabel: 'Pertes récentes',
-      date: 'DATE',
-      incident: 'INCIDENT',
-      estLoss: 'PERTE EST.',
-      totalLabel: 'TOTAL SIGNALÉ — FÉV ➜ AVR 2026',
-    },
   },
 
   howItWorks: {
