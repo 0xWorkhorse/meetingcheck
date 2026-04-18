@@ -177,4 +177,33 @@
     background: rgb(var(--ink));
     color: rgb(var(--paper));
   }
+
+  /* native <select> styled to match mc-btn */
+  .mc-select {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    padding: 10px 28px 10px 16px;
+    border: 1.5px solid rgb(var(--ink));
+    background-color: rgb(var(--paper));
+    color: rgb(var(--ink));
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                      linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 14px) 52%, calc(100% - 9px) 52%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    transition: background-color 0.12s ease, color 0.12s ease;
+  }
+  .mc-select:hover {
+    background-color: rgb(var(--ink));
+    color: rgb(var(--paper));
+  }
+  .mc-select:focus {
+    outline: none;
+  }
 }

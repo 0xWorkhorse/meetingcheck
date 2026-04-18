@@ -1,4 +1,5 @@
 import { ThemeToggle } from './ThemeToggle.js';
+import { LocaleSwitcher } from './i18n/LocaleSwitcher.js';
 import { useLocale } from './i18n/LocaleContext.js';
 
 export function TopNav() {
@@ -37,6 +38,7 @@ export function TopNav() {
       </ul>
 
       <div className="flex gap-2.5 items-center">
+        <LocaleSwitcher />
         <ThemeToggle />
         <a href="#checker" className="mc-btn">{t.nav.extension}</a>
         <a href="#checker" className="mc-btn mc-btn-solid">{t.nav.pasteALink}</a>

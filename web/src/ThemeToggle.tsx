@@ -6,7 +6,7 @@ type Theme = 'light' | 'dark';
 function initialTheme(): Theme {
   const attr = document.documentElement.getAttribute('data-theme');
   if (attr === 'dark' || attr === 'light') return attr;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'dark';
 }
 
 export function ThemeToggle() {

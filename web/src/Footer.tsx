@@ -1,4 +1,3 @@
-import { LocaleSwitcher } from './i18n/LocaleSwitcher.js';
 import { useLocale } from './i18n/LocaleContext.js';
 import { format } from './i18n/format.js';
 
@@ -34,14 +33,13 @@ export function Footer() {
         />
       </div>
 
-      <div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted mt-7 flex flex-col md:flex-row md:justify-between gap-3 pt-[18px] border-t border-ink">
+      <div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted mt-7 pt-[18px] border-t border-ink">
         <span>
           {format(t.footer.credit, {
             team: <a href="https://themathteam.io" target="_blank" rel="noopener noreferrer">The Math Team</a>,
             author: <a href="https://x.com/0xWorkhorse" target="_blank" rel="noopener noreferrer">@0xWorkhorse</a>,
           })}
         </span>
-        <LocaleSwitcher />
       </div>
     </footer>
   );
