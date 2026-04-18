@@ -4,7 +4,13 @@
  *
  * We use HEAD first, fall back to GET if the target rejects HEAD.
  * We never execute the response body; this is just URL expansion.
+ *
+ * We try expansion on every non-official host (scammers use obscure redirectors
+ * and own-domain redirects, not just bit.ly). Official hosts skip the lookup so
+ * SAFE verdicts stay fast — nobody's redirecting zoom.us to a drainer.
  */
+import { OFFICIAL_DOMAINS } from '@meetingcheck/detector';
+
 const MAX_HOPS = 5;
 const TIMEOUT_MS = 2000;
 
@@ -14,18 +20,17 @@ export interface ExpandResult {
   timedOut: boolean;
 }
 
-const KNOWN_SHORTENERS = new Set([
-  'bit.ly', 't.co', 'tinyurl.com', 'goo.gl', 'ow.ly',
-  'buff.ly', 'is.gd', 'rebrand.ly', 'tiny.cc', 'shorturl.at',
-  'lnkd.in', 'cutt.ly', 'rb.gy',
-]);
+const OFFICIAL_SET: ReadonlySet<string> = new Set(
+  Object.values(OFFICIAL_DOMAINS).flat() as string[],
+);
 
-function isShortener(urlStr: string): boolean {
-  try {
-    return KNOWN_SHORTENERS.has(new URL(urlStr).hostname.toLowerCase());
-  } catch {
-    return false;
+function isOfficialHost(hostname: string): boolean {
+  const lower = hostname.toLowerCase();
+  if (OFFICIAL_SET.has(lower)) return true;
+  for (const official of OFFICIAL_SET) {
+    if (lower.endsWith('.' + official)) return true;
   }
+  return false;
 }
 
 async function fetchOnce(url: string): Promise<Response | null> {
@@ -64,18 +69,20 @@ export async function expand(initialUrl: string): Promise<ExpandResult> {
   let current = initialUrl;
   let timedOut = false;
 
-  // Only follow redirects if the initial URL is a known shortener or if a redirect
-  // response comes back. This keeps latency low for the 95% case where the input is
-  // already a direct link.
-  const shouldFollow = isShortener(initialUrl);
-  if (!shouldFollow) {
+  // Skip expansion for well-known official hosts — we trust them not to redirect
+  // to anything dangerous, and we want their SAFE verdict to be instant.
+  let initialHost = '';
+  try { initialHost = new URL(initialUrl).hostname.toLowerCase(); } catch { return { chain, final: current, timedOut }; }
+  if (isOfficialHost(initialHost)) {
     return { chain, final: current, timedOut };
   }
 
   for (let i = 0; i < MAX_HOPS; i++) {
     const res = await fetchOnce(current);
     if (!res) {
-      timedOut = true;
+      // On the first hop a null result means the host is unreachable or timed out.
+      // Don't mark every non-redirecting check as timedOut — only actual network failures.
+      if (i === 0) timedOut = true;
       break;
     }
     const location = res.headers.get('location');
