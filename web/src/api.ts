@@ -57,6 +57,8 @@ export async function reportUrl(params: {
 export interface Stats {
   links_checked_24h: number;
   scams_flagged_24h: number;
+  links_checked_total: number;
+  scams_flagged_total: number;
   community_reports_total: number;
   confirmed_scam_domains: number;
 }

@@ -185,9 +185,11 @@ app.get('/v1/stats', async (c) => {
   const cached = await getCachedStats();
   if (cached) return c.json(cached);
 
-  const [checks24, flagged24, reportsTotal, confirmed] = await Promise.all([
+  const [checks24, flagged24, checksTotal, flaggedTotal, reportsTotal, confirmed] = await Promise.all([
     queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM check_log WHERE checked_at >= NOW() - INTERVAL '24 hours'`),
     queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM check_log WHERE checked_at >= NOW() - INTERVAL '24 hours' AND verdict = 'DANGEROUS'`),
+    queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM check_log`),
+    queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM check_log WHERE verdict = 'DANGEROUS'`),
     queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM reports`),
     queryOne<{ n: string }>(`SELECT COUNT(*)::TEXT AS n FROM threat_feed WHERE status = 'confirmed'`),
   ]);
@@ -195,6 +197,8 @@ app.get('/v1/stats', async (c) => {
   const stats = {
     links_checked_24h:       Number(checks24?.n ?? 0),
     scams_flagged_24h:       Number(flagged24?.n ?? 0),
+    links_checked_total:     Number(checksTotal?.n ?? 0),
+    scams_flagged_total:     Number(flaggedTotal?.n ?? 0),
     community_reports_total: Number(reportsTotal?.n ?? 0),
     confirmed_scam_domains:  Number(confirmed?.n ?? 0),
   };

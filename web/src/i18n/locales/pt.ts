@@ -19,8 +19,8 @@ export const pt: UiMessages = {
     headlineClick: 'Clica',
     subBody:
       'Um veredicto binário e rigoroso sobre cada convite de reunião que você recebe — {safe}, {dangerous} ou {unrecognized} — em menos de três segundos, antes que qualquer coisa abra uma janela na sua máquina.',
-    statLinksChecked: 'links verificados hoje',
-    statScamsFlagged: 'golpes sinalizados hoje',
+    statLinksChecked: 'links verificados',
+    statScamsFlagged: 'golpes sinalizados',
     statConfirmed: 'domínios de golpe confirmados',
     statUpdated: 'Atualizado {value}',
     statJustNow: 'agora mesmo',

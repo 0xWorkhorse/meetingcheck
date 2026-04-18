@@ -6,6 +6,8 @@ import { format, formatNumber } from './i18n/format.js';
 const FALLBACK: StatsT = {
   links_checked_24h: 0,
   scams_flagged_24h: 0,
+  links_checked_total: 0,
+  scams_flagged_total: 0,
   community_reports_total: 0,
   confirmed_scam_domains: 0,
 };
@@ -48,8 +50,8 @@ export function Hero() {
           })}
         </p>
         <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted flex flex-col gap-1.5 md:text-right">
-          <div><b className="text-ink font-medium">{formatNumber(stats.links_checked_24h, locale)}</b> {t.hero.statLinksChecked}</div>
-          <div><b className="text-ink font-medium">{formatNumber(stats.scams_flagged_24h, locale)}</b> {t.hero.statScamsFlagged}</div>
+          <div><b className="text-ink font-medium">{formatNumber(stats.links_checked_total, locale)}</b> {t.hero.statLinksChecked}</div>
+          <div><b className="text-ink font-medium">{formatNumber(stats.scams_flagged_total, locale)}</b> {t.hero.statScamsFlagged}</div>
           <div><b className="text-ink font-medium">{formatNumber(stats.confirmed_scam_domains, locale)}</b> {t.hero.statConfirmed}</div>
           <div>
             {format(t.hero.statUpdated, {

@@ -19,8 +19,8 @@ export const id: UiMessages = {
     headlineClick: 'Klik',
     subBody:
       'Keputusan biner yang tegas untuk setiap undangan meeting yang kamu terima — {safe}, {dangerous}, atau {unrecognized} — dalam kurang dari tiga detik, sebelum ada yang membuka jendela di mesin kamu.',
-    statLinksChecked: 'link dicek hari ini',
-    statScamsFlagged: 'penipuan ditandai hari ini',
+    statLinksChecked: 'link dicek',
+    statScamsFlagged: 'penipuan ditandai',
     statConfirmed: 'domain penipuan terkonfirmasi',
     statUpdated: 'Diperbarui {value}',
     statJustNow: 'barusan',

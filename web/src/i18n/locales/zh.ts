@@ -19,8 +19,8 @@ export const zh: UiMessages = {
     headlineClick: '点击',
     subBody:
       '对每一个会议邀请给出严格的二元判定 —— {safe}、{dangerous} 或 {unrecognized} —— 在任何窗口在你机器上打开之前，不到三秒就完成。',
-    statLinksChecked: '今日已核查链接',
-    statScamsFlagged: '今日已标记诈骗',
+    statLinksChecked: '已核查链接',
+    statScamsFlagged: '已标记诈骗',
     statConfirmed: '已确认的诈骗域名',
     statUpdated: '更新于 {value}',
     statJustNow: '刚刚',
