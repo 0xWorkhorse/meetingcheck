@@ -60,6 +60,11 @@ export const en: UiMessages = {
       clean: 'CLEAN',
       noReports: 'NO REPORTS',
       flagged: 'FLAGGED {n}×',
+      certUnavailable: 'UNAVAILABLE',
+      certNewDomain: 'NEW DOMAIN',
+      certFresh: 'FRESH CERT ({n}D)',
+      certValidDays: 'VALID ({n}D)',
+      certValidOld: 'VALID > 60D',
       checking: 'CHECKING…',
     },
     advice: {

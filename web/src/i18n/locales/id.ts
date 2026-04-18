@@ -61,6 +61,11 @@ export const id: UiMessages = {
       clean: 'BERSIH',
       noReports: 'TIDAK ADA LAPORAN',
       flagged: 'DITANDAI {n}×',
+      certUnavailable: 'TIDAK TERSEDIA',
+      certNewDomain: 'DOMAIN BARU',
+      certFresh: 'BARU ({n}H)',
+      certValidDays: 'VALID ({n}H)',
+      certValidOld: 'VALID > 60H',
       checking: 'MENGECEK…',
     },
     advice: {

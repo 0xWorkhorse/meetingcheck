@@ -35,12 +35,36 @@ export function deriveSignals(res: CheckResponse, t: UiMessages): SignalRow[] {
     official = { label: t.checker.signals.officialDomain, state: 'bad', value: 'N/A' };
   }
 
-  // Cert transparency: placeholder until we wire real CT log lookups.
-  const cert: SignalRow = {
-    label: t.checker.signals.certTransparency,
-    state: 'warn',
-    value: t.checker.values.notChecked,
-  };
+  // Cert transparency: real crt.sh lookup. Three display bands:
+  //   days == null && !checked → UNAVAILABLE (warn) — lookup timed out or failed
+  //   days == null &&  checked → NEW DOMAIN   (bad)  — no CT entries at all is suspicious
+  //   days < 14                → FRESH {n}D   (bad)  — brand-new domains are the scam pattern
+  //   days < 60                → VALID {n}D   (warn) — probably fine, still young
+  //   days >= 60               → VALID > 60D  (ok)
+  let cert: SignalRow;
+  if (res.cert_age_days == null) {
+    cert = res.cert_checked
+      ? { label: t.checker.signals.certTransparency, state: 'bad',  value: t.checker.values.certNewDomain }
+      : { label: t.checker.signals.certTransparency, state: 'warn', value: t.checker.values.certUnavailable };
+  } else if (res.cert_age_days < 14) {
+    cert = {
+      label: t.checker.signals.certTransparency,
+      state: 'bad',
+      value: format(t.checker.values.certFresh, { n: res.cert_age_days }),
+    };
+  } else if (res.cert_age_days < 60) {
+    cert = {
+      label: t.checker.signals.certTransparency,
+      state: 'warn',
+      value: format(t.checker.values.certValidDays, { n: res.cert_age_days }),
+    };
+  } else {
+    cert = {
+      label: t.checker.signals.certTransparency,
+      state: 'ok',
+      value: t.checker.values.certValidOld,
+    };
+  }
 
   let community: SignalRow;
   if (res.community_status === 'confirmed' || res.community_report_count > 0) {

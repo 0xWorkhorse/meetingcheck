@@ -61,6 +61,11 @@ export const fr: UiMessages = {
       clean: 'PROPRE',
       noReports: 'AUCUN SIGNAL.',
       flagged: 'SIGNALÉ {n}×',
+      certUnavailable: 'INDISPONIBLE',
+      certNewDomain: 'NOUVEAU DOMAINE',
+      certFresh: 'RÉCENT ({n}J)',
+      certValidDays: 'VALIDE ({n}J)',
+      certValidOld: 'VALIDE > 60J',
       checking: 'VÉRIFICATION…',
     },
     advice: {

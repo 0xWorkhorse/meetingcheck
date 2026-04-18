@@ -61,6 +61,11 @@ export const de: UiMessages = {
       clean: 'SAUBER',
       noReports: 'KEINE MELDUNGEN',
       flagged: 'GEMELDET {n}×',
+      certUnavailable: 'NICHT VERFÜGBAR',
+      certNewDomain: 'NEUE DOMAIN',
+      certFresh: 'FRISCH ({n}T)',
+      certValidDays: 'GÜLTIG ({n}T)',
+      certValidOld: 'GÜLTIG > 60T',
       checking: 'PRÜFUNG…',
     },
     advice: {

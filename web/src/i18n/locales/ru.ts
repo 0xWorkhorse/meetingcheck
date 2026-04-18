@@ -61,6 +61,11 @@ export const ru: UiMessages = {
       clean: 'ЧИСТО',
       noReports: 'БЕЗ ЖАЛОБ',
       flagged: 'ПОМЕЧЕН {n}×',
+      certUnavailable: 'НЕДОСТУПНО',
+      certNewDomain: 'НОВЫЙ ДОМЕН',
+      certFresh: 'СВЕЖИЙ ({n}Д)',
+      certValidDays: 'ДЕЙСТВ. ({n}Д)',
+      certValidOld: 'ДЕЙСТВ. > 60Д',
       checking: 'ПРОВЕРКА…',
     },
     advice: {

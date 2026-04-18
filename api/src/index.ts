@@ -19,6 +19,7 @@ import { expand } from './expand.js';
 import { getConfirmedDomains, isProtectedDomain, tryAutoPromote } from './threat-feed.js';
 import { verifyTurnstile } from './turnstile.js';
 import { notifyNewReport } from './notify.js';
+import { getCertAge } from './cert.js';
 
 const app = new Hono<{ Variables: AppVariables }>();
 
@@ -98,12 +99,19 @@ app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
   const locale = resolveLocale(c);
   const formatted = format(checkResult, locale);
 
-  const community = checkResult.registrableDomain
-    ? await queryOne<{ report_count: string; status: string }>(
-        `SELECT report_count::TEXT, status FROM threat_feed WHERE registrable_domain = $1`,
-        [checkResult.registrableDomain],
-      )
-    : null;
+  // Fetch community status and CT age in parallel — they're both optional
+  // enrichments and neither blocks the verdict itself.
+  const [community, cert] = await Promise.all([
+    checkResult.registrableDomain
+      ? queryOne<{ report_count: string; status: string }>(
+          `SELECT report_count::TEXT, status FROM threat_feed WHERE registrable_domain = $1`,
+          [checkResult.registrableDomain],
+        )
+      : Promise.resolve(null),
+    finalHostname
+      ? getCertAge(finalHostname)
+      : Promise.resolve({ days: null, checked: false }),
+  ]);
 
   fireAndForget(
     query(
@@ -120,6 +128,8 @@ app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
     scanned_at: new Date().toISOString(),
     community_report_count: community ? Number(community.report_count) : 0,
     community_status: community?.status ?? null,
+    cert_age_days: cert.days,
+    cert_checked: cert.checked,
   });
 });
 

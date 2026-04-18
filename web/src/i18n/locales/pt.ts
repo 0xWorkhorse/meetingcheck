@@ -61,6 +61,11 @@ export const pt: UiMessages = {
       clean: 'LIMPO',
       noReports: 'SEM DENÚNCIAS',
       flagged: 'SINALIZADO {n}×',
+      certUnavailable: 'INDISPONÍVEL',
+      certNewDomain: 'DOMÍNIO NOVO',
+      certFresh: 'NOVO ({n}D)',
+      certValidDays: 'VÁLIDO ({n}D)',
+      certValidOld: 'VÁLIDO > 60D',
       checking: 'VERIFICANDO…',
     },
     advice: {

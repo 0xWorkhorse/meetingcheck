@@ -9,6 +9,10 @@ export interface CheckResponse extends FormattedCheckResult {
   scanned_at: string;
   community_report_count: number;
   community_status: 'suspected' | 'confirmed' | null;
+  /** Days since the earliest CT-logged cert for this domain, null if unavailable. */
+  cert_age_days: number | null;
+  /** Whether the CT lookup completed (even if it returned no data). */
+  cert_checked: boolean;
 }
 
 function installId(): string {

@@ -71,6 +71,14 @@ export interface UiMessages {
       /** Template: "FLAGGED {n}×" */
       flagged: string;
       checking: string; // row value when pending
+      /** Cert transparency row values */
+      certUnavailable: string;         // lookup failed — neutral warn
+      certNewDomain: string;           // no CT entries — suspicious bad
+      /** Template: "FRESH CERT ({n}D)" */
+      certFresh: string;               // cert issued <14d ago — bad
+      /** Template: "VALID ({n}D)" */
+      certValidDays: string;           // 14–60 days — warn
+      certValidOld: string;            // >60 days — ok
     };
     advice: {
       safe: string;

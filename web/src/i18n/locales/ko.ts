@@ -61,6 +61,11 @@ export const ko: UiMessages = {
       clean: '깨끗함',
       noReports: '신고 없음',
       flagged: '표시됨 {n}×',
+      certUnavailable: '조회 불가',
+      certNewDomain: '신규 도메인',
+      certFresh: '최근 발급 ({n}일)',
+      certValidDays: '유효 ({n}일)',
+      certValidOld: '유효 > 60일',
       checking: '확인 중…',
     },
     advice: {

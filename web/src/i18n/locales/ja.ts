@@ -61,6 +61,11 @@ export const ja: UiMessages = {
       clean: 'クリーン',
       noReports: '報告なし',
       flagged: 'フラグ {n}×',
+      certUnavailable: '取得不可',
+      certNewDomain: '新規ドメイン',
+      certFresh: '新発行 ({n}日)',
+      certValidDays: '有効 ({n}日)',
+      certValidOld: '有効 > 60日',
       checking: '確認中…',
     },
     advice: {

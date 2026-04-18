@@ -61,6 +61,11 @@ export const vi: UiMessages = {
       clean: 'SẠCH',
       noReports: 'KHÔNG CÓ BÁO CÁO',
       flagged: 'GẮN CỜ {n}×',
+      certUnavailable: 'KHÔNG CÓ DỮ LIỆU',
+      certNewDomain: 'TÊN MIỀN MỚI',
+      certFresh: 'MỚI ({n}N)',
+      certValidDays: 'HỢP LỆ ({n}N)',
+      certValidOld: 'HỢP LỆ > 60N',
       checking: 'ĐANG KIỂM TRA…',
     },
     advice: {

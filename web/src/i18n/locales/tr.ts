@@ -61,6 +61,11 @@ export const tr: UiMessages = {
       clean: 'TEMİZ',
       noReports: 'BİLDİRİM YOK',
       flagged: 'İŞARETLENDİ {n}×',
+      certUnavailable: 'ERİŞİLEMİYOR',
+      certNewDomain: 'YENİ DOMAIN',
+      certFresh: 'YENİ ({n}G)',
+      certValidDays: 'GEÇERLİ ({n}G)',
+      certValidOld: 'GEÇERLİ > 60G',
       checking: 'KONTROL EDİLİYOR…',
     },
     advice: {

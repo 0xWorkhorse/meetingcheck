@@ -15,6 +15,7 @@ redis.on('error', (err) => {
 
 const VERDICT_TTL_S = 15 * 60;
 const STATS_TTL_S = 60;
+const CERT_TTL_S = 6 * 60 * 60; // 6h — CT data doesn't change fast
 
 export async function getCachedVerdict<T = unknown>(hostname: string): Promise<T | null> {
   const raw = await redis.get(`verdict:${hostname}`);
@@ -36,6 +37,17 @@ export async function getCachedStats<T = unknown>(): Promise<T | null> {
 
 export async function setCachedStats(value: unknown): Promise<void> {
   await redis.setex('stats:v1', STATS_TTL_S, JSON.stringify(value));
+}
+
+// ---------- Cert-age cache (by registrable domain) ----------
+
+export async function getCachedCert<T = unknown>(domain: string): Promise<T | null> {
+  const raw = await redis.get(`cert:${domain}`);
+  return raw ? (JSON.parse(raw) as T) : null;
+}
+
+export async function setCachedCert(domain: string, value: unknown): Promise<void> {
+  await redis.setex(`cert:${domain}`, CERT_TTL_S, JSON.stringify(value));
 }
 
 // ---------- Rate limiter (fixed window via INCR + EXPIRE NX) ----------

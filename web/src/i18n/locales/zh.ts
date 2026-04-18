@@ -61,6 +61,11 @@ export const zh: UiMessages = {
       clean: '干净',
       noReports: '无举报',
       flagged: '已标记 {n}×',
+      certUnavailable: '不可用',
+      certNewDomain: '新域名',
+      certFresh: '新发 ({n}天)',
+      certValidDays: '有效 ({n}天)',
+      certValidOld: '有效 > 60天',
       checking: '核查中…',
     },
     advice: {
