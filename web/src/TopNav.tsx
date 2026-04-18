@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { ThemeToggle } from './ThemeToggle.js';
 import { LocaleSwitcher } from './i18n/LocaleSwitcher.js';
 import { useLocale } from './i18n/LocaleContext.js';
@@ -40,9 +41,57 @@ export function TopNav() {
       <div className="flex gap-2.5 items-center">
         <LocaleSwitcher />
         <ThemeToggle />
-        <a href="#checker" className="mc-btn">{t.nav.extension}</a>
+        <ExtensionButton label={t.nav.extension} popoverMessage={t.nav.extensionPopover} />
         <a href="#checker" className="mc-btn mc-btn-solid">{t.nav.pasteALink}</a>
       </div>
     </nav>
+  );
+}
+
+/**
+ * Not-yet-shipped extension CTA. Clicking reveals a small serif popover
+ * announcing the work-in-progress status; clicking again (or waiting 3.5s,
+ * or clicking outside) dismisses it.
+ */
+function ExtensionButton({ label, popoverMessage }: { label: string; popoverMessage: string }) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const autoClose = window.setTimeout(() => setOpen(false), 3500);
+    const onDocClick = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      window.clearTimeout(autoClose);
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  return (
+    <div ref={wrapRef} className="relative">
+      <button
+        type="button"
+        className="mc-btn"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+      >
+        {label}
+      </button>
+      {open && (
+        <div
+          role="status"
+          className="absolute right-0 top-[calc(100%+8px)] border-[1.5px] border-ink bg-paper text-ink px-4 py-3 font-serif italic text-[16px] whitespace-nowrap shadow-[4px_4px_0_rgb(var(--ink))] z-20"
+        >
+          {popoverMessage}
+        </div>
+      )}
+    </div>
   );
 }

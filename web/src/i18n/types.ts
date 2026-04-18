@@ -15,6 +15,8 @@ export interface UiMessages {
     howItWorks: string;
     verdicts: string;
     extension: string;
+    /** Cheeky popover shown when the Extension button is clicked. */
+    extensionPopover: string;
     pasteALink: string;
     tagline: string; // under MEETINGCHECK logo
   };

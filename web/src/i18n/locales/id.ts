@@ -6,6 +6,7 @@ export const id: UiMessages = {
     howItWorks: 'Cara kerja',
     verdicts: 'Keputusan',
     extension: 'Ekstensi',
+    extensionPopover: "Lagi dimasak, stay tuned ;)",
     pasteALink: 'Tempel link →',
     tagline: 'v3.2 — verifikator link',
   },

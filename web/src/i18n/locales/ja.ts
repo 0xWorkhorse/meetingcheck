@@ -6,6 +6,7 @@ export const ja: UiMessages = {
     howItWorks: '仕組み',
     verdicts: '判定',
     extension: '拡張機能',
+    extensionPopover: "絶賛仕込み中、お楽しみに ;)",
     pasteALink: 'リンクを貼る →',
     tagline: 'v3.2 — リンク検証器',
   },

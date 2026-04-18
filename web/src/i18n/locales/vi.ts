@@ -6,6 +6,7 @@ export const vi: UiMessages = {
     howItWorks: 'Cách hoạt động',
     verdicts: 'Phán quyết',
     extension: 'Tiện ích',
+    extensionPopover: "Đang nấu, chờ chút nhé ;)",
     pasteALink: 'Dán liên kết →',
     tagline: 'v3.2 — trình xác minh liên kết',
   },

@@ -6,6 +6,7 @@ export const ko: UiMessages = {
     howItWorks: '작동 방식',
     verdicts: '판정',
     extension: '확장 프로그램',
+    extensionPopover: "열심히 만드는 중, 조금만 기다려 ;)",
     pasteALink: '링크 붙여넣기 →',
     tagline: 'v3.2 — 링크 검증기',
   },

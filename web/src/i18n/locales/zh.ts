@@ -6,6 +6,7 @@ export const zh: UiMessages = {
     howItWorks: '工作原理',
     verdicts: '判定',
     extension: '扩展',
+    extensionPopover: "正在烹饪中，敬请期待 ;)",
     pasteALink: '粘贴链接 →',
     tagline: 'v3.2 — 链接核查器',
   },
