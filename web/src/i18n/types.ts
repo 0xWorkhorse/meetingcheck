@@ -183,10 +183,13 @@ export type Locale =
   | 'es'
   | 'fr'
   | 'id'
+  | 'ja'
+  | 'ko'
   | 'pt'
   | 'ru'
   | 'tr'
-  | 'vi';
+  | 'vi'
+  | 'zh';
 
 /** Human-readable name for the locale picker (native spelling). */
 export interface LocaleInfo {

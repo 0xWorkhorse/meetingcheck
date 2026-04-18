@@ -16,9 +16,21 @@ export default {
         highlight: 'rgb(var(--highlight) / <alpha-value>)',
       },
       fontFamily: {
-        mono:      ['"JetBrains Mono"', 'ui-monospace', 'Menlo', 'monospace'],
-        display:   ['"Space Grotesk"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-        serif:     ['"Instrument Serif"', 'Georgia', 'serif'],
+        mono: [
+          '"JetBrains Mono"',
+          '"Noto Sans SC"', '"Noto Sans JP"', '"Noto Sans KR"',
+          'ui-monospace', 'Menlo', 'monospace',
+        ],
+        display: [
+          '"Space Grotesk"',
+          '"Noto Sans SC"', '"Noto Sans JP"', '"Noto Sans KR"',
+          '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif',
+        ],
+        serif: [
+          '"Instrument Serif"',
+          '"Noto Sans SC"', '"Noto Sans JP"', '"Noto Sans KR"',
+          'Georgia', 'serif',
+        ],
       },
     },
   },
