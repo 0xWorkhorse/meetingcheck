@@ -30,12 +30,13 @@ export function Footer() {
       </div>
 
       <div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted mt-7 flex flex-col md:flex-row md:justify-between gap-3 pt-[18px] border-t border-ink">
-        <span>© 2026 MEETINGCHECK.IO — a public utility</span>
-        <span>▲ set in Space Grotesk / Instrument Serif / JetBrains Mono</span>
-        <div className="flex items-center gap-3">
-          <span>built in a weekend, updated hourly</span>
-          <LocaleSwitcher />
-        </div>
+        <span>
+          © 2026{' '}
+          <a href="https://themathteam.io" target="_blank" rel="noopener noreferrer">The Math Team</a>
+          {' '}— a public utility built by{' '}
+          <a href="https://x.com/0xWorkhorse" target="_blank" rel="noopener noreferrer">@0xWorkhorse</a>
+        </span>
+        <LocaleSwitcher />
       </div>
     </footer>
   );
