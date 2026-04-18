@@ -3,7 +3,7 @@ import { LocaleSwitcher } from './LocaleSwitcher.js';
 export function Footer() {
   return (
     <footer className="wrap mt-15 pt-10 pb-7 border-t-[3px] border-double border-ink" id="feed">
-      <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr] gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr] gap-10">
         <div>
           <div className="font-display font-bold tracking-[-0.03em] leading-[0.95] text-[46px]">
             Paste first. <em className="font-serif italic font-normal">Click</em> second.
@@ -19,26 +19,12 @@ export function Footer() {
           links={[
             ['#checker', 'Web checker'],
             ['#',        'Browser extension'],
-            ['#',        'Slack app'],
-            ['#',        'API for teams'],
           ]}
         />
         <FooterCol
           heading="Community"
           links={[
             ['#checker', 'Report a link'],
-            ['#',        'Threat feed (JSON)'],
-            ['#',        'Responsible disclosure'],
-            ['#',        'Mastodon / Farcaster'],
-          ]}
-        />
-        <FooterCol
-          heading="The thing"
-          links={[
-            ['#problem', 'Feb 2026 incident'],
-            ['#',        'FAQ'],
-            ['#',        'Press kit'],
-            ['#',        'Colophon'],
           ]}
         />
       </div>

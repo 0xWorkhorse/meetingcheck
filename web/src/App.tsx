@@ -1,4 +1,3 @@
-import { Ticker } from './Ticker.js';
 import { TopNav } from './TopNav.js';
 import { Hero } from './Hero.js';
 import { Checker } from './Checker.js';
@@ -10,7 +9,6 @@ import { Footer } from './Footer.js';
 export function App() {
   return (
     <>
-      <Ticker />
       <TopNav />
       <main>
         <Hero />
