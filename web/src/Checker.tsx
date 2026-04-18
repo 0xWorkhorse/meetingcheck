@@ -119,7 +119,7 @@ export function Checker() {
       </div>
 
       {/* body */}
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_420px] min-h-[360px]">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_520px] min-h-[360px]">
         {/* input column */}
         <div className="p-7 pb-5 md:border-r-[1.5px] md:border-ink border-b-[1.5px] md:border-b-0 border-ink flex flex-col gap-3.5">
           <label htmlFor="urlin" className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted">
@@ -221,7 +221,7 @@ export function Checker() {
 
           <div
             className={'font-display font-bold tracking-[-0.04em] leading-[0.9] my-4 ' + (meta ? meta.color : 'text-ink')}
-            style={{ fontSize: 'clamp(44px, 6vw, 88px)' }}
+            style={{ fontSize: 'clamp(40px, 5vw, 76px)' }}
           >
             <span className="inline-block mr-2">{meta?.icon ?? '—'}</span>
             <span>{loading ? 'CHECKING…' : meta?.label ?? 'AWAITING'}</span>
