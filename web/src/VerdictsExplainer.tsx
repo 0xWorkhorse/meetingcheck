@@ -1,35 +1,39 @@
-const CARDS = [
-  {
-    key: 'safe',
-    color: 'text-safe',
-    lab: 'Verdict A',
-    icon: '✓',
-    name: 'SAFE',
-    body: 'On the official allowlist. Certificate matches a known provider issued > 60 days ago. No community reports. Proceed.',
-  },
-  {
-    key: 'danger',
-    color: 'text-danger',
-    lab: 'Verdict B',
-    icon: '◆',
-    name: 'DANGEROUS',
-    body: 'Homoglyph, typosquat, fresh cert on an off-brand TLD, or currently in the blocklist. Close the tab. Report it. Tell your friends.',
-  },
-  {
-    key: 'unrec',
-    color: 'text-warn',
-    lab: 'Verdict C',
-    icon: '?',
-    name: 'UNRECOGNIZED',
-    body: "Could be a smaller provider we don't know yet. We won't lie and say it's safe. Verify out-of-band before you click.",
-  },
-];
+import { useLocale } from './i18n/LocaleContext.js';
 
 export function VerdictsExplainer() {
+  const { t } = useLocale();
+
+  const cards = [
+    {
+      key: 'safe',
+      color: 'text-safe',
+      lab: t.verdictsExplainer.safeLab,
+      icon: '✓',
+      name: t.verdictWords.safe,
+      body: t.verdictsExplainer.safeBody,
+    },
+    {
+      key: 'danger',
+      color: 'text-danger',
+      lab: t.verdictsExplainer.dangerousLab,
+      icon: '◆',
+      name: t.verdictWords.dangerous,
+      body: t.verdictsExplainer.dangerousBody,
+    },
+    {
+      key: 'unrec',
+      color: 'text-warn',
+      lab: t.verdictsExplainer.unrecognizedLab,
+      icon: '?',
+      name: t.verdictWords.unrecognized,
+      body: t.verdictsExplainer.unrecognizedBody,
+    },
+  ];
+
   return (
     <section className="wrap pb-[76px]" id="verdicts">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-9">
-        {CARDS.map((c) => (
+        {cards.map((c) => (
           <div key={c.key} className="border-[1.5px] border-ink p-[22px] bg-paper-2 flex flex-col gap-2.5 min-h-[200px]">
             <div className="font-mono text-[10px] tracking-[0.16em] uppercase text-muted">{c.lab}</div>
             <div className={'font-mono font-bold leading-none text-[30px] ' + c.color}>{c.icon}</div>

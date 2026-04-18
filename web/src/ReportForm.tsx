@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { reportUrl } from './api.js';
-import { useLocale } from './LocaleContext.js';
+import { useLocale } from './i18n/LocaleContext.js';
 import { Turnstile } from './Turnstile.js';
 
 export function ReportForm({ initialUrl = '' }: { initialUrl?: string }) {
@@ -21,7 +21,7 @@ export function ReportForm({ initialUrl = '' }: { initialUrl?: string }) {
     e.preventDefault();
     if (honeypot) return;
     if (turnstileRequired && !turnstileToken) {
-      setError('Please complete the challenge.');
+      setError(t.report.needsChallenge);
       return;
     }
     setSubmitting(true);
@@ -38,7 +38,7 @@ export function ReportForm({ initialUrl = '' }: { initialUrl?: string }) {
       );
       setDone(res.report_id);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'failed');
+      setError(err instanceof Error ? err.message : t.report.failed);
     } finally {
       setSubmitting(false);
     }

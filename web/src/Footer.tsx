@@ -1,40 +1,45 @@
-import { LocaleSwitcher } from './LocaleSwitcher.js';
+import { LocaleSwitcher } from './i18n/LocaleSwitcher.js';
+import { useLocale } from './i18n/LocaleContext.js';
+import { format } from './i18n/format.js';
 
 export function Footer() {
+  const { t } = useLocale();
+
   return (
     <footer className="wrap mt-15 pt-10 pb-7 border-t-[3px] border-double border-ink" id="feed">
       <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr] gap-10">
         <div>
           <div className="font-display font-bold tracking-[-0.03em] leading-[0.95] text-[46px]">
-            Paste first. <em className="font-serif italic font-normal">Click</em> second.
+            {format(t.footer.tagline, {
+              click: <em className="font-serif italic font-normal">{t.footer.taglineClick}</em>,
+            })}
           </div>
           <p className="font-mono text-[12px] leading-[1.7] mt-4 max-w-[36ch] text-ink-2">
-            A free public utility. No sign-up. No tracking. Your pasted URL never leaves our checker in a form that
-            identifies you.
+            {t.footer.body}
           </p>
-          <a href="#checker" className="mc-btn mc-btn-solid mt-2">Check a link now →</a>
+          <a href="#checker" className="mc-btn mc-btn-solid mt-2">{t.footer.cta}</a>
         </div>
         <FooterCol
-          heading="Product"
+          heading={t.footer.productHeading}
           links={[
-            ['#checker', 'Web checker'],
-            ['#',        'Browser extension'],
+            ['#checker', t.footer.webChecker],
+            ['#',        t.footer.browserExtension],
           ]}
         />
         <FooterCol
-          heading="Community"
+          heading={t.footer.communityHeading}
           links={[
-            ['#checker', 'Report a link'],
+            ['#checker', t.footer.reportALink],
           ]}
         />
       </div>
 
       <div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted mt-7 flex flex-col md:flex-row md:justify-between gap-3 pt-[18px] border-t border-ink">
         <span>
-          © 2026{' '}
-          <a href="https://themathteam.io" target="_blank" rel="noopener noreferrer">The Math Team</a>
-          {' '}— a public utility built by{' '}
-          <a href="https://x.com/0xWorkhorse" target="_blank" rel="noopener noreferrer">@0xWorkhorse</a>
+          {format(t.footer.credit, {
+            team: <a href="https://themathteam.io" target="_blank" rel="noopener noreferrer">The Math Team</a>,
+            author: <a href="https://x.com/0xWorkhorse" target="_blank" rel="noopener noreferrer">@0xWorkhorse</a>,
+          })}
         </span>
         <LocaleSwitcher />
       </div>

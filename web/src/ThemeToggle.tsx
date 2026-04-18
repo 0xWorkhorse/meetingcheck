@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocale } from './i18n/LocaleContext.js';
 
 type Theme = 'light' | 'dark';
 
@@ -9,6 +10,7 @@ function initialTheme(): Theme {
 }
 
 export function ThemeToggle() {
+  const { t } = useLocale();
   const [theme, setTheme] = useState<Theme>(initialTheme);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ export function ThemeToggle() {
   }, [theme]);
 
   const next: Theme = theme === 'dark' ? 'light' : 'dark';
-  const label = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  const label = theme === 'dark' ? t.theme.switchToLight : t.theme.switchToDark;
 
   return (
     <button
