@@ -16,7 +16,7 @@ export const es: UiMessages = {
     kickerMeta: 'Construido tras el drenaje de febrero 2026',
     headlineLine1: '{paste} primero{period}',
     headlineLine2: '{click} después.',
-    headlinePaste: 'Pega',
+    headlinePaste: 'Verifica',
     headlineClick: 'Haz click',
     subBody:
       'Un veredicto binario y estricto sobre cada invitación de reunión que recibes — {safe}, {dangerous} o {unrecognized} — en menos de tres segundos, antes de que nada abra una ventana en tu máquina.',
@@ -167,7 +167,7 @@ export const es: UiMessages = {
   },
 
   footer: {
-    tagline: 'Pega primero. {click} después.',
+    tagline: 'Verifica primero. {click} después.',
     taglineClick: 'Haz click',
     body:
       'Una utilidad pública gratuita. Sin registro. Sin tracking. Tu URL pegada nunca sale de nuestro verificador en una forma que te identifique.',

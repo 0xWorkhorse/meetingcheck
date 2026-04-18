@@ -16,7 +16,7 @@ export const en: UiMessages = {
     kickerMeta: 'Built after the Feb 2026 drain',
     headlineLine1: '{paste} first{period}',
     headlineLine2: '{click} second.',
-    headlinePaste: 'Paste',
+    headlinePaste: 'Check',
     headlineClick: 'Click',
     subBody:
       'A strict, binary verdict on every meeting invite you get — {safe}, {dangerous}, or {unrecognized} — in under three seconds, before anything opens a window on your machine.',
@@ -166,7 +166,7 @@ export const en: UiMessages = {
   },
 
   footer: {
-    tagline: 'Paste first. {click} second.',
+    tagline: 'Check first. {click} second.',
     taglineClick: 'Click',
     body:
       'A free public utility. No sign-up. No tracking. Your pasted URL never leaves our checker in a form that identifies you.',

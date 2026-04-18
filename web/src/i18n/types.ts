@@ -179,7 +179,14 @@ export interface UiMessages {
 /** Locale code. Extend as new locales are registered. */
 export type Locale =
   | 'en'
-  | 'es';
+  | 'de'
+  | 'es'
+  | 'fr'
+  | 'id'
+  | 'pt'
+  | 'ru'
+  | 'tr'
+  | 'vi';
 
 /** Human-readable name for the locale picker (native spelling). */
 export interface LocaleInfo {
