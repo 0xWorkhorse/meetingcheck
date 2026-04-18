@@ -18,6 +18,7 @@ import { clientIp, isUuidLike, newId } from './util.js';
 import { expand } from './expand.js';
 import { getConfirmedDomains, isProtectedDomain, tryAutoPromote } from './threat-feed.js';
 import { verifyTurnstile } from './turnstile.js';
+import { notifyNewReport } from './notify.js';
 
 const app = new Hono<{ Variables: AppVariables }>();
 
@@ -154,6 +155,17 @@ app.post('/v1/report', rateLimitMiddleware('report', 10, 10, 3600), async (c) =>
   );
 
   fireAndForget(tryAutoPromote(parsed.registrableDomain, brand));
+  fireAndForget(
+    notifyNewReport({
+      reportId: id,
+      url,
+      hostname: parsed.hostname,
+      registrableDomain: parsed.registrableDomain,
+      brand,
+      receivedFrom: body.received_from ?? null,
+      context: body.context ?? null,
+    }),
+  );
 
   return c.json({ report_id: id, status: 'queued' });
 });

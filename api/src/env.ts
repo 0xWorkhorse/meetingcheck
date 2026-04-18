@@ -24,6 +24,9 @@ export const env = {
   TURNSTILE_SECRET_KEY: optional('TURNSTILE_SECRET_KEY'),
   ADMIN_TOKEN: optional('ADMIN_TOKEN'),
 
+  TELEGRAM_BOT_TOKEN: optional('TELEGRAM_BOT_TOKEN'),
+  TELEGRAM_CHAT_ID: optional('TELEGRAM_CHAT_ID'),
+
   ALLOWED_ORIGINS: (process.env.ALLOWED_ORIGIN ?? 'https://meetingcheck.io')
     .split(',')
     .map((o) => o.trim())

@@ -64,6 +64,8 @@ Rate-limit responses expose `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-Rat
    ADMIN_TOKEN           <openssl rand -hex 32>
    TURNSTILE_SECRET_KEY  <from Cloudflare Turnstile dashboard>
    ALLOWED_ORIGIN        https://meetingcheck.io,https://www.meetingcheck.io
+   TELEGRAM_BOT_TOKEN    <optional, from @BotFather>
+   TELEGRAM_CHAT_ID      <optional, numeric chat id>
    NODE_ENV              production
    ```
 
