@@ -25,10 +25,9 @@ export function Hero() {
 
       <h1 className="font-display font-bold tracking-[-0.045em] leading-[0.9] m-0 text-ink"
           style={{ fontSize: 'clamp(56px, 11vw, 184px)' }}>
-        Don't click<br />
-        that link<span className="text-danger">.</span>
+        Paste first<span className="text-danger">.</span>
         <br />
-        <em className="font-serif italic font-normal tracking-[-0.02em]">Paste</em> it.
+        <em className="font-serif italic font-normal tracking-[-0.02em]">Click</em> second.
       </h1>
 
       <div className="mt-6 grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-10 items-end pt-[22px] border-t border-ink">

@@ -221,7 +221,12 @@ export function Checker() {
 
           <div
             className={'font-display font-bold tracking-[-0.04em] leading-[0.9] my-4 ' + (meta ? meta.color : 'text-ink')}
-            style={{ fontSize: 'clamp(40px, 5vw, 76px)' }}
+            style={{
+              fontSize:
+                result?.verdict === 'UNRECOGNIZED'
+                  ? 'clamp(36px, 4vw, 60px)'
+                  : 'clamp(40px, 5vw, 76px)',
+            }}
           >
             <span className="inline-block mr-2">{meta?.icon ?? '—'}</span>
             <span>{loading ? 'CHECKING…' : meta?.label ?? 'AWAITING'}</span>

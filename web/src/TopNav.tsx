@@ -19,7 +19,6 @@ export function TopNav() {
           ['#problem',  'The problem'],
           ['#how',      'How it works'],
           ['#verdicts', 'Verdicts'],
-          ['#feed',     'Threat feed'],
         ].map(([href, label]) => (
           <li key={href}>
             <a
