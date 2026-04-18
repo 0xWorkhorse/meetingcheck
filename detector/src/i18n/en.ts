@@ -9,6 +9,7 @@ export const en: Messages = {
   'title.dangerous.community':            'Confirmed scam',
   'title.dangerous.subdomain_trick':      'Almost certainly a scam',
   'title.dangerous.impersonation':        'Almost certainly a scam',
+  'title.dangerous.homoglyph':            'Almost certainly a scam',
 
   // Reasons
   'reason.safe':
@@ -25,6 +26,8 @@ export const en: Messages = {
     'The real domain here is {fakeDomain}, not {brand}. This is a classic subdomain spoofing pattern. Do not open this link.',
   'reason.dangerous.impersonation':
     'This domain is trying to look like a real meeting service but is not on the official list. This matches the exact pattern used in the Feb 2026 fake-Zoom campaigns. Do not open this link.',
+  'reason.dangerous.homoglyph':
+    'This domain uses look-alike characters (Cyrillic, Greek, or punycode) to impersonate {brand}. Stripped of the trick, it resembles "{skeleton}". Do not open this link.',
 
   // Signal labels and details
   'signal.hostname.label':                'Domain',
@@ -43,6 +46,8 @@ export const en: Messages = {
   'signal.suspicious_tld.detail':         '{tld}',
   'signal.punycode.label':                'Punycode',
   'signal.punycode.detail':               'unicode characters in domain',
+  'signal.homoglyph.label':               'Homoglyph attack',
+  'signal.homoglyph.detail':              'decodes to "{skeleton}" — impersonates {brand}',
   'signal.no_https.label':                'Protocol',
   'signal.no_https.detail':               'not using HTTPS',
   'signal.not_official.label':            'Not recognized',

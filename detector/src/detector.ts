@@ -13,6 +13,7 @@ import {
   SUSPICIOUS_TLDS,
 } from './domains.js';
 import { getRegistrableDomain, normalizeHostname } from './domain-utils.js';
+import { decodeAndSkeleton } from './homoglyph.js';
 
 export type Verdict = 'SAFE' | 'DANGEROUS' | 'UNRECOGNIZED' | 'INVALID';
 export type SignalLevel = 'ok' | 'warning' | 'critical' | 'info';
@@ -102,6 +103,48 @@ function detectPunycode(hostname: string): boolean {
   return hostname.toLowerCase().includes('xn--');
 }
 
+/**
+ * True if the hostname is using visual look-alikes (punycode/Cyrillic/Greek/full-width)
+ * that, once folded to ASCII, hit any of our brand signals. This catches attacks like
+ * `xn--zom-ted.us` (Cyrillic `о` → skeleton `zoom.us`, an exact allowlist match) and
+ * `gοοgle-meet.xyz` (Greek ο → skeleton contains the `googlemeet` brand token).
+ *
+ * We only run this if the hostname *actually used* confusable chars — that's what
+ * makes the finding a homoglyph attack rather than a plain ASCII impersonation
+ * (already covered by the separate impersonation check).
+ */
+function detectHomoglyphAttack(hostname: string): { brand: string; skeleton: string } | null {
+  const { skeleton, used } = decodeAndSkeleton(hostname);
+  if (!used) return null;
+
+  // 1) Skeleton matches (or contains) an official root → brand collision.
+  for (const [brand, domains] of Object.entries(OFFICIAL_DOMAINS)) {
+    for (const domain of domains) {
+      if (skeleton === domain || skeleton.endsWith('.' + domain)) {
+        return { brand, skeleton };
+      }
+      if (skeleton.includes(domain + '.') && !skeleton.endsWith('.' + domain)) {
+        return { brand, skeleton };
+      }
+    }
+  }
+
+  // 2) Skeleton contains a brand token (after hyphen/dot stripping).
+  const normalized = normalizeHostname(skeleton);
+  for (const [brand, tokens] of Object.entries(BRAND_TOKENS)) {
+    for (const token of tokens) {
+      if (normalized.includes(token)) return { brand, skeleton };
+    }
+  }
+
+  // 3) Skeleton matches a known typosquat pattern.
+  for (const { brand, regex } of TYPOSQUAT_PATTERNS) {
+    if (regex.test(skeleton)) return { brand, skeleton };
+  }
+
+  return null;
+}
+
 export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
   let url: URL;
   try {
@@ -172,6 +215,33 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
       titleKey: 'title.dangerous.subdomain_trick',
       reasonKey: 'reason.dangerous.subdomain_trick',
       reasonParams: { brand: subdomainTrick.brand, fakeDomain: subdomainTrick.fakeDomain },
+      hostname,
+      registrableDomain,
+      signals,
+    };
+  }
+
+  // --- Dangerous signal: homoglyph / punycode spoof ---
+  // Runs before the official-match check so that a visually-spoofed allowlist
+  // member (xn--zm-qia.us "looks like" zoom.us) is flagged as DANGEROUS instead
+  // of accidentally matching as SAFE via some later heuristic.
+  const homoglyph = detectHomoglyphAttack(hostname);
+  if (homoglyph) {
+    signals.push({
+      id: 'homoglyph',
+      level: 'critical',
+      brand: homoglyph.brand,
+      params: { brand: homoglyph.brand, skeleton: homoglyph.skeleton },
+    });
+    if (detectPunycode(hostname)) {
+      signals.push({ id: 'punycode', level: 'warning' });
+    }
+    return {
+      verdict: 'DANGEROUS',
+      confidence: 0.99,
+      titleKey: 'title.dangerous.homoglyph',
+      reasonKey: 'reason.dangerous.homoglyph',
+      reasonParams: { brand: homoglyph.brand, skeleton: homoglyph.skeleton },
       hostname,
       registrableDomain,
       signals,

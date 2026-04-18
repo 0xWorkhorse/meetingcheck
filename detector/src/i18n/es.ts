@@ -8,6 +8,7 @@ export const es: Messages = {
   'title.dangerous.community':            'Estafa confirmada',
   'title.dangerous.subdomain_trick':      'Casi con certeza una estafa',
   'title.dangerous.impersonation':        'Casi con certeza una estafa',
+  'title.dangerous.homoglyph':            'Casi con certeza una estafa',
 
   'reason.safe':
     'Este es un dominio real de {brand}. Confirma siempre al remitente por un canal de confianza antes de unirte a la llamada.',
@@ -23,6 +24,8 @@ export const es: Messages = {
     'El dominio real aquí es {fakeDomain}, no {brand}. Es un patrón clásico de suplantación por subdominio. No abras este enlace.',
   'reason.dangerous.impersonation':
     'Este dominio intenta parecer un servicio de reuniones real pero no está en la lista oficial. Coincide con el patrón exacto usado en las campañas de Zoom falso de febrero de 2026. No abras este enlace.',
+  'reason.dangerous.homoglyph':
+    'Este dominio usa caracteres visualmente confusos (cirílicos, griegos o punycode) para suplantar a {brand}. Sin el engaño, se parece a "{skeleton}". No abras este enlace.',
 
   'signal.hostname.label':                'Dominio',
   'signal.hostname.detail':               '{host}',
@@ -40,6 +43,8 @@ export const es: Messages = {
   'signal.suspicious_tld.detail':         '{tld}',
   'signal.punycode.label':                'Punycode',
   'signal.punycode.detail':               'caracteres unicode en el dominio',
+  'signal.homoglyph.label':               'Ataque homógrafo',
+  'signal.homoglyph.detail':              'se decodifica como "{skeleton}" — suplanta a {brand}',
   'signal.no_https.label':                'Protocolo',
   'signal.no_https.detail':               'no usa HTTPS',
   'signal.not_official.label':            'No reconocido',

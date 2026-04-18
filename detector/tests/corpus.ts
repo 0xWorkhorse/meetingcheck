@@ -48,6 +48,14 @@ export const cases: TestCase[] = [
   { url: 'https://zooom.com/j/123',                             expected: 'DANGEROUS' },
   { url: 'https://ca1endly.com/ian',                            expected: 'DANGEROUS' },
 
+  // --- DANGEROUS: homoglyph / punycode ---
+  // xn--zom-ted.us is the punycode encoding of "zoоm.us" where the middle o is
+  // Cyrillic (U+043E). Raw ASCII has no brand token, but the skeleton folds
+  // the Cyrillic back to Latin and matches the real Zoom root.
+  { url: 'https://xn--zom-ted.us/j/123',                        expected: 'DANGEROUS', note: 'Cyrillic о in zoom' },
+  // Greek ο (U+03BF) in googIe.com — skeleton reveals the Google brand collision.
+  { url: 'https://g\u03BF\u03BFgle-meet.xyz/abc',              expected: 'DANGEROUS', note: 'Greek ο in google' },
+
   // --- UNRECOGNIZED: random domains that don't try to impersonate ---
   { url: 'https://example.com/meeting',                         expected: 'UNRECOGNIZED' },
   { url: 'https://github.com/some/repo',                        expected: 'UNRECOGNIZED' },
