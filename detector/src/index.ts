@@ -8,6 +8,7 @@ export type {
   ParamMap,
 } from './detector.js';
 export { OFFICIAL_DOMAINS } from './domains.js';
+export { getRegistrableDomain, normalizeHostname } from './domain-utils.js';
 
 // i18n
 export {

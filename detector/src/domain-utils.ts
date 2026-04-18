@@ -1,20 +1,16 @@
-/**
- * Registrable-domain extractor. Intentionally simple; handles the 99% case for .com/.us/.co.uk.
- * For full PSL coverage, swap this for the `tldts` package once it matters.
- */
-const TWO_PART_TLDS = new Set([
-  'co.uk', 'com.au', 'co.jp', 'co.kr', 'com.br',
-  'co.nz', 'co.za', 'com.sg', 'com.mx', 'co.in',
-]);
+import { getDomain } from 'tldts';
 
+/**
+ * Registrable-domain extractor, backed by the Public Suffix List via `tldts`.
+ * Returns the eTLD+1 for a hostname — `foo.bar.co.uk` → `bar.co.uk`,
+ * `zoom.us` → `zoom.us`, `us06web.zoom.us` → `zoom.us`.
+ *
+ * Falls back to the lowercased hostname if the PSL can't extract a registrable
+ * (malformed input, IP address, etc.).
+ */
 export function getRegistrableDomain(hostname: string): string {
-  const parts = hostname.toLowerCase().split('.');
-  if (parts.length <= 2) return hostname.toLowerCase();
-  const lastTwo = parts.slice(-2).join('.');
-  if (TWO_PART_TLDS.has(lastTwo) && parts.length >= 3) {
-    return parts.slice(-3).join('.');
-  }
-  return parts.slice(-2).join('.');
+  const lower = hostname.toLowerCase();
+  return getDomain(lower) ?? lower;
 }
 
 /**
