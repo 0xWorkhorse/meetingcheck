@@ -3,6 +3,7 @@ import { cors } from 'hono/cors';
 import { serve } from '@hono/node-server';
 import {
   check,
+  decodeAndSkeleton,
   format,
   pickLocale,
   AVAILABLE_LOCALES,
@@ -20,6 +21,8 @@ import { getConfirmedDomains, isProtectedDomain, tryAutoPromote } from './threat
 import { verifyTurnstile } from './turnstile.js';
 import { notifyNewReport } from './notify.js';
 import { getCertAge } from './cert.js';
+import { getHosting } from './geoip.js';
+import { getWhoisAge } from './whois.js';
 
 const app = new Hono<{ Variables: AppVariables }>();
 
@@ -99,9 +102,10 @@ app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
   const locale = resolveLocale(c);
   const formatted = format(checkResult, locale);
 
-  // Fetch community status and CT age in parallel — they're both optional
-  // enrichments and neither blocks the verdict itself.
-  const [community, cert] = await Promise.all([
+  // Fetch enrichments in parallel — none block the verdict itself. Slowest wins:
+  // CT (crt.sh) and WHOIS can each take up to 3s; DNS+GeoIP capped at 1.5s;
+  // community DB query is ~50ms.
+  const [community, cert, hosting, whois] = await Promise.all([
     checkResult.registrableDomain
       ? queryOne<{ report_count: string; status: string }>(
           `SELECT report_count::TEXT, status FROM threat_feed WHERE registrable_domain = $1`,
@@ -111,6 +115,12 @@ app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
     finalHostname
       ? getCertAge(finalHostname)
       : Promise.resolve({ days: null, checked: false }),
+    finalHostname
+      ? getHosting(finalHostname)
+      : Promise.resolve({ country: null, ip: null, checked: false }),
+    finalHostname
+      ? getWhoisAge(finalHostname)
+      : Promise.resolve({ age_days: null, checked: false }),
   ]);
 
   fireAndForget(
@@ -119,6 +129,8 @@ app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
       [finalHostname, checkResult.verdict, c.get('ipHash'), c.get('installId')],
     ),
   );
+
+  const charDecode = finalHostname ? decodeAndSkeleton(finalHostname) : null;
 
   return c.json({
     ...formatted,
@@ -130,6 +142,17 @@ app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
     community_status: community?.status ?? null,
     cert_age_days: cert.days,
     cert_checked: cert.checked,
+    // Character-level analysis of the (post-expansion) hostname.
+    // non_ascii: any code point outside ASCII (including punycode source).
+    // decoded: the Unicode form of xn-- labels expanded back out.
+    homoglyph_non_ascii: charDecode?.used ?? false,
+    homoglyph_decoded: charDecode?.decoded ?? null,
+    homoglyph_punycode: finalHostname.includes('xn--'),
+    hosting_country: hosting.country,
+    hosting_ip: hosting.ip,
+    hosting_checked: hosting.checked,
+    whois_age_days: whois.age_days,
+    whois_checked: whois.checked,
   });
 });
 

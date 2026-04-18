@@ -9,6 +9,7 @@ export type {
 } from './detector.js';
 export { OFFICIAL_DOMAINS } from './domains.js';
 export { getRegistrableDomain, normalizeHostname } from './domain-utils.js';
+export { decodeIdn, asciiSkeleton, decodeAndSkeleton } from './homoglyph.js';
 
 // i18n
 export {

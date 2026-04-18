@@ -13,6 +13,22 @@ export interface CheckResponse extends FormattedCheckResult {
   cert_age_days: number | null;
   /** Whether the CT lookup completed (even if it returned no data). */
   cert_checked: boolean;
+  /** True if the hostname used any non-ASCII / confusable characters (Cyrillic, Greek, full-width, etc.). */
+  homoglyph_non_ascii: boolean;
+  /** True if the hostname includes xn-- (punycode IDN). */
+  homoglyph_punycode: boolean;
+  /** The Unicode-decoded form of the hostname; equals hostname when no confusables were used. */
+  homoglyph_decoded: string | null;
+  /** ISO 3166-1 alpha-2 country code for the resolved IP's hosting location. */
+  hosting_country: string | null;
+  /** First resolved IPv4 address for the hostname. */
+  hosting_ip: string | null;
+  /** Whether DNS + GeoIP lookup both completed. */
+  hosting_checked: boolean;
+  /** Days since the registrar-recorded creation date (WHOIS). */
+  whois_age_days: number | null;
+  /** Whether the WHOIS lookup completed (even if it returned no creation date). */
+  whois_checked: boolean;
 }
 
 function installId(): string {

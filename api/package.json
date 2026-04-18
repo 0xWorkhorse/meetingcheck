@@ -21,7 +21,8 @@
     "hono": "^4.6.0",
     "ioredis": "^5.4.0",
     "pg": "^8.13.0",
-    "tldts": "^7.0.28"
+    "tldts": "^7.0.28",
+    "whoiser": "^2.0.0-beta.10"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

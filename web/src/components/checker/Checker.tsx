@@ -35,7 +35,7 @@ export function Checker() {
     try {
       const res = await checkUrl(target, locale);
       setResult(res);
-      const rowCount = 4; // keep in sync with deriveSignals
+      const rowCount = deriveSignals(res, t).length;
       for (let i = 0; i < rowCount; i++) {
         const id = window.setTimeout(() => setRevealed(i), REVEAL_STEP_MS * (i + 1));
         timers.current.push(id);

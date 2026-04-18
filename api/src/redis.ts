@@ -16,6 +16,8 @@ redis.on('error', (err) => {
 const VERDICT_TTL_S = 15 * 60;
 const STATS_TTL_S = 60;
 const CERT_TTL_S = 6 * 60 * 60; // 6h — CT data doesn't change fast
+const GEOIP_TTL_S = 6 * 60 * 60; // 6h — hosting rarely migrates day-to-day
+const WHOIS_TTL_S = 30 * 24 * 60 * 60; // 30d — creation date never changes
 
 export async function getCachedVerdict<T = unknown>(hostname: string): Promise<T | null> {
   const raw = await redis.get(`verdict:${hostname}`);
@@ -48,6 +50,28 @@ export async function getCachedCert<T = unknown>(domain: string): Promise<T | nu
 
 export async function setCachedCert(domain: string, value: unknown): Promise<void> {
   await redis.setex(`cert:${domain}`, CERT_TTL_S, JSON.stringify(value));
+}
+
+// ---------- GeoIP cache (by hostname) ----------
+
+export async function getCachedGeoip<T = unknown>(host: string): Promise<T | null> {
+  const raw = await redis.get(`geoip:${host}`);
+  return raw ? (JSON.parse(raw) as T) : null;
+}
+
+export async function setCachedGeoip(host: string, value: unknown): Promise<void> {
+  await redis.setex(`geoip:${host}`, GEOIP_TTL_S, JSON.stringify(value));
+}
+
+// ---------- WHOIS cache (by registrable domain) ----------
+
+export async function getCachedWhois<T = unknown>(domain: string): Promise<T | null> {
+  const raw = await redis.get(`whois:${domain}`);
+  return raw ? (JSON.parse(raw) as T) : null;
+}
+
+export async function setCachedWhois(domain: string, value: unknown): Promise<void> {
+  await redis.setex(`whois:${domain}`, WHOIS_TTL_S, JSON.stringify(value));
 }
 
 // ---------- Rate limiter (fixed window via INCR + EXPIRE NX) ----------

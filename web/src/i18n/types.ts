@@ -54,7 +54,11 @@ export interface UiMessages {
     errorPrefix: string; // "Error: "
     signals: {
       urlFormat: string;
+      redirects: string;
+      characterCheck: string;
       officialDomain: string;
+      hosting: string;
+      domainAge: string;
       certTransparency: string;
       communityFeed: string;
     };
@@ -79,6 +83,31 @@ export interface UiMessages {
       /** Template: "VALID ({n}D)" */
       certValidDays: string;           // 14–60 days — warn
       certValidOld: string;            // >60 days — ok
+      /** Redirect chain row values */
+      redirectsDirect: string;         // no expansion hops
+      /** Template: "{n} HOPS" (or "1 HOP" — keep singular/plural simple in target languages) */
+      redirectsHops: string;
+      redirectsFailed: string;
+      /** Character-check row values */
+      charAsciiClean: string;          // ASCII-only hostname
+      charNonAscii: string;            // non-ASCII but no punycode and no brand collision
+      /** Template: "PUNYCODE: {decoded}" */
+      charPunycode: string;
+      /** Template: "SPOOF: {decoded}" — used when homoglyph detector fires */
+      charSpoof: string;
+      /** Hosting row values */
+      /** Template: "{cc}" — country code in a neutral label */
+      hostingKnown: string;
+      hostingUnknown: string;
+      hostingUnavailable: string;
+      /** Domain-age (WHOIS) row values */
+      whoisUnavailable: string;
+      whoisPrivate: string;            // privacy-proxied registrar record
+      /** Template: "FRESH {n}D" */
+      whoisFresh: string;
+      /** Template: "{n}D" */
+      whoisYoung: string;
+      whoisMature: string;             // >1 year
     };
     advice: {
       safe: string;
