@@ -1,9 +1,18 @@
 import type { SignalRow, SignalState } from './logic.js';
 import type { UiMessages } from '../../i18n/types.js';
 
+/**
+ * Idle-state placeholder rows. Must stay in the same order as the array
+ * returned by deriveSignals() so the layout is stable when the result
+ * replaces the placeholders.
+ */
 const PLACEHOLDER_LABEL_KEYS: Array<keyof UiMessages['checker']['signals']> = [
   'urlFormat',
+  'redirects',
+  'characterCheck',
   'officialDomain',
+  'hosting',
+  'domainAge',
   'certTransparency',
   'communityFeed',
 ];
