@@ -4,16 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        paper:     '#f2ece0',
-        'paper-2': '#eee5d2',
-        ink:       '#0b0b0b',
-        'ink-2':   '#1a1a1a',
-        muted:     '#6b6558',
-        rule:      '#0b0b0b',
-        danger:    '#d6311a',
-        safe:      '#1c7a3d',
-        warn:      '#b58900',
-        highlight: '#f5d547',
+        paper:     'rgb(var(--paper) / <alpha-value>)',
+        'paper-2': 'rgb(var(--paper-2) / <alpha-value>)',
+        ink:       'rgb(var(--ink) / <alpha-value>)',
+        'ink-2':   'rgb(var(--ink-2) / <alpha-value>)',
+        muted:     'rgb(var(--muted) / <alpha-value>)',
+        rule:      'rgb(var(--ink) / <alpha-value>)',
+        danger:    'rgb(var(--danger) / <alpha-value>)',
+        safe:      'rgb(var(--safe) / <alpha-value>)',
+        warn:      'rgb(var(--warn) / <alpha-value>)',
+        highlight: 'rgb(var(--highlight) / <alpha-value>)',
       },
       fontFamily: {
         mono:      ['"JetBrains Mono"', 'ui-monospace', 'Menlo', 'monospace'],

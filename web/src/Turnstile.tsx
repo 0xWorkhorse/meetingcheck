@@ -36,9 +36,11 @@ export function Turnstile({ onToken }: { onToken: (token: string) => void }) {
         pollId = window.setTimeout(tryRender, 100);
         return;
       }
+      const currentTheme =
+        document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
       widgetIdRef.current = window.turnstile.render(containerRef.current, {
         sitekey: siteKey,
-        theme: 'dark',
+        theme: currentTheme,
         callback: (token: string) => onToken(token),
         'expired-callback': () => onToken(''),
         'error-callback': () => onToken(''),

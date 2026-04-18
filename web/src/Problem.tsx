@@ -72,7 +72,7 @@ export function Problem() {
               <div className="text-right font-bold text-danger">{amt}</div>
             </div>
           ))}
-          <div className="grid grid-cols-[1fr_auto] py-3 px-3.5 border-t-[1.5px] border-ink font-mono text-[12px]" style={{ background: 'rgba(11,11,11,0.06)' }}>
+          <div className="grid grid-cols-[1fr_auto] py-3 px-3.5 border-t-[1.5px] border-ink font-mono text-[12px] bg-ink/10">
             <span>TOTAL REPORTED — FEB ➜ APR 2026</span>
             <b className="font-bold text-danger">$8.3M+</b>
           </div>

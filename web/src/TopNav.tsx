@@ -1,3 +1,5 @@
+import { ThemeToggle } from './ThemeToggle.js';
+
 export function TopNav() {
   return (
     <nav className="grid grid-cols-[auto_1fr_auto] items-center gap-5 py-[18px] px-7 max-w-[1320px] mx-auto border-b border-ink">
@@ -32,6 +34,7 @@ export function TopNav() {
       </ul>
 
       <div className="flex gap-2.5 items-center">
+        <ThemeToggle />
         <a href="#checker" className="mc-btn">Extension</a>
         <a href="#checker" className="mc-btn mc-btn-solid">Paste a link →</a>
       </div>

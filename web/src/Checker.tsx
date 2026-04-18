@@ -134,7 +134,7 @@ export function Checker() {
               autoComplete="off"
               onChange={(e) => setUrl(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') run(url); }}
-              className="flex-1 bg-transparent border-0 px-[18px] py-4 font-mono text-[16px] text-ink outline-none placeholder:text-[#a89f8c]"
+              className="flex-1 bg-transparent border-0 px-[18px] py-4 font-mono text-[16px] text-ink outline-none placeholder:text-muted"
               placeholder="https://…"
             />
             <button
@@ -268,7 +268,7 @@ export function Checker() {
             </div>
           )}
 
-          <div className="absolute right-[-20px] top-[-10px] font-mono text-[11px] leading-[1.4] pointer-events-none select-none text-right whitespace-pre" style={{ color: 'rgba(11,11,11,0.08)' }}>
+          <div className="absolute right-[-20px] top-[-10px] font-mono text-[11px] leading-[1.4] pointer-events-none select-none text-right whitespace-pre text-ink/10">
             {`0101 0111 1100\n1001 1011 0010\n0110 1110 0011\n. . .`}
           </div>
         </div>
