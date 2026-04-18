@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "start": "serve -s dist -l ${PORT:-3000}"
+    "start": "serve dist -l ${PORT:-3000}"
   },
   "dependencies": {
     "@meetingcheck/detector": "*",
