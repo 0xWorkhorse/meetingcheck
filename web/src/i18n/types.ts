@@ -41,7 +41,6 @@ export interface UiMessages {
     pasteMeetingUrl: string; // "▌ Paste meeting URL"
     verifyBtn: string;
     checkingBtn: string;
-    tryLabel: string;
     verdictStamp: string; // "VERDICT"
     idleStamp: string; // "— IDLE —"
     /** Template: "VERIFIED {time}" */
@@ -73,17 +72,17 @@ export interface UiMessages {
       flagged: string;
       checking: string; // row value when pending
     };
-    /** Short tags on the TRY sample chips. Kept short to match the pills. */
-    sampleTags: {
-      safe: string;
-      danger: string;
-      unrecog: string; // e.g. "???"
-    };
     advice: {
       safe: string;
       dangerous: string;
       unrecognized: string;
       invalid: string;
+    };
+    /** Donation block under the signal rows. Addresses themselves are not translated. */
+    support: {
+      heading: string; // e.g. "Support"
+      copy: string;    // button label
+      copied: string;  // feedback after click
     };
   };
   verdictWords: {

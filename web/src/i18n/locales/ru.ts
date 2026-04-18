@@ -32,7 +32,6 @@ export const ru: UiMessages = {
     pasteMeetingUrl: '▌ Вставь URL встречи',
     verifyBtn: 'ПРОВЕРИТЬ ↵',
     checkingBtn: 'ПРОВЕРКА…',
-    tryLabel: 'Попробуй:',
     verdictStamp: 'ВЕРДИКТ',
     idleStamp: '— ОЖИДАНИЕ —',
     verifiedAt: 'ПРОВЕРЕНО {time}',
@@ -64,11 +63,6 @@ export const ru: UiMessages = {
       flagged: 'ПОМЕЧЕН {n}×',
       checking: 'ПРОВЕРКА…',
     },
-    sampleTags: {
-      safe:    'OK',
-      danger:  'ОПАСНО',
-      unrecog: '???',
-    },
     advice: {
       safe: 'Можно. Но: никогда не вставляй seed-фразу в окно встречи.',
       dangerous:
@@ -76,6 +70,11 @@ export const ru: UiMessages = {
       unrecognized:
         'Проверь через другой канал. Спроси отправителя перед кликом.',
       invalid: 'Игнорируй. Попроси отправителя переслать по надёжному каналу.',
+    },
+    support: {
+      heading: 'Поддержка',
+      copy: 'копировать',
+      copied: 'скопировано',
     },
   },
 

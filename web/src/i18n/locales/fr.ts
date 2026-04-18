@@ -32,7 +32,6 @@ export const fr: UiMessages = {
     pasteMeetingUrl: '▌ Colle l\'URL de la réunion',
     verifyBtn: 'VÉRIFIER ↵',
     checkingBtn: 'VÉRIFICATION…',
-    tryLabel: 'Essaye :',
     verdictStamp: 'VERDICT',
     idleStamp: '— INACTIF —',
     verifiedAt: 'VÉRIFIÉ {time}',
@@ -64,11 +63,6 @@ export const fr: UiMessages = {
       flagged: 'SIGNALÉ {n}×',
       checking: 'VÉRIFICATION…',
     },
-    sampleTags: {
-      safe:    'OK',
-      danger:  'DANGER',
-      unrecog: '???',
-    },
     advice: {
       safe: 'Vas-y. Mais : ne colle jamais une seed phrase dans une fenêtre de réunion.',
       dangerous:
@@ -76,6 +70,11 @@ export const fr: UiMessages = {
       unrecognized:
         'Vérifie par un autre canal. Demande à l\'expéditeur avant de cliquer.',
       invalid: 'Ignore. Demande à l\'expéditeur de renvoyer via un canal fiable.',
+    },
+    support: {
+      heading: 'Soutien',
+      copy: 'copier',
+      copied: 'copié',
     },
   },
 

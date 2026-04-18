@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { checkUrl, type CheckResponse } from '../../api.js';
 import { useLocale } from '../../i18n/LocaleContext.js';
-import { SampleChips } from './SampleChips.js';
 import { SignalsPanel } from './SignalsPanel.js';
+import { Support } from './Support.js';
 import { VerdictPanel } from './VerdictPanel.js';
 import { deriveSignals, makeSessionId } from './logic.js';
 
@@ -82,8 +82,6 @@ export function Checker() {
             </button>
           </div>
 
-          <SampleChips onPick={(u) => { setUrl(u); run(u); }} t={t} />
-
           <SignalsPanel rows={rows} revealedIndex={revealed} t={t} />
 
           {error && (
@@ -91,6 +89,8 @@ export function Checker() {
               {t.checker.errorPrefix} {error}
             </div>
           )}
+
+          <Support t={t} />
         </div>
 
         <VerdictPanel

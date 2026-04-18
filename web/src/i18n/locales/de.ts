@@ -32,7 +32,6 @@ export const de: UiMessages = {
     pasteMeetingUrl: '▌ Meeting-URL einfügen',
     verifyBtn: 'PRÜFEN ↵',
     checkingBtn: 'PRÜFUNG…',
-    tryLabel: 'Probier:',
     verdictStamp: 'URTEIL',
     idleStamp: '— LEERLAUF —',
     verifiedAt: 'GEPRÜFT {time}',
@@ -64,11 +63,6 @@ export const de: UiMessages = {
       flagged: 'GEMELDET {n}×',
       checking: 'PRÜFUNG…',
     },
-    sampleTags: {
-      safe:    'OK',
-      danger:  'GEFAHR',
-      unrecog: '???',
-    },
     advice: {
       safe: 'Weiter. Aber: nie eine Seed-Phrase in ein Meeting-Fenster einfügen.',
       dangerous:
@@ -76,6 +70,11 @@ export const de: UiMessages = {
       unrecognized:
         'Out-of-Band prüfen. Absender auf einem anderen Kanal fragen, bevor du klickst.',
       invalid: 'Ignorieren. Absender soll den Link über einen vertrauenswürdigen Kanal erneut schicken.',
+    },
+    support: {
+      heading: 'Unterstützung',
+      copy: 'kopieren',
+      copied: 'kopiert',
     },
   },
 

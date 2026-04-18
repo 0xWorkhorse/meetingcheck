@@ -6,22 +6,6 @@ import type { ReactNode } from 'react';
 export type SignalState = 'ok' | 'bad' | 'warn' | 'pending';
 export type SignalRow = { label: string; state: SignalState; value: ReactNode };
 
-export interface SampleChip {
-  klass: 's' | 'd' | 'u';
-  tagKey: 'safe' | 'danger' | 'unrecog';
-  url: string;
-  label: string; // the visible URL — not translated (URLs are never translated)
-}
-
-export const SAMPLES: ReadonlyArray<SampleChip> = [
-  { klass: 's', tagKey: 'safe',    url: 'https://us06web.zoom.us/j/82910481?pwd=aGbXm',   label: 'us06web.zoom.us/j/82910481' },
-  { klass: 'd', tagKey: 'danger',  url: 'https://zoom-invite.app/j/8472910',              label: 'zoom-invite.app/j/8472910' },
-  { klass: 'd', tagKey: 'danger',  url: 'https://meet.google.ciom/xky-rjqm-dvo',          label: 'meet.google.ciom/xky-rjqm-dvo' },
-  { klass: 's', tagKey: 'safe',    url: 'https://calendly.com/mathteam/30min',            label: 'calendly.com/mathteam/30min' },
-  { klass: 'u', tagKey: 'unrecog', url: 'https://rooms.hopin.biz/j/9912',                 label: 'rooms.hopin.biz/j/9912' },
-  { klass: 'd', tagKey: 'danger',  url: 'https://teams.microsof-t.live/l/meetup/aZ92',    label: 'teams.microsof-t.live/l/meetup/aZ92' },
-];
-
 /** Build the four signal rows shown under the URL input. */
 export function deriveSignals(res: CheckResponse, t: UiMessages): SignalRow[] {
   const urlFmt: SignalRow =

@@ -32,7 +32,6 @@ export const tr: UiMessages = {
     pasteMeetingUrl: '▌ Toplantı URL\'sini yapıştır',
     verifyBtn: 'DOĞRULA ↵',
     checkingBtn: 'KONTROL EDİLİYOR…',
-    tryLabel: 'Dene:',
     verdictStamp: 'KARAR',
     idleStamp: '— BOŞTA —',
     verifiedAt: 'DOĞRULANDI {time}',
@@ -64,11 +63,6 @@ export const tr: UiMessages = {
       flagged: 'İŞARETLENDİ {n}×',
       checking: 'KONTROL EDİLİYOR…',
     },
-    sampleTags: {
-      safe:    'OK',
-      danger:  'TEHLİKE',
-      unrecog: '???',
-    },
     advice: {
       safe: 'Devam edebilirsin. Yine de: toplantı penceresine asla kurtarma ifadesi yapıştırma.',
       dangerous:
@@ -76,6 +70,11 @@ export const tr: UiMessages = {
       unrecognized:
         'Başka bir kanaldan doğrula. Tıklamadan önce göndereni farklı bir kanaldan sor.',
       invalid: 'Görmezden gel. Göndereni güvendiğin bir kanaldan tekrar göndermesini iste.',
+    },
+    support: {
+      heading: 'Destek',
+      copy: 'kopyala',
+      copied: 'kopyalandı',
     },
   },
 

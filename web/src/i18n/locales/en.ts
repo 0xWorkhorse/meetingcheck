@@ -32,7 +32,6 @@ export const en: UiMessages = {
     pasteMeetingUrl: '▌ Paste meeting URL',
     verifyBtn: 'VERIFY ↵',
     checkingBtn: 'CHECKING…',
-    tryLabel: 'Try:',
     verdictStamp: 'VERDICT',
     idleStamp: '— IDLE —',
     verifiedAt: 'VERIFIED {time}',
@@ -63,11 +62,6 @@ export const en: UiMessages = {
       flagged: 'FLAGGED {n}×',
       checking: 'CHECKING…',
     },
-    sampleTags: {
-      safe:    'SAFE',
-      danger:  'DANGER',
-      unrecog: '???',
-    },
     advice: {
       safe: 'Proceed. Still: never paste a recovery phrase into a meeting window.',
       dangerous:
@@ -75,6 +69,11 @@ export const en: UiMessages = {
       unrecognized:
         'Verify out-of-band. Ask the sender on a different channel before clicking.',
       invalid: 'Ignore. Ask the sender to re-send via a channel you trust.',
+    },
+    support: {
+      heading: 'Support',
+      copy: 'copy',
+      copied: 'copied',
     },
   },
 

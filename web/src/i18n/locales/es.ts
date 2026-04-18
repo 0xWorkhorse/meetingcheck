@@ -32,7 +32,6 @@ export const es: UiMessages = {
     pasteMeetingUrl: '▌ Pega la URL de la reunión',
     verifyBtn: 'VERIFICAR ↵',
     checkingBtn: 'VERIFICANDO…',
-    tryLabel: 'Prueba:',
     verdictStamp: 'VEREDICTO',
     idleStamp: '— INACTIVO —',
     verifiedAt: 'VERIFICADO {time}',
@@ -64,11 +63,6 @@ export const es: UiMessages = {
       flagged: 'MARCADO {n}×',
       checking: 'VERIFICANDO…',
     },
-    sampleTags: {
-      safe:    'SEGURO',
-      danger:  'PELIGRO',
-      unrecog: '???',
-    },
     advice: {
       safe: 'Continúa. Aun así: nunca pegues una frase de recuperación en una ventana de reunión.',
       dangerous:
@@ -76,6 +70,11 @@ export const es: UiMessages = {
       unrecognized:
         'Verifica por otro medio. Pregunta al remitente por otro canal antes de hacer click.',
       invalid: 'Ignora. Pide al remitente que lo reenvíe por un canal que confíes.',
+    },
+    support: {
+      heading: 'Apoyo',
+      copy: 'copiar',
+      copied: 'copiado',
     },
   },
 

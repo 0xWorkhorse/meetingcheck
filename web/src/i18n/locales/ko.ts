@@ -32,7 +32,6 @@ export const ko: UiMessages = {
     pasteMeetingUrl: '▌ 미팅 URL 붙여넣기',
     verifyBtn: '검증 ↵',
     checkingBtn: '확인 중…',
-    tryLabel: '시도:',
     verdictStamp: '판정',
     idleStamp: '— 대기 —',
     verifiedAt: '검증됨 {time}',
@@ -64,11 +63,6 @@ export const ko: UiMessages = {
       flagged: '표시됨 {n}×',
       checking: '확인 중…',
     },
-    sampleTags: {
-      safe:    '안전',
-      danger:  '위험',
-      unrecog: '???',
-    },
     advice: {
       safe: '진행해도 좋습니다. 다만: 미팅 창에 복구 구문을 절대 붙여넣지 마세요.',
       dangerous:
@@ -76,6 +70,11 @@ export const ko: UiMessages = {
       unrecognized:
         '다른 경로로 확인하세요. 클릭하기 전에 다른 채널로 발신자에게 물어보세요.',
       invalid: '무시하세요. 신뢰하는 채널로 다시 보내달라고 발신자에게 요청하세요.',
+    },
+    support: {
+      heading: '후원',
+      copy: '복사',
+      copied: '복사됨',
     },
   },
 

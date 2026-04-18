@@ -32,7 +32,6 @@ export const id: UiMessages = {
     pasteMeetingUrl: '▌ Tempel URL meeting',
     verifyBtn: 'VERIFIKASI ↵',
     checkingBtn: 'MENGECEK…',
-    tryLabel: 'Coba:',
     verdictStamp: 'KEPUTUSAN',
     idleStamp: '— DIAM —',
     verifiedAt: 'DIVERIFIKASI {time}',
@@ -64,11 +63,6 @@ export const id: UiMessages = {
       flagged: 'DITANDAI {n}×',
       checking: 'MENGECEK…',
     },
-    sampleTags: {
-      safe:    'OK',
-      danger:  'BAHAYA',
-      unrecog: '???',
-    },
     advice: {
       safe: 'Lanjutkan. Tapi: jangan pernah menempel seed phrase ke jendela meeting.',
       dangerous:
@@ -76,6 +70,11 @@ export const id: UiMessages = {
       unrecognized:
         'Verifikasi lewat saluran lain. Tanya pengirim di saluran berbeda sebelum klik.',
       invalid: 'Abaikan. Minta pengirim mengirim ulang lewat saluran yang kamu percaya.',
+    },
+    support: {
+      heading: 'Dukungan',
+      copy: 'salin',
+      copied: 'tersalin',
     },
   },
 

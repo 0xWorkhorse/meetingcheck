@@ -32,7 +32,6 @@ export const vi: UiMessages = {
     pasteMeetingUrl: '▌ Dán URL cuộc họp',
     verifyBtn: 'XÁC MINH ↵',
     checkingBtn: 'ĐANG KIỂM TRA…',
-    tryLabel: 'Thử:',
     verdictStamp: 'PHÁN QUYẾT',
     idleStamp: '— CHỜ —',
     verifiedAt: 'ĐÃ XÁC MINH {time}',
@@ -64,11 +63,6 @@ export const vi: UiMessages = {
       flagged: 'GẮN CỜ {n}×',
       checking: 'ĐANG KIỂM TRA…',
     },
-    sampleTags: {
-      safe:    'OK',
-      danger:  'NGUY',
-      unrecog: '???',
-    },
     advice: {
       safe: 'Tiếp tục được. Nhưng: không bao giờ dán seed phrase vào cửa sổ họp.',
       dangerous:
@@ -76,6 +70,11 @@ export const vi: UiMessages = {
       unrecognized:
         'Xác minh qua kênh khác. Hỏi người gửi ở kênh khác trước khi bấm.',
       invalid: 'Bỏ qua. Yêu cầu người gửi gửi lại qua kênh bạn tin tưởng.',
+    },
+    support: {
+      heading: 'Hỗ trợ',
+      copy: 'sao chép',
+      copied: 'đã sao chép',
     },
   },
 

@@ -32,7 +32,6 @@ export const zh: UiMessages = {
     pasteMeetingUrl: '▌ 粘贴会议 URL',
     verifyBtn: '核查 ↵',
     checkingBtn: '核查中…',
-    tryLabel: '试试：',
     verdictStamp: '判定',
     idleStamp: '— 待机 —',
     verifiedAt: '已核查 {time}',
@@ -64,11 +63,6 @@ export const zh: UiMessages = {
       flagged: '已标记 {n}×',
       checking: '核查中…',
     },
-    sampleTags: {
-      safe:    '安全',
-      danger:  '危险',
-      unrecog: '???',
-    },
     advice: {
       safe: '可以继续。但切记：绝不要在任何会议窗口中粘贴助记词。',
       dangerous:
@@ -76,6 +70,11 @@ export const zh: UiMessages = {
       unrecognized:
         '请通过其他渠道核实。点击之前，通过另一个渠道询问发送者。',
       invalid: '忽略它。请发送者通过你信任的渠道重新发送。',
+    },
+    support: {
+      heading: '支持',
+      copy: '复制',
+      copied: '已复制',
     },
   },
 

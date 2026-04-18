@@ -32,7 +32,6 @@ export const ja: UiMessages = {
     pasteMeetingUrl: '▌ ミーティングURLを貼り付け',
     verifyBtn: '検証 ↵',
     checkingBtn: '確認中…',
-    tryLabel: '試す:',
     verdictStamp: '判定',
     idleStamp: '— 待機中 —',
     verifiedAt: '検証済 {time}',
@@ -64,11 +63,6 @@ export const ja: UiMessages = {
       flagged: 'フラグ {n}×',
       checking: '確認中…',
     },
-    sampleTags: {
-      safe:    '安全',
-      danger:  '危険',
-      unrecog: '???',
-    },
     advice: {
       safe: '進んで大丈夫。ただし、ミーティングウィンドウにリカバリーフレーズを絶対に貼り付けないこと。',
       dangerous:
@@ -76,6 +70,11 @@ export const ja: UiMessages = {
       unrecognized:
         '別の経路で確認を。クリックする前に、送信者に別のチャンネルで聞いてください。',
       invalid: '無視してください。信頼できる経路で再送信するよう送信者に頼んでください。',
+    },
+    support: {
+      heading: 'サポート',
+      copy: 'コピー',
+      copied: 'コピー済み',
     },
   },
 
