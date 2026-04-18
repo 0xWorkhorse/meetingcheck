@@ -23,6 +23,7 @@ import { notifyNewReport } from './notify.js';
 import { getCertAge } from './cert.js';
 import { getHosting } from './geoip.js';
 import { getWhoisAge } from './whois.js';
+import { registerAdminRoutes } from './admin.js';
 
 const app = new Hono<{ Variables: AppVariables }>();
 
@@ -273,7 +274,10 @@ app.get('/v1/locales', (c) =>
   ),
 );
 
-// ---------- Admin review ----------
+// ---------- Admin ----------
+
+// Stats JSON (/v1/admin/stats) + HTML dashboard (/admin/stats)
+registerAdminRoutes(app);
 
 app.post('/admin/review', async (c) => {
   const auth = c.req.header('authorization');
