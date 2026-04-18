@@ -7,6 +7,8 @@ export interface CheckResponse extends FormattedCheckResult {
   redirect_chain: string[];
   expansion_timed_out: boolean;
   scanned_at: string;
+  community_report_count: number;
+  community_status: 'suspected' | 'confirmed' | null;
 }
 
 function installId(): string {

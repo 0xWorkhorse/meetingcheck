@@ -98,6 +98,13 @@ app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
   const locale = resolveLocale(c);
   const formatted = format(checkResult, locale);
 
+  const community = checkResult.registrableDomain
+    ? await queryOne<{ report_count: string; status: string }>(
+        `SELECT report_count::TEXT, status FROM threat_feed WHERE registrable_domain = $1`,
+        [checkResult.registrableDomain],
+      )
+    : null;
+
   fireAndForget(
     query(
       `INSERT INTO check_log (hostname, verdict, ip_hash, install_id) VALUES ($1, $2, $3, $4)`,
@@ -111,6 +118,8 @@ app.post('/v1/check', rateLimitMiddleware('check', 30, 120, 60), async (c) => {
     redirect_chain: expansion.chain,
     expansion_timed_out: expansion.timedOut,
     scanned_at: new Date().toISOString(),
+    community_report_count: community ? Number(community.report_count) : 0,
+    community_status: community?.status ?? null,
   });
 });
 
