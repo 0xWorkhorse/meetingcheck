@@ -2,21 +2,59 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary -->
+    <title>Meetingcheck — Is that meeting link actually real?</title>
+    <meta name="description" content="Paste any meeting link. Get a strict verdict in 3 seconds: is it really Zoom, Meet, Teams, or Calendly? Built for crypto after the Feb 2026 fake-Zoom wave." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
-    <title>meetingcheck — strict meeting link verifier</title>
-    <meta name="description" content="A strict link verifier for meeting invites. Is this actually Zoom, Meet, or Calendly? Built for crypto after the Feb 2026 fake-Zoom wave." />
-    <meta property="og:title" content="meetingcheck" />
-    <meta property="og:description" content="Strict meeting-link verifier. Paste a link, get a binary verdict." />
-    <meta property="og:url" content="https://meetingcheck.io" />
-    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="canonical" href="https://meetingcheck.io/" />
+
+    <!-- Icons -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://meetingcheck.io/" />
+    <meta property="og:title" content="Meetingcheck — Is that meeting link actually real?" />
+    <meta property="og:description" content="Strict binary verdict on Zoom, Meet, Teams, Calendly impersonation. Paste before you click." />
+    <meta property="og:image" content="https://meetingcheck.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@0xWorkhorse" />
+    <meta name="twitter:creator" content="@0xWorkhorse" />
+    <meta name="twitter:title" content="Meetingcheck — Is that meeting link actually real?" />
+    <meta name="twitter:description" content="Strict binary verdict on Zoom, Meet, Teams, Calendly impersonation. Paste before you click." />
+    <meta name="twitter:image" content="https://meetingcheck.io/og-image.png" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Meetingcheck",
+        "url": "https://meetingcheck.io/",
+        "description": "Strict verifier for Zoom, Meet, Teams, and Calendly meeting links.",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0" }
+      }
+    </script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
     />
+
+    <!-- Pre-hydration theme: dark by default, respects saved light preference. -->
     <script>
       (function () {
         try {
@@ -28,6 +66,8 @@
         }
       })();
     </script>
+
+    <!-- Cloudflare Turnstile (report form) -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   </head>
   <body class="bg-paper text-ink">
