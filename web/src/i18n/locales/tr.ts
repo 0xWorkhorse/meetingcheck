@@ -11,8 +11,6 @@ export const tr: UiMessages = {
   },
 
   hero: {
-    kicker: 'Sahte toplantı uyarısı aktif — Ref. 2026/02 ZOOM-CLONE DALGASI',
-    kickerMeta: 'Şubat 2026 drain\'inden sonra yapıldı',
     headlineLine1: 'Önce {paste}{period}',
     headlineLine2: 'Sonra {click}.',
     headlinePaste: 'kontrol et',

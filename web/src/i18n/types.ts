@@ -19,8 +19,6 @@ export interface UiMessages {
     tagline: string; // under MEETINGCHECK logo
   };
   hero: {
-    kicker: string;
-    kickerMeta: string;
     /** Template: "{paste} first{period}" */
     headlineLine1: string;
     /** Template: "{click} second." */

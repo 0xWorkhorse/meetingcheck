@@ -11,8 +11,6 @@ export const ko: UiMessages = {
   },
 
   hero: {
-    kicker: '가짜 미팅 경보 활성 — Ref. 2026/02 ZOOM 클론 파동',
-    kickerMeta: '2026년 2월 드레인 사태 이후 제작',
     headlineLine1: '먼저 {paste}{period}',
     headlineLine2: '그다음 {click}.',
     headlinePaste: '확인',

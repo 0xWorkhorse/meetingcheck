@@ -11,8 +11,6 @@ export const vi: UiMessages = {
   },
 
   hero: {
-    kicker: 'Cảnh báo họp giả đang hoạt động — Ref. 2026/02 ĐỢT SÓNG ZOOM-CLONE',
-    kickerMeta: 'Xây dựng sau vụ drain tháng 2/2026',
     headlineLine1: '{paste} trước{period}',
     headlineLine2: '{click} sau.',
     headlinePaste: 'Kiểm tra',

@@ -11,8 +11,6 @@ export const zh: UiMessages = {
   },
 
   hero: {
-    kicker: '假会议警报已启用 — Ref. 2026/02 ZOOM 仿冒浪潮',
-    kickerMeta: '在 2026 年 2 月抽水事件之后构建',
     headlineLine1: '先{paste}{period}',
     headlineLine2: '再{click}。',
     headlinePaste: '核查',

@@ -11,8 +11,6 @@ export const ru: UiMessages = {
   },
 
   hero: {
-    kicker: 'Оповещение о поддельных встречах активно — Ref. 2026/02 ВОЛНА ZOOM-КЛОНОВ',
-    kickerMeta: 'Собрано после слива в феврале 2026',
     headlineLine1: 'Сначала {paste}{period}',
     headlineLine2: 'Потом {click}.',
     headlinePaste: 'проверь',

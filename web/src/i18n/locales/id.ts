@@ -11,8 +11,6 @@ export const id: UiMessages = {
   },
 
   hero: {
-    kicker: 'Peringatan meeting palsu aktif — Ref. 2026/02 GELOMBANG ZOOM-CLONE',
-    kickerMeta: 'Dibangun setelah drain Februari 2026',
     headlineLine1: '{paste} dulu{period}',
     headlineLine2: '{click} kemudian.',
     headlinePaste: 'Cek',

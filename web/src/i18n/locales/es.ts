@@ -11,8 +11,6 @@ export const es: UiMessages = {
   },
 
   hero: {
-    kicker: 'Alerta de reuniones falsas activa — Ref. 2026/02 OLA ZOOM-CLONE',
-    kickerMeta: 'Construido tras el drenaje de febrero 2026',
     headlineLine1: '{paste} primero{period}',
     headlineLine2: '{click} después.',
     headlinePaste: 'Verifica',

@@ -11,8 +11,6 @@ export const ja: UiMessages = {
   },
 
   hero: {
-    kicker: '偽ミーティング警報 発令中 — Ref. 2026/02 ZOOM クローン波',
-    kickerMeta: '2026年2月のドレイン事件を受けて構築',
     headlineLine1: 'まず{paste}{period}',
     headlineLine2: '次に{click}。',
     headlinePaste: '確認',

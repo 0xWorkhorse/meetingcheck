@@ -11,8 +11,6 @@ export const fr: UiMessages = {
   },
 
   hero: {
-    kicker: 'Alerte réunion factice active — Réf. 2026/02 VAGUE ZOOM-CLONE',
-    kickerMeta: 'Construit après le drain de février 2026',
     headlineLine1: '{paste} d\'abord{period}',
     headlineLine2: '{click} ensuite.',
     headlinePaste: 'Vérifie',

@@ -11,8 +11,6 @@ export const pt: UiMessages = {
   },
 
   hero: {
-    kicker: 'Alerta de reunião falsa ativo — Ref. 2026/02 ONDA ZOOM-CLONE',
-    kickerMeta: 'Construído após o drenagem de fevereiro de 2026',
     headlineLine1: '{paste} primeiro{period}',
     headlineLine2: '{click} depois.',
     headlinePaste: 'Confere',

@@ -8,11 +8,10 @@ import { deriveSignals, makeSessionId } from './logic.js';
 
 const SESSION = makeSessionId();
 const REVEAL_STEP_MS = 260;
-const DEFAULT_URL = 'https://zoom-invite.app/j/8472910';
 
 export function Checker() {
   const { t, locale } = useLocale();
-  const [url, setUrl] = useState(DEFAULT_URL);
+  const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<CheckResponse | null>(null);
   const [revealed, setRevealed] = useState(-1);

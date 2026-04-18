@@ -11,8 +11,6 @@ export const de: UiMessages = {
   },
 
   hero: {
-    kicker: 'Warnung Fake-Meetings aktiv — Ref. 2026/02 ZOOM-CLONE-WELLE',
-    kickerMeta: 'Gebaut nach dem Drain im Februar 2026',
     headlineLine1: '{paste} zuerst{period}',
     headlineLine2: 'Dann {click}.',
     headlinePaste: 'Prüf',

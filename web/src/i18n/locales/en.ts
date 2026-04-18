@@ -11,8 +11,6 @@ export const en: UiMessages = {
   },
 
   hero: {
-    kicker: 'Fake-meeting advisory active — Ref. 2026/02 ZOOM-CLONE WAVE',
-    kickerMeta: 'Built after the Feb 2026 drain',
     headlineLine1: '{paste} first{period}',
     headlineLine2: '{click} second.',
     headlinePaste: 'Check',

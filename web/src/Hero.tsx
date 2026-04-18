@@ -21,13 +21,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="wrap pt-14 pb-6 relative" id="top">
-      <div className="flex items-center gap-3.5 text-[11px] uppercase tracking-[0.18em] text-muted mb-7">
-        <span className="w-2 h-2 rounded-full bg-danger mc-pulse" />
-        <span>{t.hero.kicker}</span>
-        <span className="ml-auto">{t.hero.kickerMeta}</span>
-      </div>
-
+    <section className="wrap pt-10 pb-6 relative" id="top">
       <h1 className="font-display font-bold tracking-[-0.045em] leading-[0.9] m-0 text-ink"
           style={{ fontSize: 'clamp(56px, 11vw, 184px)' }}>
         {format(t.hero.headlineLine1, {
