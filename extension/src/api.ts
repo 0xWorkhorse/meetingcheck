@@ -1,3 +1,25 @@
+/**
+ * API + offline fallback for the extension popup.
+ *
+ * Network path calls https://api.meetingcheck.io/v1/check and returns the full
+ * enriched response (redirects + hosting + whois + cert + community feed).
+ *
+ * Offline path runs the bundled detector locally — which correctly covers
+ * URL_FORMAT / CHARACTER_CHECK / OFFICIAL_DOMAIN / subdomain-trick / typosquat
+ * / homoglyph, because those are pure-URL signals. The five network-requiring
+ * rows (redirects / hosting / domain age / cert / community) are explicitly
+ * marked offline so the popup can render them as "OFFLINE" in muted cream.
+ *
+ * Offline verdict policy (matches the popup spec):
+ *   - detector SAFE        → downgraded to UNRECOGNIZED. Community-feed status
+ *                            is unknown offline; we refuse to claim SAFE
+ *                            without that confirmation.
+ *   - detector DANGEROUS   → kept DANGEROUS. URL-pattern matches (homoglyph,
+ *                            typosquat, subdomain trick) are conclusive
+ *                            regardless of network.
+ *   - detector UNRECOGNIZED → kept UNRECOGNIZED.
+ *   - detector INVALID     → kept INVALID.
+ */
 import { check, format, type FormattedCheckResult } from '@meetingcheck/detector';
 
 export const API_BASE = 'https://api.meetingcheck.io';
@@ -7,7 +29,26 @@ export type CheckResponse = FormattedCheckResult & {
   redirect_chain: string[];
   expansion_timed_out: boolean;
   scanned_at: string;
+
+  // Enrichment fields (may be missing when offline; consumers must tolerate).
+  community_report_count?: number;
+  community_status?: 'suspected' | 'confirmed' | null;
+  cert_age_days?: number | null;
+  cert_checked?: boolean;
+  homoglyph_non_ascii?: boolean;
+  homoglyph_punycode?: boolean;
+  homoglyph_decoded?: string | null;
+  hosting_country?: string | null;
+  hosting_ip?: string | null;
+  hosting_checked?: boolean;
+  whois_age_days?: number | null;
+  whois_checked?: boolean;
 };
+
+/** Shape returned by checkUrl(); popup branches on `offline`. */
+export type CheckOutcome =
+  | { offline: false; result: CheckResponse }
+  | { offline: true;  result: CheckResponse; downgraded: boolean };
 
 async function getInstallId(): Promise<string> {
   const stored = await chrome.storage.local.get('install_id');
@@ -38,7 +79,11 @@ async function setCached(hostname: string, value: CheckResponse): Promise<void> 
   });
 }
 
-export async function checkUrlRemote(url: string): Promise<CheckResponse> {
+/**
+ * Hit the API. Throws on any transport error so the caller can fall back to
+ * the local detector.
+ */
+async function checkUrlRemote(url: string): Promise<CheckResponse> {
   let hostname = '';
   try { hostname = new URL(url).hostname.toLowerCase(); } catch {}
 
@@ -64,19 +109,53 @@ export async function checkUrlRemote(url: string): Promise<CheckResponse> {
 }
 
 /**
- * Offline fallback: run the detector locally and format with the UI locale.
- * Redirect expansion is unavailable offline.
+ * Run the bundled detector locally and shape the result like a CheckResponse
+ * so the popup can render it with the same code path. Five enrichment fields
+ * are left `undefined` (not null) to signal "we didn't check this." The popup
+ * distinguishes that from the remote-checked-and-null case.
  */
-export function checkUrlLocal(url: string): CheckResponse {
+function checkUrlLocal(url: string): { result: CheckResponse; downgraded: boolean } {
   const r = check(url);
   const f = format(r, uiLocale());
-  return {
+
+  // Offline verdict policy — never claim SAFE without the community-feed
+  // confirmation we can't do here.
+  let verdict = f.verdict;
+  let downgraded = false;
+  if (verdict === 'SAFE') {
+    verdict = 'UNRECOGNIZED';
+    downgraded = true;
+  }
+
+  const result: CheckResponse = {
     ...f,
+    verdict,
     resolved_hostname: f.hostname,
     redirect_chain: [url],
     expansion_timed_out: false,
     scanned_at: new Date().toISOString(),
+    // Intentionally omit community_*, cert_*, hosting_*, whois_*, redirect expansion
+    // so the popup renders those rows as OFFLINE. homoglyph_* fields are known
+    // locally (detector computes them); we populate those from the detector.
+    homoglyph_non_ascii: !/^[\x00-\x7f]*$/.test(f.hostname),
+    homoglyph_punycode: f.hostname.includes('xn--'),
+    homoglyph_decoded: f.hostname,
   };
+  return { result, downgraded };
+}
+
+/**
+ * Top-level: try remote, fall back to offline-local. Always returns a
+ * populated CheckOutcome so the popup can render *something*.
+ */
+export async function checkUrl(url: string): Promise<CheckOutcome> {
+  try {
+    const result = await checkUrlRemote(url);
+    return { offline: false, result };
+  } catch {
+    const { result, downgraded } = checkUrlLocal(url);
+    return { offline: true, result, downgraded };
+  }
 }
 
 export async function reportScam(url: string, context?: string): Promise<{ report_id: string; status: string }> {

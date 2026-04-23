@@ -1,29 +1,72 @@
 {
-  "extName": {
-    "message": "meetingcheck — meeting link verifier",
-    "description": "Extension name shown in the store and browser"
-  },
-  "extDescription": {
-    "message": "Right-click any link to check if it's a real Zoom, Meet, or Calendly — or a scam impersonating one.",
-    "description": "Store listing description"
-  },
-  "menuCheck": {
-    "message": "Check this link with meetingcheck",
-    "description": "Right-click menu item — check"
-  },
-  "menuReport": {
-    "message": "Report this link as a scam",
-    "description": "Right-click menu item — report"
-  },
-  "popupHeader": { "message": "meetingcheck" },
-  "popupPlaceholder": { "message": "Paste a link…" },
-  "popupCheck": { "message": "Check" },
-  "popupChecking": { "message": "Checking…" },
-  "popupReportScam": { "message": "Report as scam" },
-  "popupConfirmReport": { "message": "Confirm and report" },
-  "popupReporting": { "message": "Reporting…" },
-  "popupReported": { "message": "Reported. Thank you." },
-  "popupReportFailed": { "message": "Failed — try again" },
-  "popupCouldntCheck": { "message": "Couldn't check that link" },
-  "popupCheckedAs":    { "message": "Checked:", "description": "Prefix before the resolved URL when the normalizer extracted a URL that differed from what the user pasted" }
+  "extName":            { "message": "meetingcheck — meeting link verifier", "description": "Extension name shown in the store and browser" },
+  "extDescription":     { "message": "Right-click any link to check if it's a real Zoom, Meet, or Calendly — or a scam impersonating one.", "description": "Store listing description" },
+
+  "menuCheck":          { "message": "Check this link with meetingcheck", "description": "Right-click menu item — check" },
+  "menuReport":         { "message": "Report this link as a scam", "description": "Right-click menu item — report" },
+
+  "popupShellTitle":    { "message": "MEETINGCHECK // VERIFIER SHELL", "description": "Brand string in the terminal-bar chrome — typically not translated" },
+  "popupOfflineBanner": { "message": "Offline mode — partial check only" },
+  "popupReconnectHint": { "message": "Reconnect for full verification" },
+  "popupOpenOnSite":    { "message": "Open on meetingcheck.io" },
+
+  "popupPlaceholder":   { "message": "Paste a meeting link…" },
+  "popupCheck":         { "message": "VERIFY" },
+  "popupChecking":      { "message": "CHECKING…" },
+
+  "popupReportScam":    { "message": "Report as scam" },
+  "popupConfirmReport": { "message": "Confirm report" },
+  "popupReporting":     { "message": "Reporting…" },
+  "popupReported":      { "message": "Reported. Thank you." },
+  "popupReportFailed":  { "message": "Failed — try again" },
+  "popupCouldntCheck":  { "message": "Couldn't check that link" },
+
+  "popupCheckedAs":     { "message": "Checked:", "description": "Prefix before the resolved URL when the normalizer extracted a URL that differed from what the user pasted" },
+  "popupIdleMessage":   { "message": "Paste a meeting link above. We'll check it against official domains, certificate records, and our live community threat feed." },
+  "popupLoadingMessage":{ "message": "Running checks against official allowlists and the community feed." },
+
+  "popupVerdictAwaiting":    { "message": "AWAITING" },
+  "popupVerdictChecking":    { "message": "CHECKING" },
+  "popupVerdictSafe":        { "message": "SAFE" },
+  "popupVerdictDangerous":   { "message": "DANGEROUS" },
+  "popupVerdictUnrecognized":{ "message": "UNRECOGNIZED" },
+  "popupVerdictInvalid":     { "message": "INVALID" },
+
+  "popupAdviceSafe":         { "message": "Proceed. Never paste a recovery phrase in a meeting window." },
+  "popupAdviceDangerous":    { "message": "Close the tab. Report the sender." },
+  "popupAdviceUnrecognized": { "message": "Verify out-of-band before you click." },
+
+  "popupSignalUrlFormat":   { "message": "URL format" },
+  "popupSignalRedirects":   { "message": "Redirects" },
+  "popupSignalCharacter":   { "message": "Character check" },
+  "popupSignalOfficial":    { "message": "Official domain" },
+  "popupSignalHosting":     { "message": "Hosting" },
+  "popupSignalDomainAge":   { "message": "Domain age" },
+  "popupSignalCert":        { "message": "Cert transparency" },
+  "popupSignalCommunity":   { "message": "Community feed" },
+
+  "popupStatusOffline":         { "message": "OFFLINE" },
+  "popupStatusValid":           { "message": "VALID" },
+  "popupStatusMalformed":       { "message": "MALFORMED" },
+  "popupStatusDirect":          { "message": "DIRECT" },
+  "popupStatusHops":            { "message": "$1 HOPS",          "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusExpansionFailed": { "message": "EXPANSION FAILED" },
+  "popupStatusAsciiClean":      { "message": "ASCII CLEAN" },
+  "popupStatusNonAscii":        { "message": "NON-ASCII" },
+  "popupStatusPunycode":        { "message": "PUNYCODE: $1",     "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusSpoof":           { "message": "SPOOF: $1",        "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusAllowlisted":     { "message": "ALLOWLISTED" },
+  "popupStatusNotAllowlisted":  { "message": "NOT ALLOWLISTED" },
+  "popupStatusLookalike":       { "message": "LOOKALIKE / NOT OFFICIAL" },
+  "popupStatusUnknown":         { "message": "UNKNOWN" },
+  "popupStatusUnavailable":     { "message": "UNAVAILABLE" },
+  "popupStatusPrivate":         { "message": "PRIVATE" },
+  "popupStatusFresh":           { "message": "FRESH ($1D)",      "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusYoungDays":       { "message": "$1D",               "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusMature":          { "message": "> 1Y" },
+  "popupStatusCertValidOld":    { "message": "VALID > 60D" },
+  "popupStatusNewDomain":       { "message": "NEW DOMAIN" },
+  "popupStatusClean":           { "message": "CLEAN" },
+  "popupStatusNoReports":       { "message": "NO REPORTS" },
+  "popupStatusFlagged":         { "message": "FLAGGED $1×",      "placeholders": { "1": { "content": "$1" } } }
 }

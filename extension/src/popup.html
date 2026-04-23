@@ -2,23 +2,72 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="dark" />
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <header>
-      <strong data-i18n="popupHeader">meetingcheck</strong>
-      <a href="https://meetingcheck.io" target="_blank" rel="noopener">↗</a>
-    </header>
-    <main>
-      <form id="check-form">
-        <input id="url-input" type="url" data-i18n-attr="placeholder:popupPlaceholder" required autofocus />
-        <button type="submit" id="check-btn" data-i18n="popupCheck">Check</button>
-      </form>
-      <div id="result" class="hidden"></div>
-      <div id="actions" class="hidden">
-        <button id="report-btn" data-i18n="popupReportScam">Report as scam</button>
+    <div class="shell">
+      <!-- Terminal bar (fixed chrome at top) -->
+      <div class="bar">
+        <div class="dots">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+        </div>
+        <div class="bar-title" data-i18n="popupShellTitle">MEETINGCHECK // VERIFIER SHELL</div>
+        <div class="bar-session" id="session">0x0000</div>
       </div>
-    </main>
+
+      <!-- Offline banner — hidden unless the state machine shows it -->
+      <div class="offline-banner hidden" id="offline-banner" data-i18n="popupOfflineBanner">
+        Offline mode — partial check only
+      </div>
+
+      <!-- Input + VERIFY -->
+      <form id="check-form" class="input-row">
+        <input
+          id="url-input"
+          type="text"
+          spellcheck="false"
+          autocomplete="off"
+          data-i18n-attr="placeholder:popupPlaceholder"
+        />
+        <button type="submit" id="check-btn" data-i18n="popupCheck" disabled>Check</button>
+      </form>
+
+      <!-- Signals panel — 8 rows hydrated by popup.ts -->
+      <ul class="signals" id="signals" aria-live="polite"></ul>
+
+      <!-- Verdict block -->
+      <div class="verdict" id="verdict">
+        <div class="verdict-big" id="verdict-big">
+          <span class="verdict-icon" id="verdict-icon">—</span>
+          <span class="verdict-word" id="verdict-word" data-i18n="popupVerdictAwaiting">AWAITING</span>
+        </div>
+        <p class="verdict-reason" id="verdict-reason" data-i18n="popupIdleMessage">
+          Paste a meeting link above. We'll check it against official domains, certificate records, and our live community threat feed.
+        </p>
+        <div class="verdict-advice hidden" id="verdict-advice"></div>
+        <div class="checked-as hidden" id="checked-as"></div>
+        <div class="reconnect-hint hidden" id="reconnect-hint" data-i18n="popupReconnectHint">
+          Reconnect for full verification
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <button type="button" class="link-btn hidden" id="report-btn" data-i18n="popupReportScam">Report as scam</button>
+        <a
+          id="open-site"
+          class="link-btn link-btn-plain"
+          href="https://meetingcheck.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-i18n="popupOpenOnSite"
+        >Open on meetingcheck.io</a>
+      </div>
+    </div>
+
     <script type="module" src="popup.js"></script>
   </body>
 </html>

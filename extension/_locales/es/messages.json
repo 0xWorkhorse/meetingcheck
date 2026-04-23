@@ -1,29 +1,72 @@
 {
-  "extName": {
-    "message": "meetingcheck — verificador de enlaces de reunión",
-    "description": "Extension name shown in the store and browser"
-  },
-  "extDescription": {
-    "message": "Haz click derecho en cualquier enlace para comprobar si es un Zoom, Meet o Calendly real — o una estafa que los imita.",
-    "description": "Store listing description"
-  },
-  "menuCheck": {
-    "message": "Verificar este enlace con meetingcheck",
-    "description": "Right-click menu item — check"
-  },
-  "menuReport": {
-    "message": "Denunciar este enlace como estafa",
-    "description": "Right-click menu item — report"
-  },
-  "popupHeader": { "message": "meetingcheck" },
-  "popupPlaceholder": { "message": "Pega un enlace…" },
-  "popupCheck": { "message": "Verificar" },
-  "popupChecking": { "message": "Verificando…" },
-  "popupReportScam": { "message": "Denunciar estafa" },
-  "popupConfirmReport": { "message": "Confirmar y denunciar" },
-  "popupReporting": { "message": "Denunciando…" },
-  "popupReported": { "message": "Denunciado. Gracias." },
-  "popupReportFailed": { "message": "Falló — inténtalo de nuevo" },
-  "popupCouldntCheck": { "message": "No se pudo verificar ese enlace" },
-  "popupCheckedAs":    { "message": "Verificado:", "description": "Prefix before the resolved URL when the normalizer extracted a URL that differed from what the user pasted" }
+  "extName":            { "message": "meetingcheck — verificador de enlaces de reunión", "description": "Extension name shown in the store and browser" },
+  "extDescription":     { "message": "Haz click derecho en cualquier enlace para comprobar si es un Zoom, Meet o Calendly real — o una estafa que los imita.", "description": "Store listing description" },
+
+  "menuCheck":          { "message": "Verificar este enlace con meetingcheck", "description": "Right-click menu item — check" },
+  "menuReport":         { "message": "Denunciar este enlace como estafa", "description": "Right-click menu item — report" },
+
+  "popupShellTitle":    { "message": "MEETINGCHECK // VERIFIER SHELL", "description": "Brand string in the terminal-bar chrome — typically not translated" },
+  "popupOfflineBanner": { "message": "Modo sin conexión — verificación parcial" },
+  "popupReconnectHint": { "message": "Reconecta para verificación completa" },
+  "popupOpenOnSite":    { "message": "Abrir en meetingcheck.io" },
+
+  "popupPlaceholder":   { "message": "Pega un enlace de reunión…" },
+  "popupCheck":         { "message": "VERIFICAR" },
+  "popupChecking":      { "message": "VERIFICANDO…" },
+
+  "popupReportScam":    { "message": "Denunciar estafa" },
+  "popupConfirmReport": { "message": "Confirmar denuncia" },
+  "popupReporting":     { "message": "Denunciando…" },
+  "popupReported":      { "message": "Denunciado. Gracias." },
+  "popupReportFailed":  { "message": "Falló — inténtalo de nuevo" },
+  "popupCouldntCheck":  { "message": "No se pudo verificar ese enlace" },
+
+  "popupCheckedAs":     { "message": "Verificado:", "description": "Prefix before the resolved URL when the normalizer extracted a URL that differed from what the user pasted" },
+  "popupIdleMessage":   { "message": "Pega un enlace de reunión arriba. Lo verificaremos contra dominios oficiales, registros de certificados y nuestro feed comunitario de amenazas en vivo." },
+  "popupLoadingMessage":{ "message": "Ejecutando comprobaciones contra listas oficiales y el feed de la comunidad." },
+
+  "popupVerdictAwaiting":    { "message": "EN ESPERA" },
+  "popupVerdictChecking":    { "message": "VERIFICANDO" },
+  "popupVerdictSafe":        { "message": "SEGURO" },
+  "popupVerdictDangerous":   { "message": "PELIGROSO" },
+  "popupVerdictUnrecognized":{ "message": "NO RECONOCIDO" },
+  "popupVerdictInvalid":     { "message": "INVÁLIDO" },
+
+  "popupAdviceSafe":         { "message": "Continúa. Nunca pegues una frase de recuperación en una ventana de reunión." },
+  "popupAdviceDangerous":    { "message": "Cierra la pestaña. Denuncia al remitente." },
+  "popupAdviceUnrecognized": { "message": "Verifica por otro canal antes de hacer click." },
+
+  "popupSignalUrlFormat":   { "message": "Formato de URL" },
+  "popupSignalRedirects":   { "message": "Redirecciones" },
+  "popupSignalCharacter":   { "message": "Comprobación de caracteres" },
+  "popupSignalOfficial":    { "message": "Dominio oficial" },
+  "popupSignalHosting":     { "message": "Hosting" },
+  "popupSignalDomainAge":   { "message": "Edad del dominio" },
+  "popupSignalCert":        { "message": "Transparencia de cert." },
+  "popupSignalCommunity":   { "message": "Feed comunitario" },
+
+  "popupStatusOffline":         { "message": "SIN CONEXIÓN" },
+  "popupStatusValid":           { "message": "VÁLIDO" },
+  "popupStatusMalformed":       { "message": "MAL FORMADO" },
+  "popupStatusDirect":          { "message": "DIRECTO" },
+  "popupStatusHops":            { "message": "$1 SALTOS",       "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusExpansionFailed": { "message": "FALLÓ LA EXPANSIÓN" },
+  "popupStatusAsciiClean":      { "message": "ASCII LIMPIO" },
+  "popupStatusNonAscii":        { "message": "NO ASCII" },
+  "popupStatusPunycode":        { "message": "PUNYCODE: $1",    "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusSpoof":           { "message": "SUPLANTACIÓN: $1", "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusAllowlisted":     { "message": "EN LISTA PERMITIDA" },
+  "popupStatusNotAllowlisted":  { "message": "FUERA DE LISTA" },
+  "popupStatusLookalike":       { "message": "IMITACIÓN / NO OFICIAL" },
+  "popupStatusUnknown":         { "message": "DESCONOCIDO" },
+  "popupStatusUnavailable":     { "message": "NO DISPONIBLE" },
+  "popupStatusPrivate":         { "message": "PRIVADO" },
+  "popupStatusFresh":           { "message": "NUEVO ($1D)",     "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusYoungDays":       { "message": "$1D",              "placeholders": { "1": { "content": "$1" } } },
+  "popupStatusMature":          { "message": "> 1A" },
+  "popupStatusCertValidOld":    { "message": "VÁLIDO > 60D" },
+  "popupStatusNewDomain":       { "message": "DOMINIO NUEVO" },
+  "popupStatusClean":           { "message": "LIMPIO" },
+  "popupStatusNoReports":       { "message": "SIN DENUNCIAS" },
+  "popupStatusFlagged":         { "message": "MARCADO $1×",     "placeholders": { "1": { "content": "$1" } } }
 }

@@ -2,9 +2,10 @@
  * Background service worker.
  * - Registers context menu items ("Check with meetingcheck", "Report this link").
  * - Opens the popup with the selected link pre-filled.
- * - Handles messages from the popup to run checks via the API with a local fallback.
+ * - Handles messages from the popup: runs checks via the API with a local
+ *   detector fallback, handles scam reports.
  */
-import { checkUrlRemote, checkUrlLocal, reportScam, type CheckResponse } from './api.js';
+import { checkUrl, reportScam, type CheckOutcome } from './api.js';
 
 const MENU_CHECK = 'itls-check';
 const MENU_REPORT = 'itls-report';
@@ -41,14 +42,9 @@ chrome.runtime.onMessage.addListener((msg: Message, _sender, sendResponse) => {
   (async () => {
     try {
       if (msg.type === 'check') {
-        let res: CheckResponse;
-        try {
-          res = await checkUrlRemote(msg.url);
-        } catch {
-          res = checkUrlLocal(msg.url);
-        }
-        updateBadge(res.verdict);
-        sendResponse({ ok: true, result: res });
+        const outcome: CheckOutcome = await checkUrl(msg.url);
+        updateBadge(outcome.result.verdict);
+        sendResponse({ ok: true, outcome });
       } else if (msg.type === 'report') {
         const r = await reportScam(msg.url, msg.context);
         sendResponse({ ok: true, result: r });
@@ -60,11 +56,11 @@ chrome.runtime.onMessage.addListener((msg: Message, _sender, sendResponse) => {
   return true; // async response
 });
 
-function updateBadge(verdict: CheckResponse['verdict']) {
-  const style: Record<CheckResponse['verdict'], { text: string; color: string }> = {
-    SAFE:         { text: '✓',   color: '#10b981' },
-    DANGEROUS:    { text: '!',   color: '#ef4444' },
-    UNRECOGNIZED: { text: '?',   color: '#f59e0b' },
+function updateBadge(verdict: CheckOutcome['result']['verdict']) {
+  const style: Record<CheckOutcome['result']['verdict'], { text: string; color: string }> = {
+    SAFE:         { text: '✓',   color: '#4fa66a' },
+    DANGEROUS:    { text: '!',   color: '#ef4a34' },
+    UNRECOGNIZED: { text: '?',   color: '#d6a130' },
     INVALID:      { text: '',    color: '#525252' },
   };
   const s = style[verdict];
