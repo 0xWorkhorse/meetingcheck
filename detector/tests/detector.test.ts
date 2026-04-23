@@ -145,6 +145,50 @@ test('normalizeInput: unknown non-http scheme returns scheme.other:<name>', () =
   assert.deepEqual(normalizeInput('ftp://zoom.us/file'), { error: 'scheme.other:ftp' });
 });
 
+// --- Trailing punctuation and non-ASCII wrappers ---
+
+test('normalizeInput: trailing sentence punctuation is stripped', () => {
+  assert.deepEqual(normalizeInput('Join at https://zoom.us/j/123.').url, 'https://zoom.us/j/123');
+  assert.deepEqual(normalizeInput('Link: https://meet.google.com/abc-def,').url, 'https://meet.google.com/abc-def');
+});
+
+test('normalizeInput: ASCII and curly paren/quote wrappers both strip', () => {
+  assert.deepEqual(normalizeInput('(https://zoom.us/j/123)').url, 'https://zoom.us/j/123');
+  assert.deepEqual(normalizeInput('"https://zoom.us/j/123"').url, 'https://zoom.us/j/123');
+});
+
+test('normalizeInput: smart double quotes (U+201C / U+201D) are treated as URL terminators', () => {
+  const r = normalizeInput('See: “https://zoom.us/j/123”');
+  if ('error' in r) throw new Error('unexpected error');
+  assert.equal(r.url, 'https://zoom.us/j/123');
+});
+
+test('normalizeInput: curly singles, German „..." quotes, French «...», CJK 「...」 all strip', () => {
+  assert.equal((normalizeInput('‘https://zoom.us/j/123’') as { url: string }).url, 'https://zoom.us/j/123');
+  assert.equal((normalizeInput('„https://zoom.us/j/123“') as { url: string }).url, 'https://zoom.us/j/123');
+  assert.equal((normalizeInput('«https://zoom.us/j/123»') as { url: string }).url, 'https://zoom.us/j/123');
+  assert.equal((normalizeInput('「https://zoom.us/j/123」') as { url: string }).url, 'https://zoom.us/j/123');
+});
+
+test('normalizeInput: non-breaking space (U+00A0) separates URL from surrounding prose', () => {
+  const r = normalizeInput('Copy https://zoom.us/j/123 please');
+  if ('error' in r) throw new Error('unexpected error');
+  assert.equal(r.url, 'https://zoom.us/j/123');
+});
+
+test('normalizeInput: & in path is preserved (not a URL terminator)', () => {
+  const r = normalizeInput('https://zoom.us/j/123&utm_source=invite');
+  if ('error' in r) throw new Error('unexpected error');
+  assert.equal(r.url, 'https://zoom.us/j/123&utm_source=invite');
+});
+
+test('normalizeInput: calendar HTML blob with smart quotes + NBSP extracts the meet URL cleanly', () => {
+  const blob = 'Google Calendar Invite  “https://meet.google.com/abc-defg-hij” Dial-in: tel:+1-555-0100';
+  const r = normalizeInput(blob);
+  if ('error' in r) throw new Error('unexpected error');
+  assert.equal(r.url, 'https://meet.google.com/abc-defg-hij');
+});
+
 // --- check() integration: extractedFrom flows through, scheme rejection maps to INVALID ---
 
 test('check() exposes extractedFrom when input was normalized', () => {

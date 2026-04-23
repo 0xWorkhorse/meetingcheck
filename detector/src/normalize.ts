@@ -48,12 +48,28 @@ const OFFICIAL_SET: ReadonlySet<string> = new Set(
   Object.values(OFFICIAL_DOMAINS).flat() as string[],
 );
 
-// Full URL with http/https scheme, greedy up to whitespace or terminator chars.
-const RE_FULL_URL = /\bhttps?:\/\/[^\s<>"'`()\[\]{}]+/gi;
-// Hostname optionally followed by /path (no scheme).
-const RE_HOSTNAME_PATH = /\b(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}(?:\/\S*)?/gi;
+// Characters that end a URL in prose: whitespace, ASCII brackets/quotes, and
+// the common non-ASCII punctuation that browsers auto-substitute for ASCII
+// quotes/brackets (smart quotes, guillemets, CJK corner brackets). Keeping
+// this centralized so the full-URL and hostname-path regexes agree.
+const URL_TERMINATORS =
+  '\\s<>"\'`()\\[\\]{}' +
+  '«»' +        // « »   French guillemets
+  '‘’‚' +  // ' ' ‚   curly / low single quotes
+  '“”„' +  // " " „   curly / low double quotes
+  '「」『』'; // 「 」 『 』   CJK corner brackets
+const RE_FULL_URL      = new RegExp('\\bhttps?://[^' + URL_TERMINATORS + ']+', 'gi');
+const RE_HOSTNAME_PATH = new RegExp(
+  '\\b(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,}(?:/[^' + URL_TERMINATORS + ']*)?',
+  'gi',
+);
 // Strict hostname-only (used for the "bare hostname → https://" path).
 const RE_HOSTNAME_ONLY = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i;
+
+// Trailing-punctuation strippers. Runs AFTER the regex as belt-and-suspenders:
+// the regex shouldn't produce these, but if an upstream change relaxes it,
+// this still keeps the output clean.
+const RE_TRAIL_PUNCT = /[.,;:!?)>\]'"‘’‚“”„»」』`]+$/;
 
 export function normalizeInput(raw: string): NormalizeResult {
   const trimmed = (raw ?? '').trim();
@@ -94,6 +110,12 @@ function stripWrappers(s: string): string {
     ['"', '"'],
     ["'", "'"],
     ['`', '`'],
+    ['“', '”'],    // " "   curly double
+    ['‘', '’'],    // ' '   curly single
+    ['„', '“'],    // „ "   German/CEE opening-low → closing-high
+    ['«', '»'],    // « »   French guillemets
+    ['「', '」'],    // 「 」   CJK corner brackets
+    ['『', '』'],    // 『 』   CJK white corner brackets
   ];
   for (const [open, close] of pairs) {
     if (trimmed.startsWith(open) && trimmed.endsWith(close) && trimmed.length >= 2) {
@@ -187,7 +209,7 @@ function pickBest(blob: string): NormalizeOk | null {
 }
 
 function trimTrailingPunct(s: string): string {
-  return s.replace(/[.,;:!?)>\]'"`]+$/, '');
+  return s.replace(RE_TRAIL_PUNCT, '');
 }
 
 function hostOf(url: string): string {
