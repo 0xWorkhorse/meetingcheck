@@ -10,6 +10,8 @@ export type {
 export { OFFICIAL_DOMAINS } from './domains.js';
 export { getRegistrableDomain, normalizeHostname } from './domain-utils.js';
 export { decodeIdn, asciiSkeleton, decodeAndSkeleton } from './homoglyph.js';
+export { normalizeInput } from './normalize.js';
+export type { NormalizeResult, NormalizeOk, NormalizeErr, NormalizeErrorCode } from './normalize.js';
 
 // i18n
 export {

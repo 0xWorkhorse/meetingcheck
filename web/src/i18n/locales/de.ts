@@ -37,6 +37,7 @@ export const de: UiMessages = {
     inFlight: 'LÄUFT',
     awaiting: 'WARTET',
     checking: 'PRÜFUNG…',
+    checkedAs: "Geprüft: {url}",
     idleMessage:
       'Füg links einen Meeting-Link ein. Wir prüfen ihn gegen offizielle Domains, Zertifikatsregister und unseren Live-Community-Threat-Feed.',
     loadingMessage:

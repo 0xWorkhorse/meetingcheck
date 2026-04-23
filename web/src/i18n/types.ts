@@ -48,6 +48,8 @@ export interface UiMessages {
     inFlight: string;
     awaiting: string;
     checking: string;
+    /** Template: "Checked: {url}" — shown when the normalizer extracted a URL that differs from what the user pasted. */
+    checkedAs: string;
     idleMessage: string;
     loadingMessage: string;
     reportThisLink: string;

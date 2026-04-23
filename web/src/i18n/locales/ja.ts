@@ -37,6 +37,7 @@ export const ja: UiMessages = {
     inFlight: '処理中',
     awaiting: '待機中',
     checking: '確認中…',
+    checkedAs: "確認済: {url}",
     idleMessage:
       '左側にミーティングリンクを貼り付けてください。公式ドメイン、証明書記録、そしてライブのコミュニティ脅威フィードに対して確認します。',
     loadingMessage:

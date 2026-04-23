@@ -24,5 +24,6 @@
   "popupReporting": { "message": "Denunciando…" },
   "popupReported": { "message": "Denunciado. Gracias." },
   "popupReportFailed": { "message": "Falló — inténtalo de nuevo" },
-  "popupCouldntCheck": { "message": "No se pudo verificar ese enlace" }
+  "popupCouldntCheck": { "message": "No se pudo verificar ese enlace" },
+  "popupCheckedAs":    { "message": "Verificado:", "description": "Prefix before the resolved URL when the normalizer extracted a URL that differed from what the user pasted" }
 }

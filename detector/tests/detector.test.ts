@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { check, format, pickLocale, en, es } from '../src/index.js';
+import { check, format, pickLocale, normalizeInput, en, es } from '../src/index.js';
 import { cases } from './corpus.js';
 
 for (const tc of cases) {
@@ -81,6 +81,100 @@ test('pickLocale() handles Accept-Language headers', () => {
   assert.equal(pickLocale(''), 'en');
   assert.equal(pickLocale(null), 'en');
   assert.equal(pickLocale('es'), 'es');
+});
+
+// --- Normalizer contract ---
+
+test('normalizeInput: already-formed URL round-trips unchanged (no extractedFrom)', () => {
+  const r = normalizeInput('https://zoom.us/j/123');
+  assert.deepEqual(r, { url: 'https://zoom.us/j/123' });
+});
+
+test('normalizeInput: bare hostname+path gets https:// prepended and flags extractedFrom', () => {
+  const r = normalizeInput('meet.google.com/tfn-wtyz-qny');
+  if ('error' in r) throw new Error('unexpected error result');
+  assert.equal(r.url, 'https://meet.google.com/tfn-wtyz-qny');
+  assert.equal(r.extractedFrom, 'meet.google.com/tfn-wtyz-qny');
+});
+
+test('normalizeInput: bare hostname alone also normalizes', () => {
+  const r = normalizeInput('zoom.us');
+  if ('error' in r) throw new Error('unexpected error result');
+  assert.equal(r.url, 'https://zoom.us');
+});
+
+test('normalizeInput: markdown link syntax extracts the URL', () => {
+  const r = normalizeInput('[Join](https://zoom.us/j/123)');
+  if ('error' in r) throw new Error('unexpected error result');
+  assert.equal(r.url, 'https://zoom.us/j/123');
+  assert.ok(r.extractedFrom, 'extractedFrom should be set when input shape changed');
+});
+
+test('normalizeInput: angle-bracket wrapping strips the wrappers', () => {
+  const r = normalizeInput('<https://meet.google.com/abc>');
+  if ('error' in r) throw new Error('unexpected error result');
+  assert.equal(r.url, 'https://meet.google.com/abc');
+});
+
+test('normalizeInput: text blob prioritizes official-domain URLs over others', () => {
+  const blob = 'Join: tel.meet/xxx (backup) or https://meet.google.com/xyz for the real call';
+  const r = normalizeInput(blob);
+  if ('error' in r) throw new Error('unexpected error result');
+  assert.ok(r.url.startsWith('https://meet.google.com/'));
+});
+
+test('normalizeInput: empty string returns empty error', () => {
+  assert.deepEqual(normalizeInput(''),        { error: 'empty' });
+  assert.deepEqual(normalizeInput('   '),     { error: 'empty' });
+  assert.deepEqual(normalizeInput('\n\t\n'),  { error: 'empty' });
+});
+
+test('normalizeInput: prose with no URL-like substring returns no_url error', () => {
+  assert.deepEqual(normalizeInput('hello world'),                 { error: 'no_url' });
+  assert.deepEqual(normalizeInput('just some words here'),        { error: 'no_url' });
+});
+
+test('normalizeInput: native-app schemes each return a scheme-specific error code', () => {
+  assert.deepEqual(normalizeInput('zoommtg://zoom.us/join?confno=123'), { error: 'scheme.zoommtg' });
+  assert.deepEqual(normalizeInput('msteams:/l/meetup-join/...'),        { error: 'scheme.msteams' });
+  assert.deepEqual(normalizeInput('tel:+15555551212'),                  { error: 'scheme.tel' });
+  assert.deepEqual(normalizeInput('mailto:person@example.com'),         { error: 'scheme.mailto' });
+});
+
+test('normalizeInput: unknown non-http scheme returns scheme.other:<name>', () => {
+  assert.deepEqual(normalizeInput('ftp://zoom.us/file'), { error: 'scheme.other:ftp' });
+});
+
+// --- check() integration: extractedFrom flows through, scheme rejection maps to INVALID ---
+
+test('check() exposes extractedFrom when input was normalized', () => {
+  const r = check('meet.google.com/abc-def-ghi');
+  assert.equal(r.verdict, 'SAFE');
+  assert.equal(r.extractedFrom, 'meet.google.com/abc-def-ghi');
+});
+
+test('check() does NOT set extractedFrom for pristine URL inputs', () => {
+  const r = check('https://zoom.us/j/123');
+  assert.equal(r.verdict, 'SAFE');
+  assert.equal(r.extractedFrom, undefined);
+});
+
+test('check() maps zoommtg:// to a scheme-specific INVALID reason', () => {
+  const r = check('zoommtg://zoom.us/join?confno=123');
+  assert.equal(r.verdict, 'INVALID');
+  assert.equal(r.reasonKey, 'reason.invalid.scheme.zoommtg');
+});
+
+test('check() maps empty input to reason.invalid.empty', () => {
+  const r = check('');
+  assert.equal(r.verdict, 'INVALID');
+  assert.equal(r.reasonKey, 'reason.invalid.empty');
+});
+
+test('check() maps prose-with-no-url to reason.invalid.no_url', () => {
+  const r = check('just some random text');
+  assert.equal(r.verdict, 'INVALID');
+  assert.equal(r.reasonKey, 'reason.invalid.no_url');
 });
 
 test('English and Spanish locales cover the same keys', () => {

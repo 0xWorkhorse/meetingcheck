@@ -37,6 +37,7 @@ export const en: UiMessages = {
     inFlight: 'IN FLIGHT',
     awaiting: 'AWAITING',
     checking: 'CHECKING…',
+    checkedAs: "Checked: {url}",
     idleMessage:
       "Paste a meeting link on the left. We'll check it against official domains, certificate records, and our live community threat feed.",
     loadingMessage: 'Running checks against official allowlists and the community feed.',

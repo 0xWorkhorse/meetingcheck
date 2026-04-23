@@ -37,6 +37,7 @@ export const id: UiMessages = {
     inFlight: 'SEDANG BERJALAN',
     awaiting: 'MENUNGGU',
     checking: 'MENGECEK…',
+    checkedAs: "Dicek: {url}",
     idleMessage:
       'Tempel link meeting di sebelah kiri. Kami akan mengeceknya terhadap domain resmi, catatan sertifikat, dan feed ancaman komunitas live kami.',
     loadingMessage:

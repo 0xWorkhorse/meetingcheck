@@ -37,6 +37,7 @@ export const vi: UiMessages = {
     inFlight: 'ĐANG XỬ LÝ',
     awaiting: 'ĐANG CHỜ',
     checking: 'ĐANG KIỂM TRA…',
+    checkedAs: "Đã kiểm tra: {url}",
     idleMessage:
       'Dán liên kết họp vào bên trái. Chúng tôi sẽ kiểm tra nó với các tên miền chính thức, hồ sơ chứng chỉ và nguồn cấp dữ liệu đe dọa cộng đồng trực tiếp của chúng tôi.',
     loadingMessage:

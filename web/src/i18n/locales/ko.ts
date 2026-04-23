@@ -37,6 +37,7 @@ export const ko: UiMessages = {
     inFlight: '처리 중',
     awaiting: '대기 중',
     checking: '확인 중…',
+    checkedAs: "확인됨: {url}",
     idleMessage:
       '왼쪽에 미팅 링크를 붙여넣으세요. 공식 도메인, 인증서 기록, 그리고 실시간 커뮤니티 위협 피드와 대조하여 확인합니다.',
     loadingMessage:

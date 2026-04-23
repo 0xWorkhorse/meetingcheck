@@ -5,6 +5,9 @@ export const es: Messages = {
   'title.unrecognized':                   'Servicio de reuniones no reconocido',
   'title.invalid.unparseable':            'URL no válida',
   'title.invalid.protocol':               'Protocolo no admitido',
+  'title.invalid.empty':                  'Pega un enlace de reunión',
+  'title.invalid.no_url':                 'No se encontró ningún enlace',
+  'title.invalid.scheme':                 'No es un enlace web',
   'title.dangerous.community':            'Estafa confirmada',
   'title.dangerous.subdomain_trick':      'Casi con certeza una estafa',
   'title.dangerous.impersonation':        'Casi con certeza una estafa',
@@ -18,6 +21,18 @@ export const es: Messages = {
     'No se pudo analizar esto como una URL. Pega el enlace completo empezando por https://',
   'reason.invalid.protocol':
     'El protocolo {protocol} no está admitido. Pega un enlace http(s).',
+  'reason.invalid.empty':
+    'Pega un enlace de reunión arriba para verificarlo.',
+  'reason.invalid.no_url':
+    'No encontramos ninguna URL en ese texto. Pega el enlace de la reunión solo, o asegúrate de incluirlo.',
+  'reason.invalid.scheme.zoommtg':
+    'Este es un enlace de la app nativa de Zoom (zoommtg://). Pega en su lugar la versión https:// de la invitación.',
+  'reason.invalid.scheme.msteams':
+    'Este es un enlace de la app nativa de Microsoft Teams (msteams:). Pega en su lugar la versión https:// de la invitación.',
+  'reason.invalid.scheme.tel':
+    'Este es un enlace telefónico (tel:), no un enlace de reunión.',
+  'reason.invalid.scheme.mailto':
+    'Este es un enlace de correo (mailto:), no un enlace de reunión.',
   'reason.dangerous.community':
     '{domain} ha sido denunciado por la comunidad como una estafa. No abras este enlace.',
   'reason.dangerous.subdomain_trick':

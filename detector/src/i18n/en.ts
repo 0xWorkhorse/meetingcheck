@@ -6,6 +6,9 @@ export const en: Messages = {
   'title.unrecognized':                   'Not a known meeting service',
   'title.invalid.unparseable':            'Not a valid URL',
   'title.invalid.protocol':               'Unsupported protocol',
+  'title.invalid.empty':                  'Paste a meeting link',
+  'title.invalid.no_url':                 'No link found',
+  'title.invalid.scheme':                 'Not a web link',
   'title.dangerous.community':            'Confirmed scam',
   'title.dangerous.subdomain_trick':      'Almost certainly a scam',
   'title.dangerous.impersonation':        'Almost certainly a scam',
@@ -20,6 +23,18 @@ export const en: Messages = {
     'Could not parse this as a URL. Paste the full link starting with https://',
   'reason.invalid.protocol':
     'Protocol {protocol} is not supported. Paste a http(s) link.',
+  'reason.invalid.empty':
+    'Paste a meeting link above to check it.',
+  'reason.invalid.no_url':
+    "We couldn't find a URL in that text. Paste the meeting link by itself, or make sure it's included.",
+  'reason.invalid.scheme.zoommtg':
+    'This is a Zoom native app link (zoommtg://). Paste the https:// version of the invite instead.',
+  'reason.invalid.scheme.msteams':
+    'This is a Microsoft Teams native app link (msteams:). Paste the https:// version of the invite instead.',
+  'reason.invalid.scheme.tel':
+    'This is a phone number link (tel:), not a meeting link.',
+  'reason.invalid.scheme.mailto':
+    'This is an email link (mailto:), not a meeting link.',
   'reason.dangerous.community':
     '{domain} has been reported by the community as a scam. Do not open this link.',
   'reason.dangerous.subdomain_trick':

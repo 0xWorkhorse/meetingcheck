@@ -67,4 +67,20 @@ export const cases: TestCase[] = [
   { url: 'not a url',                                           expected: 'INVALID' },
   { url: 'javascript:alert(1)',                                 expected: 'INVALID', note: 'javascript: URL has no hostname; URL parser may accept it but protocol check rejects' },
   { url: 'ftp://zoom.us/file',                                  expected: 'INVALID' },
+
+  // --- Normalization: lazy-paste shapes that should resolve and get graded ---
+  { url: 'meet.google.com/tfn-wtyz-qny',                        expected: 'SAFE',      note: 'bare hostname + path; https:// prepended' },
+  { url: '  https://zoom.us/j/123  ',                           expected: 'SAFE',      note: 'surrounding whitespace' },
+  { url: '<https://meet.google.com/abc>',                       expected: 'SAFE',      note: 'angle-bracket wrapping (email style)' },
+  { url: '[Join](https://zoom.us/j/123)',                       expected: 'SAFE',      note: 'markdown link syntax' },
+  {
+    url: 'Join the call:\nhttps://meet.google.com/xyz-abcd-efg\n\nDial in: +1-555-0100\ntel.meet/xyz (backup)\nSincerely,\nIan',
+    expected: 'SAFE',
+    note: 'calendar-invite text blob; official meet.google.com beats tel.meet',
+  },
+
+  // --- Normalization: scheme-specific rejections ---
+  { url: 'zoommtg://zoom.us/join?confno=123',                   expected: 'INVALID',   note: 'Zoom native app link' },
+  { url: '',                                                    expected: 'INVALID',   note: 'empty string → paste-a-link message' },
+  { url: 'hello world',                                         expected: 'INVALID',   note: 'no URL found in the text' },
 ];

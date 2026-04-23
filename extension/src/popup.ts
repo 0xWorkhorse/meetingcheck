@@ -105,7 +105,11 @@ function render(r: CheckResponse) {
   result.classList.remove('hidden');
   // Verdict strings come pre-localized from the API (which reads Accept-Language /
   // or we can send x-locale from chrome.i18n.getUILanguage()).
+  const checkedAsLine = r.extractedFrom
+    ? `<div class="verdict-checked-as">${escape(chrome.i18n.getMessage('popupCheckedAs'))} <code>${escape(r.resolved_hostname || r.hostname)}</code></div>`
+    : '';
   result.innerHTML = `
+    ${checkedAsLine}
     <div class="verdict-title ${cls}">${escape(r.title)}</div>
     <div class="verdict-reason">${escape(r.reason)}</div>
     ${r.hostname ? `<div class="verdict-host">${escape(r.hostname)}</div>` : ''}

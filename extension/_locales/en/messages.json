@@ -24,5 +24,6 @@
   "popupReporting": { "message": "Reporting…" },
   "popupReported": { "message": "Reported. Thank you." },
   "popupReportFailed": { "message": "Failed — try again" },
-  "popupCouldntCheck": { "message": "Couldn't check that link" }
+  "popupCouldntCheck": { "message": "Couldn't check that link" },
+  "popupCheckedAs":    { "message": "Checked:", "description": "Prefix before the resolved URL when the normalizer extracted a URL that differed from what the user pasted" }
 }

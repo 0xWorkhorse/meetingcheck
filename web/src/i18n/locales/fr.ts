@@ -37,6 +37,7 @@ export const fr: UiMessages = {
     inFlight: 'EN COURS',
     awaiting: 'EN ATTENTE',
     checking: 'VÉRIFICATION…',
+    checkedAs: "Vérifié : {url}",
     idleMessage:
       'Colle un lien de réunion à gauche. On va le vérifier contre les domaines officiels, les registres de certificats, et notre fil de menaces communautaire en direct.',
     loadingMessage:

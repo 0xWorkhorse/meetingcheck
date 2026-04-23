@@ -37,6 +37,7 @@ export const ru: UiMessages = {
     inFlight: 'В ПРОЦЕССЕ',
     awaiting: 'ОЖИДАНИЕ',
     checking: 'ПРОВЕРКА…',
+    checkedAs: "Проверено: {url}",
     idleMessage:
       'Вставь ссылку на встречу слева. Мы сверим её с официальными доменами, записями сертификатов и нашим живым фидом угроз от сообщества.',
     loadingMessage:

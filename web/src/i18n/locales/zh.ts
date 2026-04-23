@@ -37,6 +37,7 @@ export const zh: UiMessages = {
     inFlight: '进行中',
     awaiting: '等待中',
     checking: '核查中…',
+    checkedAs: "已检查：{url}",
     idleMessage:
       '在左侧粘贴一个会议链接。我们会将其与官方域名、证书记录以及实时社区威胁源进行对比。',
     loadingMessage:

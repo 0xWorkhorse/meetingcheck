@@ -14,6 +14,7 @@ import {
 } from './domains.js';
 import { getRegistrableDomain, normalizeHostname } from './domain-utils.js';
 import { decodeAndSkeleton } from './homoglyph.js';
+import { normalizeInput, type NormalizeErrorCode } from './normalize.js';
 
 export type Verdict = 'SAFE' | 'DANGEROUS' | 'UNRECOGNIZED' | 'INVALID';
 export type SignalLevel = 'ok' | 'warning' | 'critical' | 'info';
@@ -40,6 +41,12 @@ export interface CheckResult {
   hostname: string;
   registrableDomain: string;
   signals: Signal[];
+  /**
+   * Populated when the raw input was materially different from the URL we
+   * ended up checking (bare hostname, pasted text blob, markdown link, etc.).
+   * Callers can display "Checked: <url>" so the user sees what was extracted.
+   */
+  extractedFrom?: string;
 }
 
 export interface CheckOptions {
@@ -146,9 +153,64 @@ function detectHomoglyphAttack(hostname: string): { brand: string; skeleton: str
 }
 
 export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
+  // Normalize the input first — handles bare hostnames, text blobs, markdown
+  // links, angle brackets, native-app schemes, etc. Existing well-formed URLs
+  // round-trip unchanged.
+  const normalized = normalizeInput(rawUrl);
+  if ('error' in normalized) {
+    return invalidFromNormalizeError(normalized.error);
+  }
+  const result = checkInternal(normalized.url, opts);
+  if (normalized.extractedFrom !== undefined) {
+    result.extractedFrom = normalized.extractedFrom;
+  }
+  return result;
+}
+
+/**
+ * Maps a normalizer error code to a localized INVALID verdict. Kept adjacent
+ * to check() so the set of error codes stays in sync with the i18n keys.
+ */
+function invalidFromNormalizeError(code: NormalizeErrorCode): CheckResult {
+  const base = {
+    verdict: 'INVALID' as const,
+    confidence: 1,
+    hostname: '',
+    registrableDomain: '',
+    signals: [],
+  };
+  if (code === 'empty') {
+    return { ...base, titleKey: 'title.invalid.empty', reasonKey: 'reason.invalid.empty' };
+  }
+  if (code === 'no_url') {
+    return { ...base, titleKey: 'title.invalid.no_url', reasonKey: 'reason.invalid.no_url' };
+  }
+  if (code === 'scheme.zoommtg') {
+    return { ...base, titleKey: 'title.invalid.scheme', reasonKey: 'reason.invalid.scheme.zoommtg' };
+  }
+  if (code === 'scheme.msteams') {
+    return { ...base, titleKey: 'title.invalid.scheme', reasonKey: 'reason.invalid.scheme.msteams' };
+  }
+  if (code === 'scheme.tel') {
+    return { ...base, titleKey: 'title.invalid.scheme', reasonKey: 'reason.invalid.scheme.tel' };
+  }
+  if (code === 'scheme.mailto') {
+    return { ...base, titleKey: 'title.invalid.scheme', reasonKey: 'reason.invalid.scheme.mailto' };
+  }
+  // scheme.other:<name> — fall back to the existing generic protocol reason.
+  const other = code.startsWith('scheme.other:') ? code.slice('scheme.other:'.length) : 'unknown';
+  return {
+    ...base,
+    titleKey: 'title.invalid.scheme',
+    reasonKey: 'reason.invalid.protocol',
+    reasonParams: { protocol: `${other}:` },
+  };
+}
+
+function checkInternal(normalizedUrl: string, opts: CheckOptions): CheckResult {
   let url: URL;
   try {
-    url = new URL(rawUrl.trim());
+    url = new URL(normalizedUrl);
   } catch {
     return {
       verdict: 'INVALID',
@@ -162,6 +224,8 @@ export function check(rawUrl: string, opts: CheckOptions = {}): CheckResult {
   }
 
   if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+    // Shouldn't happen — normalizeInput catches non-http schemes — kept as
+    // a local invariant in case checkInternal is called directly.
     return {
       verdict: 'INVALID',
       confidence: 1,

@@ -56,6 +56,14 @@ export function VerdictPanel({
         <span>{stamp}</span>
       </div>
 
+      {result?.extractedFrom && (
+        <div className="mt-3 font-mono text-[10px] tracking-[0.1em] uppercase text-muted">
+          {format(t.checker.checkedAs, {
+            url: <span className="text-ink break-all">{result.redirect_chain[0] ?? result.resolved_hostname}</span>,
+          })}
+        </div>
+      )}
+
       <div
         className={
           'font-display font-bold tracking-[-0.04em] leading-[0.9] my-4 ' +

@@ -37,6 +37,7 @@ export const tr: UiMessages = {
     inFlight: 'İŞLENİYOR',
     awaiting: 'BEKLİYOR',
     checking: 'KONTROL EDİLİYOR…',
+    checkedAs: "Kontrol edildi: {url}",
     idleMessage:
       'Sol tarafa bir toplantı linki yapıştır. Onu resmi domainlere, sertifika kayıtlarına ve canlı topluluk tehdit feed\'imize karşı kontrol edeceğiz.',
     loadingMessage:
