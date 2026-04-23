@@ -2,7 +2,7 @@
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
     "builder": "RAILPACK",
-    "buildCommand": "npm install && npm --workspace detector run build && npx --workspace web playwright install chromium && npm --workspace web run build"
+    "buildCommand": "npm install && npm --workspace detector run build && npx --workspace web playwright install --with-deps chromium && npm --workspace web run build"
   },
   "deploy": {
     "startCommand": "cd web && npm start",

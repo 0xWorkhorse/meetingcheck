@@ -80,8 +80,12 @@ async function main() {
   let chromium;
   try {
     ({ chromium } = await import('playwright'));
-  } catch {
-    console.warn('[generate-og] playwright not installed — skipping OG generation (existing image kept)');
+  } catch (err) {
+    console.warn(
+      '[generate-og] WARNING: OG image generation failed, using stale placeholder image. ' +
+      'Error: playwright is not installed. Run `npm install --save-dev playwright` in the web workspace. ' +
+      'Underlying error: ' + (err instanceof Error ? err.message : String(err)),
+    );
     return;
   }
 
@@ -95,8 +99,10 @@ async function main() {
   } catch (err) {
     server.close();
     console.warn(
-      '[generate-og] chromium launch failed — skipping OG generation. Install with `npx playwright install chromium`.\n' +
-      '  cause:', err.message,
+      '[generate-og] WARNING: OG image generation failed, using stale placeholder image. ' +
+      'Error: chromium failed to launch. Install the browser binary and its system dependencies with ' +
+      '`npx playwright install --with-deps chromium`. ' +
+      'Underlying error: ' + (err instanceof Error ? err.message : String(err)),
     );
     return;
   }
@@ -128,8 +134,12 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error('[generate-og] failed:', err);
-  // Non-fatal — the existing og-image.png is a fine fallback. We warn but
-  // don't break the build.
+  console.warn(
+    '[generate-og] WARNING: OG image generation failed, using stale placeholder image. ' +
+    'Error: unexpected failure during screenshot run. ' +
+    'Underlying error: ' + (err instanceof Error ? (err.stack ?? err.message) : String(err)),
+  );
+  // Non-fatal — the existing og-image.png is a fine fallback. We warn loudly
+  // (the message above is greppable in Railway logs) but don't break the build.
   process.exit(0);
 });
