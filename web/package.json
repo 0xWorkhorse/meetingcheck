@@ -9,7 +9,7 @@
     "build": "tsc --noEmit && vite build && npm run generate:og",
     "generate:og": "node scripts/generate-og.mjs",
     "preview": "vite preview",
-    "start": "serve dist -l ${PORT:-3000}"
+    "start": "serve dist --single -l ${PORT:-3000}"
   },
   "dependencies": {
     "@meetingcheck/detector": "*",
