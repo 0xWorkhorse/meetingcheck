@@ -147,12 +147,12 @@ export function PrivacyPage() {
         <Section heading="Contact">
           <p>
             Privacy questions or data deletion requests:{' '}
-            <a href="mailto:privacy@meetingcheck.io">privacy@meetingcheck.io</a>
+            <a href="mailto:ian@themathteam.io">ian@themathteam.io</a>
           </p>
           <p>
             If you've reported a scam domain and want it removed from the threat
             feed, contact{' '}
-            <a href="mailto:security@meetingcheck.io">security@meetingcheck.io</a>{' '}
+            <a href="mailto:ian@themathteam.io">ian@themathteam.io</a>{' '}
             with the details.
           </p>
         </Section>
