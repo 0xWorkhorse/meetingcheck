@@ -176,6 +176,7 @@ export const tr: UiMessages = {
     webChecker: 'Web doğrulayıcı',
     browserExtension: 'Tarayıcı uzantısı',
     reportALink: 'Bir link bildir',
+    privacy: 'Gizlilik',
     credit: '© 2026 {team} — {author} tarafından yapılmış bir kamu aracı',
   },
 

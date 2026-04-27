@@ -176,6 +176,7 @@ export const id: UiMessages = {
     webChecker: 'Checker web',
     browserExtension: 'Ekstensi browser',
     reportALink: 'Laporkan link',
+    privacy: 'Privasi',
     credit: '© 2026 {team} — utilitas publik dibangun oleh {author}',
   },
 

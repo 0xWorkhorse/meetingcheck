@@ -182,6 +182,8 @@ export interface UiMessages {
     webChecker: string;
     browserExtension: string;
     reportALink: string;
+    /** Small legal link in the bottom credit row. */
+    privacy: string;
     /** Template: "© 2026 {team} — a public utility built by {author}" */
     credit: string;
   };

@@ -176,6 +176,7 @@ export const vi: UiMessages = {
     webChecker: 'Trình kiểm tra web',
     browserExtension: 'Tiện ích trình duyệt',
     reportALink: 'Báo cáo liên kết',
+    privacy: 'Quyền riêng tư',
     credit: '© 2026 {team} — tiện ích công cộng được xây dựng bởi {author}',
   },
 

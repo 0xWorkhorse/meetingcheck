@@ -176,6 +176,7 @@ export const ru: UiMessages = {
     webChecker: 'Веб-чекер',
     browserExtension: 'Расширение браузера',
     reportALink: 'Пожаловаться на ссылку',
+    privacy: 'Конфиденциальность',
     credit: '© 2026 {team} — публичная утилита от {author}',
   },
 

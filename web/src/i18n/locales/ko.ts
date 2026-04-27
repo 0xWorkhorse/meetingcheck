@@ -176,6 +176,7 @@ export const ko: UiMessages = {
     webChecker: '웹 검증기',
     browserExtension: '브라우저 확장 프로그램',
     reportALink: '링크 신고',
+    privacy: '개인정보 처리방침',
     credit: '© 2026 {team} — {author}가 만든 공공 유틸리티',
   },
 
