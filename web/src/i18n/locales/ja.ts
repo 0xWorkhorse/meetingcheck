@@ -176,6 +176,7 @@ export const ja: UiMessages = {
     webChecker: 'Webチェッカー',
     browserExtension: 'ブラウザ拡張機能',
     reportALink: 'リンクを報告',
+    privacy: 'プライバシー',
     credit: '© 2026 {team} — {author} が構築した公共ユーティリティ',
   },
 

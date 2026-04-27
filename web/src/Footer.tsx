@@ -33,13 +33,14 @@ export function Footer() {
         />
       </div>
 
-      <div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted mt-7 pt-[18px] border-t border-ink">
+      <div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted mt-7 pt-[18px] border-t border-ink flex flex-wrap items-baseline justify-between gap-3">
         <span>
           {format(t.footer.credit, {
             team: <a href="https://themathteam.io" target="_blank" rel="noopener noreferrer">The Math Team</a>,
             author: <a href="https://x.com/0xWorkhorse" target="_blank" rel="noopener noreferrer">@0xWorkhorse</a>,
           })}
         </span>
+        <a href="/privacy">{t.footer.privacy}</a>
       </div>
     </footer>
   );

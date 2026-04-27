@@ -176,6 +176,7 @@ export const de: UiMessages = {
     webChecker: 'Web-Checker',
     browserExtension: 'Browser-Extension',
     reportALink: 'Link melden',
+    privacy: 'Datenschutz',
     credit: '© 2026 {team} — öffentlicher Dienst, gebaut von {author}',
   },
 

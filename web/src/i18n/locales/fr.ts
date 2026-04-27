@@ -176,6 +176,7 @@ export const fr: UiMessages = {
     webChecker: 'Vérificateur web',
     browserExtension: 'Extension du navigateur',
     reportALink: 'Signaler un lien',
+    privacy: 'Confidentialité',
     credit: '© 2026 {team} — utilité publique construite par {author}',
   },
 

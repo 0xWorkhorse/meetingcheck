@@ -176,6 +176,7 @@ export const zh: UiMessages = {
     webChecker: '网页核查器',
     browserExtension: '浏览器扩展',
     reportALink: '举报链接',
+    privacy: '隐私政策',
     credit: '© 2026 {team} —— 由 {author} 构建的公共工具',
   },
 
