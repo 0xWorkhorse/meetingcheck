@@ -6,7 +6,6 @@ export const de: UiMessages = {
     howItWorks: 'So funktioniert\'s',
     verdicts: 'Urteile',
     extension: 'Extension',
-    extensionPopover: "Wir basteln dran, bleib dran ;)",
     pasteALink: 'Link einfügen →',
     tagline: 'v3.2 — Link-Verifier',
   },
