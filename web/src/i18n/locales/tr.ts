@@ -6,7 +6,6 @@ export const tr: UiMessages = {
     howItWorks: 'Nasıl çalışır',
     verdicts: 'Kararlar',
     extension: 'Uzantı',
-    extensionPopover: "Üzerinde çalışıyoruz, takipte kal ;)",
     pasteALink: 'Bir link yapıştır →',
     tagline: 'v3.2 — link doğrulayıcı',
   },

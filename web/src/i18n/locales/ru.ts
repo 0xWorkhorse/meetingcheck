@@ -6,7 +6,6 @@ export const ru: UiMessages = {
     howItWorks: 'Как это работает',
     verdicts: 'Вердикты',
     extension: 'Расширение',
-    extensionPopover: "Готовим, оставайся на связи ;)",
     pasteALink: 'Вставь ссылку →',
     tagline: 'v3.2 — верификатор ссылок',
   },

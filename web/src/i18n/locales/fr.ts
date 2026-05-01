@@ -6,7 +6,6 @@ export const fr: UiMessages = {
     howItWorks: 'Comment ça marche',
     verdicts: 'Verdicts',
     extension: 'Extension',
-    extensionPopover: "On bosse dessus, reste dans le coin ;)",
     pasteALink: 'Colle un lien →',
     tagline: 'v3.2 — vérificateur de liens',
   },
