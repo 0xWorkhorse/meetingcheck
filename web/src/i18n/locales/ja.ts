@@ -17,11 +17,7 @@ export const ja: UiMessages = {
     headlineClick: 'クリック',
     subBody:
       '受け取ったミーティング招待すべてに厳格な二者択一の判定を — {safe}、{dangerous}、または {unrecognized} — マシンに何かがウィンドウを開く前に、3秒以内で。',
-    statLinksChecked: '確認されたリンク',
-    statScamsFlagged: 'フラグ付けされた詐欺',
-    statConfirmed: '確認済み詐欺ドメイン',
-    statUpdated: '{value} に更新',
-    statJustNow: 'たった今',
+    statScamsFlaggedSince: '{date} 以降にフラグ付けされた詐欺',
   },
 
   checker: {
