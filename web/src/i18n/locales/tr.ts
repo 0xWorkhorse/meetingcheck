@@ -17,11 +17,7 @@ export const tr: UiMessages = {
     headlineClick: 'tıkla',
     subBody:
       'Aldığın her toplantı davetine dair katı ve ikili bir karar — {safe}, {dangerous} ya da {unrecognized} — üç saniyenin altında, makinende herhangi bir şey pencere açmadan önce.',
-    statLinksChecked: 'kontrol edilen link',
-    statScamsFlagged: 'işaretlenen dolandırıcılık',
-    statConfirmed: 'doğrulanmış dolandırıcılık domaini',
-    statUpdated: 'Güncellendi {value}',
-    statJustNow: 'az önce',
+    statScamsFlaggedSince: '{date} tarihinden beri işaretlenen dolandırıcılık',
   },
 
   checker: {

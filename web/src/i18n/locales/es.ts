@@ -17,11 +17,7 @@ export const es: UiMessages = {
     headlineClick: 'Haz click',
     subBody:
       'Un veredicto binario y estricto sobre cada invitación de reunión que recibes — {safe}, {dangerous} o {unrecognized} — en menos de tres segundos, antes de que nada abra una ventana en tu máquina.',
-    statLinksChecked: 'enlaces verificados',
-    statScamsFlagged: 'estafas marcadas',
-    statConfirmed: 'dominios de estafa confirmados',
-    statUpdated: 'Actualizado {value}',
-    statJustNow: 'justo ahora',
+    statScamsFlaggedSince: 'estafas marcadas desde {date}',
   },
 
   checker: {

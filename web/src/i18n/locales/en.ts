@@ -17,11 +17,7 @@ export const en: UiMessages = {
     headlineClick: 'Click',
     subBody:
       'A strict, binary verdict on every meeting invite you get — {safe}, {dangerous}, or {unrecognized} — in under three seconds, before anything opens a window on your machine.',
-    statLinksChecked: 'links checked',
-    statScamsFlagged: 'scams flagged',
-    statConfirmed: 'confirmed scam domains',
-    statUpdated: 'Updated {value}',
-    statJustNow: 'just now',
+    statScamsFlaggedSince: 'scams flagged since {date}',
   },
 
   checker: {

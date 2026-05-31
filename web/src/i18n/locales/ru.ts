@@ -17,11 +17,7 @@ export const ru: UiMessages = {
     headlineClick: 'кликай',
     subBody:
       'Строгий бинарный вердикт по каждой входящей ссылке на встречу — {safe}, {dangerous} или {unrecognized} — меньше чем за три секунды, до того как что-либо откроет окно у тебя на машине.',
-    statLinksChecked: 'ссылок проверено',
-    statScamsFlagged: 'мошенничеств помечено',
-    statConfirmed: 'подтверждённых мошеннических доменов',
-    statUpdated: 'Обновлено {value}',
-    statJustNow: 'только что',
+    statScamsFlaggedSince: 'мошенничеств помечено с {date}',
   },
 
   checker: {

@@ -17,11 +17,7 @@ export const fr: UiMessages = {
     headlineClick: 'Clique',
     subBody:
       'Un verdict binaire et strict sur chaque invitation de réunion que tu reçois — {safe}, {dangerous} ou {unrecognized} — en moins de trois secondes, avant que quoi que ce soit n\'ouvre une fenêtre sur ta machine.',
-    statLinksChecked: 'liens vérifiés',
-    statScamsFlagged: 'arnaques signalées',
-    statConfirmed: 'domaines d\'arnaque confirmés',
-    statUpdated: 'Mis à jour {value}',
-    statJustNow: 'à l\'instant',
+    statScamsFlaggedSince: 'arnaques signalées depuis le {date}',
   },
 
   checker: {

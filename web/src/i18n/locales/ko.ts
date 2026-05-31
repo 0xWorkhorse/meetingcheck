@@ -17,11 +17,7 @@ export const ko: UiMessages = {
     headlineClick: '클릭',
     subBody:
       '받은 모든 미팅 초대에 대한 엄격한 이분법 판정을 — {safe}, {dangerous}, 또는 {unrecognized} — 기기에 창이 열리기 전에, 3초 이내로.',
-    statLinksChecked: '확인한 링크',
-    statScamsFlagged: '표시된 사기',
-    statConfirmed: '확인된 사기 도메인',
-    statUpdated: '{value} 업데이트',
-    statJustNow: '방금 전',
+    statScamsFlaggedSince: '{date} 이후 표시된 사기',
   },
 
   checker: {

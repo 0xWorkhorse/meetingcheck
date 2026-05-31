@@ -17,11 +17,7 @@ export const vi: UiMessages = {
     headlineClick: 'Bấm',
     subBody:
       'Một phán quyết nhị phân nghiêm ngặt cho mỗi lời mời họp bạn nhận được — {safe}, {dangerous} hoặc {unrecognized} — dưới ba giây, trước khi bất cứ thứ gì mở cửa sổ trên máy bạn.',
-    statLinksChecked: 'liên kết được kiểm tra',
-    statScamsFlagged: 'vụ lừa đảo được gắn cờ',
-    statConfirmed: 'tên miền lừa đảo đã xác nhận',
-    statUpdated: 'Cập nhật {value}',
-    statJustNow: 'vừa xong',
+    statScamsFlaggedSince: 'vụ lừa đảo được gắn cờ từ {date}',
   },
 
   checker: {

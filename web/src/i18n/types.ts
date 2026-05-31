@@ -27,11 +27,8 @@ export interface UiMessages {
     headlineClick: string;
     /** Template: "A strict, binary verdict on every meeting invite you get — {safe}, {dangerous}, or {unrecognized} — in under three seconds, before anything opens a window on your machine." */
     subBody: string;
-    statLinksChecked: string;
-    statScamsFlagged: string;
-    statConfirmed: string;
-    statUpdated: string; // "Updated {value}"
-    statJustNow: string; // "just now"
+    /** Template: "scams flagged since {date}" */
+    statScamsFlaggedSince: string;
   };
   checker: {
     shellTitle: string; // "MEETINGCHECK // VERIFIER SHELL" — brand, typically not translated

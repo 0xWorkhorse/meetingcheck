@@ -44,13 +44,9 @@ export function Hero() {
           })}
         </p>
         <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted flex flex-col gap-1.5 md:text-right">
-          <div><b className="text-ink font-medium">{formatNumber(stats.links_checked_total, locale)}</b> {t.hero.statLinksChecked}</div>
-          <div><b className="text-ink font-medium">{formatNumber(stats.scams_flagged_total, locale)}</b> {t.hero.statScamsFlagged}</div>
-          <div><b className="text-ink font-medium">{formatNumber(stats.confirmed_scam_domains, locale)}</b> {t.hero.statConfirmed}</div>
           <div>
-            {format(t.hero.statUpdated, {
-              value: <b className="text-ink font-medium">{t.hero.statJustNow}</b>,
-            })}
+            <b className="text-ink font-medium">{formatNumber(stats.scams_flagged_total, locale)}</b>{' '}
+            {format(t.hero.statScamsFlaggedSince, { date: '5/1/2026' })}
           </div>
         </div>
       </div>
